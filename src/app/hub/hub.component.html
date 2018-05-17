@@ -1,0 +1,100 @@
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">angular-hub</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">首页
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">文章</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">问答</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">分享</a>
+                    </li>
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li> -->
+
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
+                </form>
+                <!-- 登录状态 -->
+                <!-- <div class="d-flex flex-row">
+                    <div class="p-0 p-lg-2">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                创建
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">提问题</a>
+                                <a class="dropdown-item" href="#">写文章</a>
+                                <a class="dropdown-item" href="#">发头条</a>
+                                <a class="dropdown-item" href="#">记笔记</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">草稿箱</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-0 p-lg-2">
+                        <button type="button" class="btn btn-light">
+                            <i class="fa fa-bell-o fa-lg" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="p-0 p-lg-2">
+                        <div class="avatar">
+                            <img class="w-100 rounded-circle" src="assets/images/avatar.jpg" />
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="d-flex flex-row">
+                    <div class="p-0 ml-lg-2">
+                        <button type="button" class="btn btn-outline-dark">
+                            <i class="fa fa-user-plus" aria-hidden="true"></i>
+                            注册
+                        </button>
+                    </div>
+                    <div class="p-0 ml-lg-2 ml-2">
+                        <button type="button" class="btn btn-outline-dark">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            登录
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+</header>
+
+<router-outlet></router-outlet>
+
+
+<footer class=" bg-light fixed-bottom">
+    <div class="container">
+        底部内容
+    </div>
+</footer>
