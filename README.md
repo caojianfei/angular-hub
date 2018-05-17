@@ -1,6 +1,6 @@
 # AngularHub
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.1.
+使用`angular`构建一个社区
 
 ## Development server
 
