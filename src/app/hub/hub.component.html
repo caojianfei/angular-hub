@@ -10,7 +10,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">首页
+                        <a class="nav-link" routerLink="">首页
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
@@ -72,13 +72,13 @@
 
                 <div class="d-flex flex-row">
                     <div class="p-0 ml-lg-2">
-                        <button type="button" class="btn btn-outline-dark">
+                        <button  routerLink="/register" type="button" class="btn btn-outline-dark">
                             <i class="fa fa-user-plus" aria-hidden="true"></i>
                             注册
                         </button>
                     </div>
                     <div class="p-0 ml-lg-2 ml-2">
-                        <button type="button" class="btn btn-outline-dark">
+                        <button routerLink="/login" type="button" class="btn btn-outline-dark">
                             <i class="fa fa-user" aria-hidden="true"></i>
                             登录
                         </button>
@@ -90,10 +90,11 @@
     </nav>
 </header>
 
-<router-outlet></router-outlet>
+<main class="container mt-4">
+    <router-outlet></router-outlet>
+</main>
 
-
-<footer class="bg-light mt-5">
+<footer class="bg-light mt-5 fixed-bottom">
     <div class="container">
         底部内容
     </div>
