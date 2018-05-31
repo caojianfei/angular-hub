@@ -1,29 +1,47 @@
 <section class="register d-flex justify-content-center" novalidate>
-    <form class="register-form needs-validation" novalidate>
 
+    <form class="register-form needs-validation" [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
         <h4 class="text-center">注册</h4>
         <hr>
-        <div class="form-group  is-invalid">
-            <label for="exampleInputEmail1">邮箱</label>
-            <input type="text" class="form-control is-invalid" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"
-                requird>
+        <div class="form-group">
+            <label for="email">邮箱</label>
+            <input type="text" class="form-control" [class.is-invalid]="email.invalid && (email.dirty || email.touched)" id="email" placeholder="email"
+                formControlName="email">
             <div class="invalid-feedback">
-                Looks good!
+                <span *ngIf="email.errors?.required">邮箱必填</span>
+                <span *ngIf="email.errors?.email">邮箱格式错误</span>
             </div>
         </div>
         <div class="form-group ">
-            <label for="exampleInputPassword1">密码</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <label for="password">密码</label>
+            <input type="password" class="form-control" [class.is-invalid]="password.invalid && (password.dirty || password.touched)"
+                id="password" formControlName="password">
+            <div class="invalid-feedback">
+                <span *ngIf="password.errors?.required">密码必填</span>
+                <span *ngIf="password.errors?.minlength">密码长度不能小于6</span>
+            </div>
+        
         </div>
         <div class="form-group ">
-            <label for="exampleInputPassword1">确认密码</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <label for="passwordConfirmation">确认密码</label>
+            <input type="password" class="form-control" [class.is-invalid]="passwordConfirmation.invalid && (passwordConfirmation.dirty || passwordConfirmation.touched)"
+                id="passwordConfirmation" formControlName="passwordConfirmation">
+            <div class="invalid-feedback">
+                <span *ngIf="passwordConfirmation.errors?.required">确认密码必填</span>
+                <span *ngIf="passwordConfirmation.errors?.confirm">两次输入密码不一致</span>
+            </div>
         </div>
+        
         <div class="form-group ">
             <div class="row">
                 <div class="col-8">
-                    <label for="exampleInputPassword1">验证码</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    <label for="verifyCode">验证码</label>
+                    <input type="text" class="form-control" id="verifyCode" [class.is-invalid]="verifyCode.invalid && (verifyCode.dirty || verifyCode.touched)"
+                        formControlName="verifyCode">
+                    <div class="invalid-feedback">
+                        <span *ngIf="verifyCode.errors?.required">验证码</span>
+                        <!-- <span *ngIf="passwordConfirmation.errors?.minLength">密码长度不能小于6</span> -->
+                    </div>
                 </div>
                 <div class="col-4 d-flex align-items-end pl-0 ml-0">
                     <div class="verify-code  ">
@@ -31,13 +49,8 @@
                     </div>
                 </div>
             </div>
-
         </div>
-        <!-- <div class="form-check">
 
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div> -->
-        <button type="submit" class="btn btn-primary w-100">Submit</button>
+        <button type="submit" [disabled]="registerForm.invalid" class="btn btn-primary w-100">提交</button>
     </form>
 </section>

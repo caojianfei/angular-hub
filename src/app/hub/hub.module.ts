@@ -11,7 +11,6 @@ import { AuthModule } from '../auth/auth.module';
         CommonModule,
         AuthModule,
         HubRoutingModule,
-        
     ],
     declarations: [
         HubComponent,
