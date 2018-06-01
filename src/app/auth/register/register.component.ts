@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+
 import { CaptchasService } from '../../apis/captchas.service';
+import { Captcha } from '../../apis/models/responses/captcha';
+import { UserService } from '../../apis/user.service';
+import { Register } from '../../apis/models/requests/register';
+import { User } from '../../apis/models/responses/user';
+import { ErrorFormat } from '../../apis/models/error-format';
 
 
 @Component({
@@ -12,35 +18,56 @@ export class RegisterComponent implements OnInit {
 
     registerForm: FormGroup;
 
-    constructor(private fb: FormBuilder, private captchasService: CaptchasService) { }
+    captcha: Captcha;
+
+    constructor(
+        private fb: FormBuilder,
+        private captchasService: CaptchasService,
+        private userService: UserService
+    ) { }
 
     ngOnInit() {
         this.createForm();
+        this.getCaptcha();
+        //console.log(this.userService.register({} as Register));
+        //console.log(this.captchasService);
     }
 
     createForm() {
         this.registerForm = this.fb.group({
+            name: ['', [Validators.required]],
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(6)]],
-            passwordConfirmation: ['', [Validators.required]],
-            verifyCode: ['', Validators.required]
+            password_confirmation: ['', [Validators.required]],
+            captch: ['', Validators.required]
         });
+    }
+
+    getCaptcha() {
+        this.captchasService.getCaptchas().subscribe(
+            (res) => this.captcha = res,
+            (error) => { }
+        );
+    }
+
+    get name(): AbstractControl {
+        return this.registerForm.get('name');
     }
 
     get email(): AbstractControl {
         return this.registerForm.get('email');
     }
 
-    get password() {
+    get password(): AbstractControl {
         return this.registerForm.get('password');
     }
 
-    get passwordConfirmation() {
-        return this.registerForm.get('passwordConfirmation');
+    get password_confirmation(): AbstractControl {
+        return this.registerForm.get('password_confirmation');
     }
 
-    get verifyCode() {
-        return this.registerForm.get('verifyCode');
+    get captch(): AbstractControl {
+        return this.registerForm.get('captch');
     }
 
 
@@ -48,13 +75,27 @@ export class RegisterComponent implements OnInit {
 
         let values = this.registerForm.value;
 
-        if (values.password !== values.passwordConfirmation) {
-            this.passwordConfirmation.setErrors({ confirm: true });
+        if (values.password !== values.password_confirmation) {
+            this.password_confirmation.setErrors({ confirm: true });
             return;
         }
+        values.captch_key = this.captcha.captcha_key;
 
-        console.log(this.registerForm.value);
-        //this.email.setErrors({api: 'test'});
-        //console.log(this.email);
+        console.log(values);
+
+        this.userService.register(values).subscribe(
+            (res: User) => {
+                console.log(res);
+            },
+            (error: ErrorFormat) => {
+                if (error.statusCode === 422) {
+                    let errors = error.errors;
+                    for (let field in errors) {
+                        this.registerForm.get(field).setErrors({server: errors[field][0]});
+                    }
+                } else {}
+                //console.log(error)
+            }
+        );
     }
 }

@@ -1,8 +1,17 @@
-<section class="register d-flex justify-content-center" novalidate>
 
+<section class="register d-flex justify-content-center" novalidate>
     <form class="register-form needs-validation" [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
         <h4 class="text-center">注册</h4>
         <hr>
+        <div class="form-group">
+            <label for="name">用户名</label>
+            <input type="text" class="form-control" [class.is-invalid]="name.invalid && (name.dirty || name.touched)" id="name" placeholder="用户名注册之后可修改"
+                formControlName="name">
+            <div class="invalid-feedback">
+                <span *ngIf="email.errors?.required">用户名必填</span>
+                <span *ngIf="name.errors?.server">{{name.errors?.server}}</span>
+            </div>
+        </div>
         <div class="form-group">
             <label for="email">邮箱</label>
             <input type="text" class="form-control" [class.is-invalid]="email.invalid && (email.dirty || email.touched)" id="email" placeholder="email"
@@ -10,6 +19,7 @@
             <div class="invalid-feedback">
                 <span *ngIf="email.errors?.required">邮箱必填</span>
                 <span *ngIf="email.errors?.email">邮箱格式错误</span>
+                <span *ngIf="email.errors?.server">{{email.errors?.server}}</span>
             </div>
         </div>
         <div class="form-group ">
@@ -19,33 +29,34 @@
             <div class="invalid-feedback">
                 <span *ngIf="password.errors?.required">密码必填</span>
                 <span *ngIf="password.errors?.minlength">密码长度不能小于6</span>
+                <span *ngIf="password.errors?.server">{{password.errors?.server}}</span>
             </div>
-        
+
         </div>
         <div class="form-group ">
-            <label for="passwordConfirmation">确认密码</label>
-            <input type="password" class="form-control" [class.is-invalid]="passwordConfirmation.invalid && (passwordConfirmation.dirty || passwordConfirmation.touched)"
-                id="passwordConfirmation" formControlName="passwordConfirmation">
+            <label for="password_confirmation">确认密码</label>
+            <input type="password" class="form-control" [class.is-invalid]="password_confirmation.invalid && (password_confirmation.dirty || password_confirmation.touched)"
+                id="password_confirmation" formControlName="password_confirmation">
             <div class="invalid-feedback">
-                <span *ngIf="passwordConfirmation.errors?.required">确认密码必填</span>
-                <span *ngIf="passwordConfirmation.errors?.confirm">两次输入密码不一致</span>
+                <span *ngIf="password_confirmation.errors?.required">确认密码必填</span>
+                <span *ngIf="password_confirmation.errors?.confirm">两次输入密码不一致</span>
             </div>
         </div>
-        
+
         <div class="form-group ">
             <div class="row">
                 <div class="col-8">
-                    <label for="verifyCode">验证码</label>
-                    <input type="text" class="form-control" id="verifyCode" [class.is-invalid]="verifyCode.invalid && (verifyCode.dirty || verifyCode.touched)"
-                        formControlName="verifyCode">
+                    <label for="captch">验证码</label>
+                    <input type="text" class="form-control" id="captch" [class.is-invalid]="captch.invalid && (captch.dirty || captch.touched)"
+                        formControlName="captch">
                     <div class="invalid-feedback">
-                        <span *ngIf="verifyCode.errors?.required">验证码</span>
-                        <!-- <span *ngIf="passwordConfirmation.errors?.minLength">密码长度不能小于6</span> -->
+                        <span *ngIf="captch.errors?.required">验证码</span>
+                        <span *ngIf="captch.errors?.server">{{captch.errors?.server}}</span>
                     </div>
                 </div>
                 <div class="col-4 d-flex align-items-end pl-0 ml-0">
-                    <div class="verify-code  ">
-                        <img class="w-100 " src="assets/images/avatar.jpg">
+                    <div class="verify-code ">
+                        <img class="w-100 border-light rounded" (click)="getCaptcha()" src="{{ captcha?.captcha_image_content }}">
                     </div>
                 </div>
             </div>

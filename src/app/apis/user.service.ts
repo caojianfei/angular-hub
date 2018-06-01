@@ -6,11 +6,13 @@ import { catchError, retry } from 'rxjs/operators';
 import { BASE_URL, ACCEPT } from './apis.module';
 import { ErrorHandleService } from './error-handle.service';
 import { Captcha } from './models/responses/captcha';
+import { User } from './models/responses/user';
+import { Register } from './models/requests/register';
 
 @Injectable({
     providedIn: 'root'
 })
-export class CaptchasService {
+export class UserService {
 
     constructor(
         @Inject(BASE_URL) private apiUrl,
@@ -19,14 +21,9 @@ export class CaptchasService {
         private errorHandle: ErrorHandleService
     ) { }
 
-    /**
-     * 获取验证码图片
-     * 
-     * @returns {Observable<Captcha>} 
-     * @memberof CaptchasService
-     */
-    getCaptchas(): Observable<Captcha> {
-        let route: string = '/captchas';
+
+    register(data: Register): Observable<User> {
+        let route: string = '/users';
         let url = `${this.apiUrl}${route}`;
         let options = {
             headers: {
@@ -34,7 +31,7 @@ export class CaptchasService {
             }
         };
 
-        return this.http.post<Captcha>(url, null, options).pipe(
+        return this.http.post<User>(url, data, options).pipe(
             catchError(this.errorHandle.handleError)
         );
     }

@@ -26,8 +26,4 @@ export const ACCEPT = new InjectionToken<string>('The api request accept in head
         HttpClientModule
     ]
 })
-export class ApisModule {
-    // constructor( @Inject(BASE_URL) public apiUrl) {
-    //     console.log(apiUrl);
-    // }
-}
+export class ApisModule { }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CaptchasService } from '../../apis/captchas.service';
+import { ErrorFormat } from '../../apis/models/error-format';
 
 @Component({
   selector: 'app-login',
@@ -12,14 +13,7 @@ export class LoginComponent implements OnInit {
   constructor(private captchasService: CaptchasService) { }
 
   ngOnInit() {
-      this.captchasService.getCaptchas().subscribe(
-          (res) => {
-            console.log(res);
-          },
-          (error) =>{
-              console.log(error)
-          }
-      );
+      
   }
 
 }
