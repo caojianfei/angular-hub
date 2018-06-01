@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
     selector: 'app-hub',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HubComponent implements OnInit {
 
-    constructor() { }
+    isLogin: boolean;
+
+    constructor(private authService: AuthService) { }
 
     ngOnInit() {
+        this.isLogin = this.authService.isLogin;
     }
 
 }
