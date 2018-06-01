@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { ApisModule } from './apis/apis.module';
 
 
+import { GrowlModule } from 'primeng/growl';
+import { MessageService } from 'primeng/components/common/messageservice';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -14,8 +17,10 @@ import { ApisModule } from './apis/apis.module';
         BrowserModule,
         AppRoutingModule,
         ApisModule,
+        GrowlModule
     ],
     providers: [
+        MessageService
     ],
     bootstrap: [AppComponent]
 })

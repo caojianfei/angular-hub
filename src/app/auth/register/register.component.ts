@@ -7,6 +7,7 @@ import { UserService } from '../../apis/user.service';
 import { Register } from '../../apis/models/requests/register';
 import { User } from '../../apis/models/responses/user';
 import { ErrorFormat } from '../../apis/models/error-format';
+import { GrowlMessageService } from '../../growl-message.service';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class RegisterComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private captchasService: CaptchasService,
-        private userService: UserService
+        private userService: UserService,
+        private message: GrowlMessageService
     ) { }
 
     ngOnInit() {
@@ -85,7 +87,7 @@ export class RegisterComponent implements OnInit {
 
         this.userService.register(values).subscribe(
             (res: User) => {
-                console.log(res);
+                this.message.success('注册成功');
             },
             (error: ErrorFormat) => {
                 if (error.statusCode === 422) {
@@ -93,8 +95,9 @@ export class RegisterComponent implements OnInit {
                     for (let field in errors) {
                         this.registerForm.get(field).setErrors({server: errors[field][0]});
                     }
-                } else {}
-                //console.log(error)
+                } else {
+                    this.message.error(error.message);
+                }
             }
         );
     }
