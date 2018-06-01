@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router'
 
 import { CaptchasService } from '../../apis/captchas.service';
 import { Captcha } from '../../apis/models/responses/captcha';
@@ -8,6 +9,7 @@ import { Register } from '../../apis/models/requests/register';
 import { User } from '../../apis/models/responses/user';
 import { ErrorFormat } from '../../apis/models/error-format';
 import { GrowlMessageService } from '../../growl-message.service';
+import { AuthService } from '../auth.service';
 
 
 @Component({
@@ -25,14 +27,14 @@ export class RegisterComponent implements OnInit {
         private fb: FormBuilder,
         private captchasService: CaptchasService,
         private userService: UserService,
-        private message: GrowlMessageService
+        private message: GrowlMessageService,
+        private router: Router,
+        private authService: AuthService
     ) { }
 
     ngOnInit() {
         this.createForm();
         this.getCaptcha();
-        //console.log(this.userService.register({} as Register));
-        //console.log(this.captchasService);
     }
 
     createForm() {
@@ -83,17 +85,17 @@ export class RegisterComponent implements OnInit {
         }
         values.captch_key = this.captcha.captcha_key;
 
-        console.log(values);
-
         this.userService.register(values).subscribe(
             (res: User) => {
                 this.message.success('注册成功');
+                this.authService.login(res.meta);
+                this.router.navigate([this.authService.successLoginRedirect]);
             },
             (error: ErrorFormat) => {
                 if (error.statusCode === 422) {
                     let errors = error.errors;
                     for (let field in errors) {
-                        this.registerForm.get(field).setErrors({server: errors[field][0]});
+                        this.registerForm.get(field).setErrors({ server: errors[field][0] });
                     }
                 } else {
                     this.message.error(error.message);
