@@ -1,28 +1,36 @@
-<!-- <section class="text-center">
-    <form class="form-signin">
-        <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+<section class="text-center">
+    <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <h1 class="h3 mb-3 font-weight-normal">请登录</h1>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="手机号码" required="" autofocus="">
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="密码" required="">
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me"> 记住我
-            </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
-      
-        <div class="alert alert-info" role="alert">
-            This is a info alert—check it out!
-        </div>
-        <div class="text-secondary mt-2">---------- 更多登录方式 ----------</div>
-        
-        <div class="d-flex flex-row justify-content-center">
-            <div class="p-2 cursor-pointer"><i class="fa fa-weixin fa-lg text-primary" aria-hidden="true"></i></div>
-            <div class="p-2 cursor-pointer"><i class="fa fa-github-alt" aria-hidden="true"></i></div>
+        <label for="email" class="sr-only">Email address</label>
+        <input type="email" id="email" class="form-control" [class.is-invalid]="email.invalid && (email.dirty || email.touched)" placeholder="邮箱" autofocus formControlName="email">
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" id="password" class="form-control " [class.is-invalid]="password.invalid && (password.dirty || password.touched)" placeholder="密码" required="" formControlName="password">
+        <div class="invalid-feedback">
+            <span *ngIf="email.errors?.required">邮箱必填<br></span>
+            <span *ngIf="email.errors?.email">邮箱格式错误<br></span>
+            <span *ngIf="email.errors?.server">{{email.errors?.server}}<br></span>
+            <span *ngIf="password.errors?.required">密码必填<br></span>
         </div>
 
-          <p class="mt-5 mb-3 text-muted">© 2017-2018</p>
+        <div class="checkbox mb-3">
+            <!-- <label>
+                <input type="checkbox" value="remember-me"> 记住我
+            </label> -->
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" [disabled]="loginForm.invalid" type="submit">登录</button>
+
+
+        <!-- <div class="text-secondary mt-2">---------- 更多登录方式 ----------</div> -->
+
+        <!-- <div class="d-flex flex-row justify-content-center">
+            <div class="p-2 cursor-pointer">
+                <i class="fa fa-weixin fa-lg text-primary" aria-hidden="true"></i>
+            </div>
+            <div class="p-2 cursor-pointer">
+                <i class="fa fa-github-alt" aria-hidden="true"></i>
+            </div>
+        </div> -->
+
+        <p class="mt-5 mb-3 text-muted">© 2017-2018</p>
     </form>
-</section> -->
+</section>
