@@ -30,12 +30,17 @@
                             "src/styles.scss",
                             "./node_modules/font-awesome/css/font-awesome.min.css",
                             "./node_modules/primeng/resources/themes/omega/theme.css",
-                            "./node_modules/primeng/resources/primeng.min.css"
+                            "./node_modules/primeng/resources/primeng.min.css",
+                            "./node_modules/simditor/styles/simditor.css"
                         ],
                         "scripts": [
                             "./node_modules/jquery/dist/jquery.min.js",
                             "./node_modules/popper.js/dist/umd/popper.min.js",
-                            "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+                            "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+                            "./node_modules/simple-module/lib/module.js",
+                            "./node_modules/simple-hotkeys/lib/hotkeys.js",
+                            "./node_modules/simple-uploader/lib/uploader.js",
+                            "./node_modules/simditor/lib/simditor.js"
                         ]
                     },
                     "configurations": {
