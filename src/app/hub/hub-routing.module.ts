@@ -4,6 +4,7 @@ import { HubComponent } from './hub.component';
 import { HubHomeComponent } from './hub-home/hub-home.component';
 import { LoginComponent } from '../auth/login/login.component';
 import { RegisterComponent } from '../auth/register/register.component';
+import { CreateArticleComponent } from './create-article/create-article.component';
 
 const routes: Routes = [
     {
@@ -12,7 +13,8 @@ const routes: Routes = [
         children: [
             { path: '', component: HubHomeComponent },
             { path: 'login', component: LoginComponent },
-            { path: 'register', component: RegisterComponent }
+            { path: 'register', component: RegisterComponent },
+            { path: 'articles/create/:type', component: CreateArticleComponent }
         ]
     }
 ];
