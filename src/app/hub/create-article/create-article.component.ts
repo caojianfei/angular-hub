@@ -28,7 +28,12 @@ export class CreateArticleComponent implements OnInit {
 
     createSimditor() {
         this.simditor = new Simditor({
-            textarea: $('#textarea')
+            textarea: $('#textarea'),
+            placeholder: 'hahaha',
+            defaultImage: "assets/images/avatar.jpg",
+            upload: true,
+            pasteImage: true,
+            cleanPaste: true
         });
     }
 
