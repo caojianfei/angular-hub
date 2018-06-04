@@ -2,14 +2,18 @@
 
     <div class="w-75">
 
-        <h2 class="text-center">写文章</h2>
+        <h2 class="text-center">{{type}}</h2>
         <hr>
         <form class="">
 
             <input type="text" class="form-control" placeholder="输入标题">
 
+            <p-autoComplete [(ngModel)]="selectedTags" [suggestions]="filteredTags" (completeMethod)="filterTags($event)" [multiple]="true"
+                name="tags" field="name" [minLength]="1" (onSelect)="selectedTag($event)" [style]="{'width': '200px'}" styleClass="w-100 mt-4"></p-autoComplete>
+
+
             <textarea id="textarea" class="form-control mt-3" rows="16"></textarea>
-            
+
             <button (click)="getvalue()" class="btn btn-info mt-4">发布</button>
         </form>
 
