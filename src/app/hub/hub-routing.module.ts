@@ -5,6 +5,7 @@ import { HubHomeComponent } from './hub-home/hub-home.component';
 import { LoginComponent } from '../auth/login/login.component';
 import { RegisterComponent } from '../auth/register/register.component';
 import { CreateArticleComponent } from './create-article/create-article.component';
+import { ShowArticleComponent } from './show-article/show-article.component';
 
 const routes: Routes = [
     {
@@ -14,7 +15,8 @@ const routes: Routes = [
             { path: '', component: HubHomeComponent },
             { path: 'login', component: LoginComponent },
             { path: 'register', component: RegisterComponent },
-            { path: 'articles/create/:type', component: CreateArticleComponent }
+            { path: 'articles/create/:type', component: CreateArticleComponent },
+            { path: 'articles/:id', component: ShowArticleComponent }
         ]
     }
 ];

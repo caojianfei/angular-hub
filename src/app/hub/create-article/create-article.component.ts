@@ -1,11 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { BASE_URL } from '../../apis/apis.module';
 import { AuthService } from '../../auth/auth.service';
 import { TagsService } from '../../apis/tags.service';
 import { Tag } from '../../apis/models/responses/tag';
 import { GrowlMessageService } from '../../growl-message.service';
+import { ArticlesService } from '../../apis/articles.service';
 
 declare let Simditor;
 
@@ -16,9 +17,13 @@ declare let Simditor;
 })
 export class CreateArticleComponent implements OnInit {
 
+    articleTitle: string;
+
     simditor: any;
 
     type: string;
+
+    categoryId: number;
 
     tags: Tag[];
 
@@ -29,19 +34,17 @@ export class CreateArticleComponent implements OnInit {
     constructor(
         @Inject(BASE_URL) private apiUrl: string,
         private route: ActivatedRoute,
+        private router: Router,
         private authService: AuthService,
         private tagsService: TagsService,
-        private message: GrowlMessageService
+        private message: GrowlMessageService,
+        private articlesService: ArticlesService
     ) { }
 
     ngOnInit() {
-
         this.tagsService.getTags().subscribe(
             res => {
                 this.tags = res.data;
-                // this.tags.forEach((tag) => {
-                //     this.selectedTags.push(tag);
-                // });
             },
             err => {
                 this.message.error(err.message)
@@ -81,10 +84,13 @@ export class CreateArticleComponent implements OnInit {
     defineType(type: string) {
         if (type === "article") {
             this.type = '写文章';
+            this.categoryId = 1;
         } else if (type === "question") {
             this.type = "提问题";
+            this.categoryId = 2;
         } else {
             this.type = "分享";
+            this.categoryId = 3;
         }
     }
 
@@ -106,8 +112,40 @@ export class CreateArticleComponent implements OnInit {
         }
     }
 
-    getvalue() {
-        console.log(this.simditor.getValue());
-    }
+    submit() {
+        if (!this.articleTitle) {
+            this.message.warn('文章标题不能为空');
+            return;
+        }
 
+        if (!this.selectedTags || this.selectedTags.length === 0) {
+            this.message.warn("至少填写一个标签");
+            return;
+        }
+
+        let articleContent = this.simditor.getValue();
+
+        if (!articleContent) {
+            this.message.warn("内容不能为空");
+            return;
+        }
+
+        let tags: number[] = [];
+        this.selectedTags.forEach((tag) => {
+            tags.push(tag.id);
+        });
+
+        this.articlesService.createArticle({
+            title: this.articleTitle,
+            category_id: this.categoryId,
+            content: articleContent,
+            tags: tags
+        }).subscribe(
+            res => {
+                this.message.success('文章新增成功');
+                this.router.navigate(['/articles/' + res.id]);
+            },
+            err => this.message.error(err.message)
+        );
+    }
 }
