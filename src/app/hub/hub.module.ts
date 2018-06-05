@@ -10,6 +10,7 @@ import { AuthModule } from '../auth/auth.module';
 import { CreateArticleComponent } from './create-article/create-article.component';
 import { ShowArticleComponent } from './show-article/show-article.component';
 import { HtmlDirective } from '../directives/html.directive';
+import { ArticleListComponent } from './article-list/article-list.component';
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import { HtmlDirective } from '../directives/html.directive';
         HubHomeComponent,
         CreateArticleComponent,
         ShowArticleComponent,
-        HtmlDirective
+        HtmlDirective,
+        ArticleListComponent
     ]
 })
 export class HubModule { }

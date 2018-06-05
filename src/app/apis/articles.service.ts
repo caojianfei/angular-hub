@@ -8,6 +8,7 @@ import { ErrorHandleService } from './error-handle.service';
 import { CreateArticle } from './models/requests/create-article';
 import { AuthService } from '../auth/auth.service';
 import { Article } from './models/responses/article';
+import { ArticlePagination } from './models/responses/article-pagination';
 
 
 
@@ -24,6 +25,35 @@ export class ArticlesService {
         private authService: AuthService
     ) { }
 
+    /**
+     * 
+     * @param params 
+     * @param include 
+     * @returns {Observable<ArticlePagination>}
+     */
+    public getArticles(params: { [key: string]: string }, include: string[] = null): Observable<ArticlePagination> {
+
+        let route: string = '/articles';
+        let url = `${this.apiUrl}${route}`;
+
+        let httpParams = new HttpParams();
+
+        for (let field in params) {
+            httpParams = httpParams.set(field, params[field]);
+        }
+
+        if (include) {
+            httpParams = httpParams.set('include', include.join(','));
+        }
+
+        return this.http.get<ArticlePagination>(url, {
+            headers: { Accept: this.accept },
+            params: httpParams
+        }).pipe(
+            catchError(this.errorHandle.handleError)
+        )
+
+    }
 
     /**
      * 新增文章
@@ -50,7 +80,7 @@ export class ArticlesService {
     public getArticle(id: number, include: string[] = null): Observable<Article> {
         let route: string = '/articles/' + id;
         let url = `${this.apiUrl}${route}`;
-    
+
         return this.http.get<Article>(url, {
             headers: {
                 Accept: this.accept

@@ -6,6 +6,7 @@ import { LoginComponent } from '../auth/login/login.component';
 import { RegisterComponent } from '../auth/register/register.component';
 import { CreateArticleComponent } from './create-article/create-article.component';
 import { ShowArticleComponent } from './show-article/show-article.component';
+import { ArticleListComponent } from './article-list/article-list.component';
 
 const routes: Routes = [
     {
@@ -16,7 +17,8 @@ const routes: Routes = [
             { path: 'login', component: LoginComponent },
             { path: 'register', component: RegisterComponent },
             { path: 'articles/create/:type', component: CreateArticleComponent },
-            { path: 'articles/:id', component: ShowArticleComponent }
+            { path: 'articles/:id', component: ShowArticleComponent },
+            { path: 'articles/list/:categoryId', component: ArticleListComponent }
         ]
     }
 ];
