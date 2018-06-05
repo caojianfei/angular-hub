@@ -1,3 +1,5 @@
-<p>
-  show-article works!
-</p>
+<section>
+
+    <div *ngIf="article$ | async as article"  [appHtml]="article.content"></div>
+
+</section>

@@ -47,4 +47,18 @@ export class ArticlesService {
         );
     }
 
+    public getArticle(id: number, include: string[] = null): Observable<Article> {
+        let route: string = '/articles/' + id;
+        let url = `${this.apiUrl}${route}`;
+    
+        return this.http.get<Article>(url, {
+            headers: {
+                Accept: this.accept
+            },
+            params: include ? new HttpParams().set('include', include.join(',')) : {}
+        }).pipe(
+            catchError(this.errorHandle.handleError)
+        );
+    }
+
 }

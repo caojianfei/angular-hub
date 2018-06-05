@@ -39,7 +39,12 @@ export class TagsService {
             options.params = new HttpParams().set('name', name);
         }
         
-        return this.http.get<TagsCollection>(url).pipe(
+        return this.http.get<TagsCollection>(url, {
+            headers: {
+                Accept: this.accept
+            },
+            params: name ? new HttpParams().set('name', name) : {}
+        }).pipe(
             catchError(this.errorHandle.handleError)
         );
     }
