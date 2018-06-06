@@ -34,8 +34,9 @@
     </div>
     <div class="col-lg-7 col-md-8">
         <div class="article-list rounded border border-light">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item px-0">
+            <ul *ngIf="articles$ | async as articles" class="list-group list-group-flush">
+
+                <li *ngFor="let article of articles.data" class="list-group-item px-0">
                     <div class="media article-item">
                         <!-- 左侧点赞 -->
                         <div class="mr-3 border rounded like-box">
@@ -44,7 +45,7 @@
                                     <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
                                 </div>
                                 <div class="">
-                                    <span>1</span>
+                                    <span>{{ article.like_count }}</span>
                                 </div>
                             </div>
                         </div>
@@ -53,14 +54,12 @@
 
                             <div class="article-header">
                                 <h5 class="mt-0 d-inline">
-                                    <a>PHP是世界上最好PHP是世界上最好PHP是世界上最好PHP是世界上最好</a>
+                                    <a>{{article.title}}</a>
+                                    <a routerLink="/articles/list/{{article.category.id}}" class="badge badge-secondary badge-info ">{{ article.category.name }}</a>
                                 </h5>
-                                <div class="article-tags d-inline-block">
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                    <a href="#" class="badge badge-primary">Primary</a>
+                                
+                                <div *ngIf="article.tags?.data" class="article-tags d-inline-block">
+                                    <a *ngFor="let tag of article.tags.data" href="#" class="badge badge-primary">{{tag.name}}</a>
                                 </div>
                             </div>
 
@@ -84,203 +83,8 @@
                         </div>
                     </div>
                 </li>
-                <li class="list-group-item px-0">
-                    <div class="media article-item">
-                        <!-- 左侧点赞 -->
-                        <div class="mr-3 border rounded like-box">
-                            <div class="d-flex flex-column">
-                                <div class="">
-                                    <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                                </div>
-                                <div class="">
-                                    <span>1</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="media-body">
-
-                            <div class="article-header">
-                                <h5 class="mt-0 d-inline">
-                                    <a>PHP是世界上最好PHP是世界上最好PHP是世界上最好PHP是世界上最好</a>
-                                </h5>
-                                <div class="article-tags d-inline-block">
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                </div>
-                            </div>
-
-                            <div class="d-flex flex-row auth-info">
-                                <div class="p-1">
-                                    <div class="d-flex flex-row ">
-                                        <div class="user-avatar">
-                                            <img class="w-100 rounded-circle" src="assets/images/avatar.jpg" />
-                                        </div>
-                                        <span class="user-name ml-1">Jeffrey</span>
-                                    </div>
-                                </div>
-                                <div class="p-1">
-                                    <span class="publish-time">5 分钟前</span>
-                                </div>
-                                <div class="p-1">
-                                    <a href="#" class="replay-number">5 回复</a>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item px-0">
-                    <div class="media article-item">
-                        <!-- 左侧点赞 -->
-                        <div class="mr-3 border rounded like-box">
-                            <div class="d-flex flex-column">
-                                <div class="">
-                                    <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                                </div>
-                                <div class="">
-                                    <span>1</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="media-body">
-
-                            <div class="article-header">
-                                <h5 class="mt-0 d-inline">
-                                    <a>PHP是世界上最好PHP是世界上最好PHP是世界上最好PHP是世界上最好</a>
-                                </h5>
-                                <div class="article-tags d-inline-block">
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                </div>
-                            </div>
-
-                            <div class="d-flex flex-row auth-info">
-                                <div class="p-1">
-                                    <div class="d-flex flex-row ">
-                                        <div class="user-avatar">
-                                            <img class="w-100 rounded-circle" src="assets/images/avatar.jpg" />
-                                        </div>
-                                        <span class="user-name ml-1">Jeffrey</span>
-                                    </div>
-                                </div>
-                                <div class="p-1">
-                                    <span class="publish-time">5 分钟前</span>
-                                </div>
-                                <div class="p-1">
-                                    <a href="#" class="replay-number">5 回复</a>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item px-0">
-                    <div class="media article-item">
-                        <!-- 左侧点赞 -->
-                        <div class="mr-3 border rounded like-box">
-                            <div class="d-flex flex-column">
-                                <div class="">
-                                    <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                                </div>
-                                <div class="">
-                                    <span>1</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="media-body">
-
-                            <div class="article-header">
-                                <h5 class="mt-0 d-inline">
-                                    <a>PHP是世界上最好PHP是世界上最好PHP是世界上最好PHP是世界上最好</a>
-                                </h5>
-                                <div class="article-tags d-inline-block">
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                </div>
-                            </div>
-
-                            <div class="d-flex flex-row auth-info">
-                                <div class="p-1">
-                                    <div class="d-flex flex-row ">
-                                        <div class="user-avatar">
-                                            <img class="w-100 rounded-circle" src="assets/images/avatar.jpg" />
-                                        </div>
-                                        <span class="user-name ml-1">Jeffrey</span>
-                                    </div>
-                                </div>
-                                <div class="p-1">
-                                    <span class="publish-time">5 分钟前</span>
-                                </div>
-                                <div class="p-1">
-                                    <a href="#" class="replay-number">5 回复</a>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item px-0">
-                    <div class="media article-item">
-                        <!-- 左侧点赞 -->
-                        <div class="mr-3 border rounded like-box">
-                            <div class="d-flex flex-column">
-                                <div class="">
-                                    <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                                </div>
-                                <div class="">
-                                    <span>1</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="media-body">
-
-                            <div class="article-header">
-                                <h5 class="mt-0 d-inline">
-                                    <a>PHP是世界上最好PHP是世界上最好PHP是世界上最好PHP是世界上最好</a>
-                                </h5>
-                                <div class="article-tags d-inline-block">
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                    <a href="#" class="badge badge-primary">Primary</a>
-                                </div>
-                            </div>
-
-                            <div class="d-flex flex-row auth-info">
-                                <div class="p-1">
-                                    <div class="d-flex flex-row ">
-                                        <div class="user-avatar">
-                                            <img class="w-100 rounded-circle" src="assets/images/avatar.jpg" />
-                                        </div>
-                                        <span class="user-name ml-1">Jeffrey</span>
-                                    </div>
-                                </div>
-                                <div class="p-1">
-                                    <span class="publish-time">5 分钟前</span>
-                                </div>
-                                <div class="p-1">
-                                    <a href="#" class="replay-number">5 回复</a>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </li>
-
+                
+                
             </ul>
         </div>
     </div>
