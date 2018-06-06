@@ -8,16 +8,14 @@
 }
 
 .article-list {
-    padding: 5px;
     background-color: #ffffff;
 }
 
 $auth-info-height: 25px;
 
 .article-item {
-    .like-box {
-        width: 45px;
-        text-align: center;
+    .avatar {
+        width: 64px;
     }
 
     .article-header {
@@ -29,9 +27,6 @@ $auth-info-height: 25px;
     }
    
     .auth-info {
-        .user-avatar {
-            width: $auth-info-height;
-        }
         .user-name {
             line-height: $auth-info-height;
             

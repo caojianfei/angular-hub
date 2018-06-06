@@ -33,25 +33,13 @@
         </aside>
     </div>
     <div class="col-lg-7 col-md-8">
-        <div class="article-list rounded border border-light">
+        <div class="article-list px-4 rounded border border-light">
             <ul *ngIf="articles$ | async as articles" class="list-group list-group-flush">
 
                 <li *ngFor="let article of articles.data" class="list-group-item px-0">
                     <div class="media article-item">
-                        <!-- 左侧点赞 -->
-                        <div class="mr-3 border rounded like-box">
-                            <div class="d-flex flex-column">
-                                <div class="">
-                                    <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                                </div>
-                                <div class="">
-                                    <span>{{ article.like_count }}</span>
-                                </div>
-                            </div>
-                        </div>
-
+                        <img class="mr-3 avatar rounded" src="assets/images/avatar.jpg" >
                         <div class="media-body">
-
                             <div class="article-header">
                                 <h5 class="mt-0 d-inline">
                                     <a>{{article.title}}</a>
@@ -66,9 +54,6 @@
                             <div class="d-flex flex-row auth-info">
                                 <div class="p-1">
                                     <div class="d-flex flex-row ">
-                                        <div class="user-avatar">
-                                            <img class="w-100 rounded-circle" src="assets/images/avatar.jpg" />
-                                        </div>
                                         <span class="user-name ml-1">Jeffrey</span>
                                     </div>
                                 </div>
