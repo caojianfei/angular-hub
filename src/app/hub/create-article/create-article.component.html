@@ -3,8 +3,20 @@
         <h2 class="text-center">{{type}}</h2>
         <hr>
         <form class="" (ngSubmit)="submit()">
-            <input type="text" class="form-control" placeholder="输入标题" [(ngModel)]="articleTitle" name="title">
-            <p-autoComplete [(ngModel)]="selectedTags" [suggestions]="filteredTags" (completeMethod)="filterTags($event)" [multiple]="true"
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="输入标题" [(ngModel)]="articleTitle" name="title">
+                <div *ngIf="categoryId == 1" class="input-group-append">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ writeType }}</button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item cursor-pointer" (click)="writeType = '原创'">原创</a>
+                        <a class="dropdown-item cursor-pointer" (click)="writeType = '转载'">转载</a>
+                        <a class="dropdown-item cursor-pointer" (click)="writeType = '翻译'">翻译</a>
+                    </div>
+                </div>
+            </div>
+            <input *ngIf="categoryId == 3" type="text" class="form-control mt-4" placeholder="分享链接" [(ngModel)]="shareLink" name="shareLink">
+            <!-- <input type="text" class="form-control" placeholder="输入标题" [(ngModel)]="articleTitle" name="title"> -->
+            <p-autoComplete placeholder="标签" [(ngModel)]="selectedTags" [suggestions]="filteredTags" (completeMethod)="filterTags($event)" [multiple]="true"
                 name="tags" field="name" [minLength]="1" (onSelect)="selectedTag($event)" [style]="{'width': '200px'}" styleClass="w-100 mt-4"></p-autoComplete>
             <textarea id="textarea" class="form-control mt-3" rows="16"></textarea>
             <button type="submit" class="btn btn-info mt-4">发布</button>

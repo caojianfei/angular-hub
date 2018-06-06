@@ -1,3 +1,8 @@
-<p>
-  article-list works!
-</p>
+<section>
+    <div [ngSwitch]="categoryId">
+        <app-list-article *ngSwitchCase="'1'"></app-list-article>
+        <app-list-question *ngSwitchCase="'2'"></app-list-question>
+        <app-list-share *ngSwitchCase="'3'"></app-list-share>
+    </div>
+
+</section>

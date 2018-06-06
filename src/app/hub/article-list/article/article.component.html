@@ -1,0 +1,144 @@
+<div class="row hub-articles-list">
+    <div class="col-md-8">
+        <p-tabView styleClass="hub-tab-view" (onChange)="onTabChange($event)">
+            <p-tabPanel header="全部文章">
+                <ng-template pTemplate="content">
+                    <div *ngIf="totalArticles$ | async as totalArticles" class="article-list p-2">
+                        <div *ngFor="let article of totalArticles.data" class="article-item border-bottom p-2">
+                            <div class="article-title">
+                                <h5>
+                                    <a routerLink="/articles/{{article.id}}">{{ article.title }}</a>
+                                </h5>
+                            </div>
+                            <div class="article-excerpt text-secondary">
+                                {{ article.excerpt }}
+                            </div>
+                            <div class="article-extra row d-flex align-items-center">
+                                <div class="col-md-6">
+                                    <div class="d-flex justify-content-md-start justify-content-end align-items-center">
+                                        <div class="d-inline">
+                                            <img src="assets/images/avatar.jpg" class="rounded-circle avatar">
+                                        </div>
+                                        <span class="px-2  border-right">{{ article.user.name }}</span>
+                                        <span class="px-2 text-secondary">18小时前</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex justify-content-end">
+                                        <div class="d-inline px-2 border-right">
+                                            <span class="text-info px-1">{{ article.view_count }}</span>
+                                            <span class="text-secondary">阅读</span>
+                                        </div>
+                                        <div class="d-inline px-2 border-right">
+                                            <span class="text-info px-1">{{ article.like_count }}</span>
+                                            <span class="text-secondary">点赞</span>
+                                        </div>
+                                        <div class="d-inline px-2">
+                                            <span class="text-info px-1">{{ article.replay_count }}</span>
+                                            <span class="text-secondary">评论</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-tabPanel>
+
+            <p-tabPanel header="热门文章">
+                <ng-template pTemplate="content">
+                    <div *ngIf="hotArticles$ | async as hotArticles" class="article-list p-2">
+                        <div *ngFor="let article of hotArticles.data" class="article-item border-bottom p-2">
+                            <div class="article-title">
+                                <h5>
+                                    <a routerLink="/articles/{{article.id}}">{{ article.title }}</a>
+                                </h5>
+                            </div>
+
+                            <div class="article-excerpt text-secondary">
+                                {{ article.excerpt }}
+                            </div>
+
+                            <div class="article-extra row d-flex align-items-center">
+                                <div class="col-md-6">
+                                    <div class="d-flex justify-content-md-start justify-content-end align-items-center">
+                                        <div class="d-inline">
+                                            <img src="assets/images/avatar.jpg" class="rounded-circle avatar">
+                                        </div>
+                                        <span class="px-2  border-right">{{ article.user.name }}</span>
+                                        <span class="px-2 text-secondary">18小时前</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex justify-content-end">
+                                        <div class="d-inline px-2 border-right">
+                                            <span class="text-info px-1">{{ article.view_count }}</span>
+                                            <span class="text-secondary">阅读</span>
+                                        </div>
+                                        <div class="d-inline px-2 border-right">
+                                            <span class="text-info px-1">{{ article.like_count }}</span>
+                                            <span class="text-secondary">点赞</span>
+                                        </div>
+                                        <div class="d-inline px-2">
+                                            <span class="text-info px-1">{{ article.replay_count }}</span>
+                                            <span class="text-secondary">评论</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-tabPanel>
+            <p-tabPanel header="最近回复">
+                <ng-template pTemplate="content">
+                    <div *ngIf="recentReplayArticles$ | async as recentReplayArticles" class="article-list p-2">
+                        <div *ngFor="let article of recentReplayArticles.data" class="article-item border-bottom p-2">
+                            <div class="article-title">
+                                <h5>
+                                    <a routerLink="/articles/{{article.id}}">{{ article.title }}</a>
+                                </h5>
+                            </div>
+
+                            <div class="article-excerpt text-secondary">
+                                {{ article.excerpt }}
+                            </div>
+
+                            <div class="article-extra row d-flex align-items-center">
+                                <div class="col-md-6">
+                                    <div class="d-flex justify-content-md-start justify-content-end align-items-center">
+                                        <div class="d-inline">
+                                            <img src="assets/images/avatar.jpg" class="rounded-circle avatar">
+                                        </div>
+                                        <span class="px-2  border-right">{{ article.user.name }}</span>
+                                        <span class="px-2 text-secondary">18小时前</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex justify-content-end">
+                                        <div class="d-inline px-2 border-right">
+                                            <span class="text-info px-1">{{ article.view_count }}</span>
+                                            <span class="text-secondary">阅读</span>
+                                        </div>
+                                        <div class="d-inline px-2 border-right">
+                                            <span class="text-info px-1">{{ article.like_count }}</span>
+                                            <span class="text-secondary">点赞</span>
+                                        </div>
+                                        <div class="d-inline px-2">
+                                            <span class="text-info px-1">{{ article.replay_count }}</span>
+                                            <span class="text-secondary">评论</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-tabPanel>
+        </p-tabView>
+    </div>
+
+    <div class="col-md-4">
+
+    </div>
+</div>

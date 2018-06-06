@@ -19,6 +19,10 @@ export class CreateArticleComponent implements OnInit {
 
     articleTitle: string;
 
+    writeType: string = "原创";
+
+    shareLink: string;
+
     simditor: any;
 
     type: string;
@@ -86,14 +90,14 @@ export class CreateArticleComponent implements OnInit {
                 'strikethrough',
                 'fontScale',
                 'color',
-                'ol',       
-                'ul',           
+                'ol',
+                'ul',
                 'blockquote',
-                'code',          
+                'code',
                 'table',
                 'link',
                 'image',
-                'hr',           
+                'hr',
                 'indent',
                 'outdent',
                 'alignment'
@@ -133,17 +137,27 @@ export class CreateArticleComponent implements OnInit {
     }
 
     submit() {
+
         if (!this.articleTitle) {
-            this.message.warn('文章标题不能为空');
+            this.message.warn('标题不能为空');
             return;
         }
 
         if (!this.selectedTags || this.selectedTags.length === 0) {
-            this.message.warn("至少填写一个标签");
+            this.message.warn("至少选择一个标签");
+            return;
+        }
+
+        if (this.categoryId === 3 && !this.shareLink) {
+            this.message.warn('请填写分享链接');
             return;
         }
 
         let articleContent = this.simditor.getValue();
+
+        if (this.categoryId === 3) {
+            articleContent = `<p>分享链接：<a href="${this.shareLink}" target="_blank" class="">${this.shareLink}</a>${articleContent}</p>`;
+        }
 
         if (!articleContent) {
             this.message.warn("内容不能为空");
@@ -159,13 +173,27 @@ export class CreateArticleComponent implements OnInit {
             title: this.articleTitle,
             category_id: this.categoryId,
             content: articleContent,
-            tags: tags
+            tags: tags,
+            write_type: this.writeTypeCode
         }).subscribe(
             res => {
-                this.message.success('文章新增成功');
+                this.message.success('新增成功');
                 this.router.navigate(['/articles/' + res.id]);
             },
             err => this.message.error(err.message)
         );
+    }
+
+    get writeTypeCode() {
+        switch (this.writeType) {
+            case '原创':
+                return 0;
+            case '转载':
+                return 1;
+            case '翻译':
+                return 2;
+            default:
+                return 0
+        }
     }
 }

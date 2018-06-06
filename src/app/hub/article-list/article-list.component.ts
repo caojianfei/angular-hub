@@ -12,6 +12,8 @@ import { Observable } from 'rxjs';
 })
 export class ArticleListComponent implements OnInit {
 
+    categoryId: string = '1';
+
     constructor(
         private route: ActivatedRoute,
         private articlesService: ArticlesService
@@ -20,12 +22,15 @@ export class ArticleListComponent implements OnInit {
     articlePagination$: Observable<ArticlePagination>;
 
     ngOnInit() {
-        this.articlePagination$ = this.route.paramMap.pipe(
-            switchMap((params: ParamMap) => this.articlesService.getArticles({category_id: params.get('categoryId')}, ['user', 'tags']))
-        );
 
-        this.articlePagination$.subscribe(res => console.log(res))
+        // this.articlePagination$ = this.route.paramMap.pipe(
+        //     switchMap((params: ParamMap) => this.articlesService.getArticles({ category_id: params.get('categoryId') }, ['user', 'tags']))
+        // );
 
+        this.route.params.subscribe(
+            res => this.categoryId = res.categoryId
+        )
+
+        //this.articlePagination$.subscribe(res => console.log(res))
     }
-
 }

@@ -15,3 +15,28 @@
 .ui-inputtext {
     width: 100%;
 }
+
+body {
+    background: #f0f2f5;
+}
+
+// prime 默认的tabView样式修改
+.hub-tab-view {
+    .ui-tabview-nav {
+        border-bottom: 1px solid #d6d6d6!important;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .ui-state-default {
+        background: white!important;
+        border:none;
+        border-bottom: 1px solid #d6d6d6 !important;
+        margin: 0px!important;
+    }
+    .ui-state-active {
+        border: 1px solid #d6d6d6;
+        border-bottom: 0!important;
+    }
+}
