@@ -1,8 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~font-awesome/css/font-awesome.min.css";
+@import "~primeng/resources/themes/omega/theme.css";
+@import "~primeng/resources/primeng.min.css";
+@import "~simditor/styles/simditor.css";
 @import "assets/prism/prism.css";
-
 
 .cursor-pointer {
     cursor: pointer;
@@ -22,20 +24,20 @@ body {
 
 // prime 默认的tabView样式修改
 .hub-tab-view {
-    .ui-tabview-nav {
+    ul.ui-tabview-nav {
         border-bottom: 1px solid #d6d6d6!important;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         padding-left: 0;
         padding-right: 0;
     }
-    .ui-state-default {
+    li.ui-state-default {
         background: white!important;
         border:none;
         border-bottom: 1px solid #d6d6d6 !important;
         margin: 0px!important;
     }
-    .ui-state-active {
+    li.ui-state-active {
         border: 1px solid #d6d6d6;
         border-bottom: 0!important;
     }

@@ -22,6 +22,10 @@ export class AuthService {
         sessionStorage.setItem('loginUser', JSON.stringify(user));
     }
 
+    updateLoginUser(user: User) {
+        this.setLoginUser(user);
+    }
+
     get isLogin(): boolean {
         let state: string = sessionStorage.getItem('authorization');
         return state ? true : false;

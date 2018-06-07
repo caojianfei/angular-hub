@@ -87,5 +87,21 @@ export class UserService {
         );
     }
 
+    update(data) {
+        let route = '/user';
+        let url = `${this.apiUrl}${route}`;
+
+        return this.http.patch<User>(url, data, {
+            headers: {
+                Accept: this.accept,
+                Authorization: "Bearer " + this.authService.authorization.access_token
+            }
+        }).pipe(
+            catchError(this.errorHandle.handleError)
+        );
+
+
+    }
+
 
 }

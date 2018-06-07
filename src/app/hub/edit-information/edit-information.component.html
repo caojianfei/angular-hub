@@ -90,8 +90,6 @@
                             <button type="submit" [disabled]="informationForm.invalid" class="btn btn-primary">提交修改</button>
                         </div>
                     </div>
-
-
                 </form>
 
             </ng-template>
@@ -99,12 +97,51 @@
 
         <p-tabPanel header="修改头像">
             <ng-template pTemplate="content">
-
+                <div class="mb-2" style="width: 400px; height: 400px;">
+                    <img class="w-100 rounded" src="{{ uploadedAvatarFile ? uploadedAvatarFile.file_path : (user.avatar.url ? user.avatar?.url : 'assets/images/avatar.jpg') }}" />
+                </div>
+                <p-fileUpload chooseLabel="选择图片" uploadLabel="上传" cancelLabel="取消" name="file" url="{{apiUrl}}/image" (onBeforeSend)="beforeUploadAvatar($event)"
+                    (onUpload)="uploadedAvatar($event)" (onError)="uploadAvatarError($event)"></p-fileUpload>
             </ng-template>
         </p-tabPanel>
         <p-tabPanel header="重置密码">
             <ng-template pTemplate="content">
+                <form [formGroup]="passwordForm" (ngSubmit)="onSubmit(3)">
+                    <div class="form-group row">
+                        <label for="password" class="col-sm-2 col-form-label text-sm-right">新密码</label>
+                        <div class="col-sm-6">
+                            <input type="password" class="form-control" [class.is-invalid]="password.invalid && (password.dirty || password.touched)"
+                                id="password" aria-describedby="passwordHelp" formControlName="password">
 
+                            <div class="invalid-feedback">
+                                <span *ngIf="password.errors?.required">密码不能为空</span>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-4 d-flex align-items-center">
+                            <small id="passwordHelp" class="form-text text-muted ">新密码请不要和旧密码相同</small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="passowrd_confirmation" class="col-sm-2 col-form-label text-sm-right">确认密码</label>
+                        <div class="col-sm-6">
+                            <input type="password" class="form-control" [class.is-invalid]="passowrd_confirmation.invalid && (passowrd_confirmation.dirty || passowrd_confirmation.touched)"
+                                id="passowrd_confirmation" aria-describedby="passowrd_confirmationHelp" formControlName="passowrd_confirmation">
+                            <div class="invalid-feedback">
+                                <span *ngIf="passowrd_confirmation.errors?.required">确认密码不能为空</span>
+                                <span *ngIf="passowrd_confirmation.errors?.confirm">两次输入密码不一致</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 d-flex align-items-center">
+                            <small id="passowrd_confirmationHelp" class="form-text text-muted ">确认密码请和新密码保持一致</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col offset-sm-2">
+                            <button type="submit" [disabled]="passwordForm.invalid" class="btn btn-primary">提交修改</button>
+                        </div>
+                    </div>
+                </form>
             </ng-template>
         </p-tabPanel>
     </p-tabView>

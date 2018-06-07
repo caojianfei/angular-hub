@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { TabViewModule } from 'primeng/tabview';
 import { PaginatorModule } from 'primeng/paginator';
+import { FileUploadModule } from 'primeng/fileupload';
 
 import { HubRoutingModule } from './hub-routing.module';
 import { HubComponent } from './hub.component';
@@ -26,7 +27,8 @@ import { EditInformationComponent } from './edit-information/edit-information.co
         HubRoutingModule,
         AutoCompleteModule,
         TabViewModule,
-        PaginatorModule
+        PaginatorModule,
+        FileUploadModule
     ],
     providers: [
     ],
