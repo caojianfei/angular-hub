@@ -9,6 +9,7 @@ import { Captcha } from './models/responses/captcha';
 import { User } from './models/responses/user';
 import { Register } from './models/requests/register';
 import { Authorization } from './models/responses/authorization';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +20,8 @@ export class UserService {
         @Inject(BASE_URL) private apiUrl,
         @Inject(ACCEPT) private accept,
         private http: HttpClient,
-        private errorHandle: ErrorHandleService
+        private errorHandle: ErrorHandleService,
+        private authService: AuthService
     ) { }
 
     /**
@@ -60,7 +62,27 @@ export class UserService {
             }
         }
 
-        return this.http.post<Authorization>(url, {email: username, password: password}, options).pipe(
+        return this.http.post<Authorization>(url, { email: username, password: password }, options).pipe(
+            catchError(this.errorHandle.handleError)
+        );
+    }
+
+    /**
+     *获取当前登录的用户
+     *
+     * @returns {Observable<User>}
+     * @memberof UserService
+     */
+    me(): Observable<User> {
+        let route = '/user';
+        let url = `${this.apiUrl}${route}`;
+
+        return this.http.get<User>(url, {
+            headers: {
+                Accept: this.accept,
+                Authorization: "Bearer " + this.authService.authorization.access_token
+            }
+        }).pipe(
             catchError(this.errorHandle.handleError)
         );
     }

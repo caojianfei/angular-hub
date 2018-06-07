@@ -16,6 +16,8 @@ import { ArticleListComponent } from './article-list/article-list.component';
 import { ArticleComponent } from './article-list/article/article.component';
 import { QuestionComponent } from './article-list/question/question.component';
 import { ShareComponent } from './article-list/share/share.component';
+import { PersonalCenterComponent } from './personal-center/personal-center.component';
+import { EditInformationComponent } from './edit-information/edit-information.component';
 
 @NgModule({
     imports: [
@@ -37,7 +39,9 @@ import { ShareComponent } from './article-list/share/share.component';
         ArticleListComponent,
         ArticleComponent,
         QuestionComponent,
-        ShareComponent
+        ShareComponent,
+        PersonalCenterComponent,
+        EditInformationComponent
     ]
 })
 export class HubModule { }

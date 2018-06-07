@@ -6,5 +6,10 @@ export interface User {
     email: string;
     created_at: string;
     updated_at: string;
-    meta?: Authorization
+    meta?: Authorization;
+    information?: any;
+    avatar?: {
+        id: number;
+        url: string;
+    }
 }

@@ -49,9 +49,15 @@ export class LoginComponent implements OnInit {
     onSubmit() {
         this.userService.login(this.email.value, this.password.value).subscribe(
             (res: Authorization) => {
-                this.authService.login(res);
-                this.message.success('登录成功');
-                this.router.navigate([this.authService.successLoginRedirect]);
+                let authorization = res;
+                this.authService.login(authorization);
+                this.userService.me().subscribe(
+                    res => {
+                        this.authService.setLoginUser(res);
+                        this.message.success('登录成功');
+                        this.router.navigate([this.authService.successLoginRedirect]);
+                    }
+                )
             },
             (error: ErrorFormat) => {
                 if (error.statusCode === 422) {

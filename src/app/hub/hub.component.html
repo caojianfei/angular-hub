@@ -42,7 +42,7 @@
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
                 </form>
                 <!-- 登录状态 -->
-                <div *ngIf="isLogin; else elseBlock" class="d-flex flex-row">
+                <div *ngIf="authService.isLogin; else elseBlock" class="d-flex flex-row">
                     <div class="p-0 p-lg-2">
                         <div class="btn-group">
                             <button type="button" class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -62,9 +62,22 @@
                         </button>
                     </div>
                     <div class="p-0 p-lg-2">
-                        <div class="avatar">
-                            <img class="w-100 rounded-circle" src="assets/images/avatar.jpg" />
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-light dropdown-toggle p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="rounded-circle mr-2" style="width: 36px;" src="assets/images/avatar.jpg" />
+                                <span>Jeffrey</span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <button class="dropdown-item cursor-pointer" type="button" routerLink="/users/{{ authService.loginedUser?.id }}">
+                                    <i class="fa fa-user mr-3" aria-hidden="true"></i>个人中心</button>
+                                <button class="dropdown-item cursor-pointer" type="button" routerLink="/edit-info">
+                                    <i class="fa fa-cog mr-3" aria-hidden="true"></i>编辑资料</button>
+                                <div class="dropdown-divider"></div>
+                                <button class="dropdown-item cursor-pointer" type="button" (click)="authService.logout()">
+                                    <i class="fa fa-sign-out mr-3" aria-hidden="true"></i>退出</button>
+                            </div>
                         </div>
+
                     </div>
                 </div>
 

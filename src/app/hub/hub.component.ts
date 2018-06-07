@@ -1,4 +1,4 @@
-import { Component, OnInit,DoCheck } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 
 import { Router } from '@angular/router';
@@ -8,18 +8,14 @@ import { Router } from '@angular/router';
     templateUrl: './hub.component.html',
     styleUrls: ['./hub.component.scss']
 })
-export class HubComponent implements OnInit, DoCheck {
+export class HubComponent implements OnInit{
 
     isLogin: boolean;
 
     constructor(private authService: AuthService, private router: Router) { }
 
     ngOnInit() {
-        //this.isLogin = this.authService.isLogin;
-    }
-
-    ngDoCheck() {
-        this.isLogin = this.authService.isLogin;
+        //console.log("HubComponent ngOnInit");
     }
 
     nav() {
