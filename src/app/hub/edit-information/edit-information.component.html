@@ -1,3 +1,111 @@
-<p>
-  edit-information works!
-</p>
+<section>
+    <p-tabView styleClass="hub-tab-view" (onChange)="onTabChange($event)">
+        <p-tabPanel header="个人信息">
+            <ng-template pTemplate="content">
+
+                <form *ngIf="informationForm" [formGroup]="informationForm" (ngSubmit)="onSubmit(1)">
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-2 col-form-label text-sm-right">用户名</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" [class.is-invalid]="name.invalid && (name.dirty || name.touched)" id="name" aria-describedby="nameHelp"
+                                formControlName="name">
+                            <div class="invalid-feedback">
+                                <span>用户名必填</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 d-flex align-items-center">
+                            <small id="nameHelp" class="form-text text-muted ">如：老王</small>
+                        </div>
+                    </div>
+
+                    <div formGroupName="information">
+
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-2 col-form-label text-sm-right">性别</label>
+                            <div class="col-sm-6 d-flex align-items-center">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" value="男" formControlName="gender">
+                                    <label class="form-check-label" for="inlineRadio1">男</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" value="女" formControlName="gender">
+                                    <label class="form-check-label" for="inlineRadio2">女</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="realName" class="col-sm-2 col-form-label text-sm-right">真实姓名</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="realName" aria-describedby="realNameHelp" placeholder="" formControlName="real_name">
+                            </div>
+                            <div class="col-sm-4 d-flex align-items-center">
+                                <small id="realNameHelp" class="form-text text-muted">如：王小二</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="city" class="col-sm-2 col-form-label text-sm-right">所在城市</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="city" aria-describedby="cityHelp" placeholder="" formControlName="city">
+                            </div>
+                            <div class="col-sm-4 d-flex align-items-center">
+                                <small id="cityHelp" class="form-text text-muted">如：杭州，上海</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="company" class="col-sm-2 col-form-label text-sm-right">公司</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="company" aria-describedby="companyHelp" placeholder="" formControlName="company">
+                            </div>
+                            <div class="col-sm-4 d-flex align-items-center">
+                                <small id="companyHelp" class="form-text text-muted">如：杭州xxx科技有限公司</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="website" class="col-sm-2 col-form-label text-sm-right">个人网站</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="website" aria-describedby="websiteHelp" placeholder="" formControlName="website">
+                            </div>
+                            <div class="col-sm-4 d-flex align-items-center">
+                                <small id="websiteHelp" class="form-text text-muted">如：http://example.com</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="introduce" class="col-sm-2 col-form-label text-sm-right">个人简介</label>
+                            <div class="col-sm-6">
+                                <textarea class="form-control" id="introduce" aria-describedby="introduceHelp" rows="4" formControlName="introduce"></textarea>
+                            </div>
+                            <div class="col-sm-4 d-flex align-items-center">
+                                <small id="introduceHelp" class="form-text text-muted">给自己写一段自我介绍，什么都可以</small>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col offset-sm-2">
+                            <button type="submit" [disabled]="informationForm.invalid" class="btn btn-primary">提交修改</button>
+                        </div>
+                    </div>
+
+
+                </form>
+
+            </ng-template>
+        </p-tabPanel>
+
+        <p-tabPanel header="修改头像">
+            <ng-template pTemplate="content">
+
+            </ng-template>
+        </p-tabPanel>
+        <p-tabPanel header="重置密码">
+            <ng-template pTemplate="content">
+
+            </ng-template>
+        </p-tabPanel>
+    </p-tabView>
+</section>
