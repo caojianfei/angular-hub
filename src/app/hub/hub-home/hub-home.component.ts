@@ -24,13 +24,20 @@ export class HubHomeComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+
         this.getArticles();
     }
 
-    getArticles() {
+
+    getArticles(page: number = 1) {
         this.articles$ = this.articlesService.getArticles(
-            { recent: '1', hot: '1' },
+            { recent: '1', hot: '1', page: page.toString(), per_page: '40' },
             ['user.avatar', 'tags', 'category']);
+    }
+
+    onPageChange(event) {
+        let page = event.page + 1;
+        this.getArticles(page);
     }
 
 

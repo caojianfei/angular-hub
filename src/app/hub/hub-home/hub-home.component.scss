@@ -6,4 +6,18 @@
     .avatar > img {
         width: 32px;
     }
+
+    .badge-light.text-success:hover {
+        background: #006633;
+        color: #ffffff!important;
+    }
+
+    .badge-light.text-warning:hover {
+        background: #ffc107!important;
+        color: #ffffff!important;
+    }
+    .badge-light.text-primary:hover {
+        background: #007bff;
+        color: #ffffff!important;
+    }
 }

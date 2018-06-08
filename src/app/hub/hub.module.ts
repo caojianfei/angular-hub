@@ -5,6 +5,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { TabViewModule } from 'primeng/tabview';
 import { PaginatorModule } from 'primeng/paginator';
 import { FileUploadModule } from 'primeng/fileupload';
+import { TooltipModule } from 'primeng/tooltip';
 
 import { HubRoutingModule } from './hub-routing.module';
 import { HubComponent } from './hub.component';
@@ -28,7 +29,8 @@ import { EditInformationComponent } from './edit-information/edit-information.co
         AutoCompleteModule,
         TabViewModule,
         PaginatorModule,
-        FileUploadModule
+        FileUploadModule,
+        TooltipModule
     ],
     providers: [
     ],

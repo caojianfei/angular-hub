@@ -1,70 +1,52 @@
 <div class="row">
 
-    <div class="col-9">
-        <div class="artcle-list container">
+    <div class="col-lg-9">
+        <div *ngIf="articles$ | async as articles" class="artcle-list container border">
 
-            <div class="article-item row py-3 border-bottom">
-                <div class="col-9 overflow-hidden">
-                    <span class="text-nowrap">
+            <div *ngFor="let article of articles.data" class="article-item row py-3 border-bottom">
+                <div class="col-md-9 overflow-hidden">
+                    <span class="text-nowrap overflow-hidden d-block">
                         <span class="avatar">
-                            <img class="rounded-circle mr-1" src="assets/images/avatar.jpg" />
+                            <img routerLink="/users/{{article.user_id}}" class="rounded-circle mr-1 cursor-pointer" src="{{ article.user.avatar ? article.user.avatar.url : 'assets/images/avatar.jpg' }}"
+                            />
                         </span>
                         <span class="mr-1">
-                            <a href="#" class="badge badge-light text-success px-3 rounded-0">文章</a>
+                            <a *ngIf="article.category_id === 1" routerLink="/articles/list/1" href="#" class="badge badge-light text-success px-3 rounded-0 border">文章</a>
+                            <a *ngIf="article.category_id === 2" routerLink="/articles/list/2" href="#" class="badge badge-light text-warning px-3 rounded-0 border">问答</a>
+                            <a *ngIf="article.category_id === 3" routerLink="/articles/list/3" href="#" class="badge badge-light text-primary px-3 rounded-0 border">分享</a>
                         </span>
-                        你好世界哈哈呵呵京津冀你好世界哈哈呵呵京津冀你好世界哈哈呵呵京津冀
+                        <i pTooltip="待回答的问题" [tooltipPosition]="'top'" *ngIf="article.answer_id === 0 && article.category_id === 2" class="fa fa-question-circle-o text-danger mr-1 cursor-pointer"
+                            aria-hidden="true"></i>
+                        <i pTooltip="已解决的问题" [tooltipPosition]="'top'" *ngIf="article.answer_id > 0 && article.category_id === 2" class="fa fa-check-square-o text-success font-third mr-1 cursor-pointer"
+                            aria-hidden="true"></i>
+                        <a class="text-dark" routerLink="/articles/{{article.id}}">{{ article.title }}</a>
                     </span>
-
                 </div>
-                <div class="col-3 text-right">
+                <div class="col-md-3 text-right">
                     <span class="mr-2">
                         <i class="fa fa-thumbs-o-up mr-1 font-small" aria-hidden="true"></i>
-                        <i class="text-color-second number-small border-right pr-1">100</i>
+                        <span class="text-color-second number-small  pr-1">{{article.like_count}}</span>
                     </span>
                     <span class="mr-2">
                         <i class="fa fa-comment-o mr-1 font-small" aria-hidden="true"></i>
-                        <i class="text-color-second number-small border-right pr-1">100</i>
+                        <span class="text-color-second number-small pr-1">{{ article.replay_count }}</span>
                     </span>
 
                     <span class="mr-2">
                         <i class="fa fa-eye mr-1 font-small" aria-hidden="true"></i>
-                        <i class="text-color-second number-small">100</i>
+                        <span class="text-color-second number-small">{{ article.view_count }}</span>
                     </span>
                 </div>
             </div>
-            <div class="article-item row py-3 border-bottom">
-                <div class="col-9 overflow-hidden">
-                    <span class="text-nowrap">
-                        <span class="avatar">
-                            <img class="rounded-circle mr-1" src="assets/images/avatar.jpg" />
-                        </span>
-                        <span class="mr-1">
-                            <a href="#" class="badge badge-light text-success px-3 rounded-0">文章</a>
-                        </span>
-                        你好世界哈哈呵呵京津冀你好世界哈哈呵呵京津冀你好世界哈哈呵呵京津冀
-                    </span>
-
+            <div class="pagination d-flex justify-content-end mt-4">
+                    <p-paginator styleClass="hub-pagination mb-2" [alwaysShow]="false" [totalRecords]="articles.meta.pagination.total"
+                        [rows]="articles.meta.pagination.per_page" [first]="(articles.meta.pagination.current_page -1) * articles.meta.pagination.per_page"
+                        (onPageChange)="onPageChange($event)"></p-paginator>
                 </div>
-                <div class="col-3 text-right">
-                    <span class="mr-2">
-                        <i class="fa fa-thumbs-o-up mr-1 font-small" aria-hidden="true"></i>
-                        <i class="text-color-second number-small border-right pr-1">100</i>
-                    </span>
-                    <span class="mr-2">
-                        <i class="fa fa-comment-o mr-1 font-small" aria-hidden="true"></i>
-                        <i class="text-color-second number-small border-right pr-1">100</i>
-                    </span>
-
-                    <span class="mr-2">
-                        <i class="fa fa-eye mr-1 font-small" aria-hidden="true"></i>
-                        <i class="text-color-second number-small">100</i>
-                    </span>
-                </div>
-            </div>
         </div>
     </div>
 
-    <div class="col-3">
+    <div class="col-lg-3">
         <div class="card">
             热门文章
             <hr>
