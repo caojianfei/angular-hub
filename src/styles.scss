@@ -22,6 +22,18 @@ body {
     background: #f0f2f5;
 }
 
+.tag {
+    border: 1px solid #000033;
+    padding: 2px 7px;
+    color: #000033;
+    font-size: 12px;
+    margin-right: 4px;
+}
+
+.tag:hover {
+    color: burlywood;
+}
+
 // prime 默认的tabView样式修改
 .hub-tab-view {
     ul.ui-tabview-nav {
@@ -41,4 +53,10 @@ body {
         border: 1px solid #d6d6d6;
         border-bottom: 0!important;
     }
+}
+
+// prime 默认分页样式修改
+.hub-pagination {
+    background: #ffffff;
+    border: none;
 }

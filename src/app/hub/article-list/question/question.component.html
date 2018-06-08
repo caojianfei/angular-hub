@@ -1,3 +1,166 @@
-<p>
-  question works!
-</p>
+<div class="row">
+    <div class="col-md-8">
+        <p-tabView styleClass="hub-tab-view" (onChange)="onTabChange($event)">
+            <p-tabPanel header="待解决">
+                <ng-template pTemplate="content">
+
+                    <div *ngIf="waittingResolveQuestion$ | async as waittingResolveQuestion" class="question-list">
+                        <div *ngFor="let question of waittingResolveQuestion.data" class="question-item border-bottom py-2 cursor-pointer">
+                            <div class="media">
+                                <img routerLink="/users/{{question.user.id}}" class="mr-3 avatar border border-light " src=" {{ question.user.avatar?.url ? question.user.avatar : 'assets/images/avatar.jpg' }}"
+                                    alt="Generic placeholder image">
+                                <div class="media-body">
+                                    <div>
+                                        <div class="d-inline mr-3 font-weight-normal">
+                                            <a routerLink="/articles/{{question.id}}">{{ question.title }}</a>
+                                        </div>
+                                        <div *ngIf="question.tags?.data" class="d-inline-block">
+                                            <span *ngFor="let tag of question.tags.data" class="tag">{{ tag.name }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6 text-sm-left text-right text-color-second">
+                                            <span class="font-weight-normal mr-2 font-second">
+                                                <a class="text-color-second" routerLink="/usrs/{{question.user.id}}">{{ question.user.name }}</a>
+                                            </span>
+                                            <span class="mr-2 number-small">提问于</span>
+                                            <span class="font-second">{{ question.created_at }}</span>
+                                        </div>
+                                        <div class="col-sm-6 text-right">
+                                            <span class="mr-3">
+                                                <i class="fa fa-thumbs-o-up mr-1" aria-hidden="true"></i>
+                                                <i class="text-color-second number-small">{{ question.like_count }}</i>
+                                            </span>
+                                            <span class="mr-3">
+                                                <i class="fa fa-comment-o mr-1" aria-hidden="true"></i>
+                                                <i class="text-color-second number-small">{{ question.replay_count }}</i>
+                                            </span>
+
+                                            <span class="mr-3">
+                                                <i class="fa fa-eye mr-1" aria-hidden="true"></i>
+                                                <i class="text-color-second number-small">{{ question.view_count }}</i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pagination d-flex justify-content-end mt-4">
+                            <p-paginator styleClass="hub-pagination" [alwaysShow]="false" [totalRecords]="waittingResolveQuestion.meta.pagination.total"
+                                [rows]="waittingResolveQuestion.meta.pagination.per_page" [first]="(waittingResolveQuestion.meta.pagination.current_page -1) * waittingResolveQuestion.meta.pagination.per_page"
+                                (onPageChange)="onPageChange($event, 1)"></p-paginator>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-tabPanel>
+
+            <p-tabPanel header="已解决">
+                <ng-template pTemplate="content">
+                    <div *ngIf="resolvedQuestion$ | async as resolvedQuestion" class="question-list">
+                        <div *ngFor="let question of resolvedQuestion.data" class="question-item border-bottom py-2 cursor-pointer">
+                            <div class="media">
+                                <img routerLink="/users/{{question.user.id}}" class="mr-3 avatar border border-light " src=" {{ question.user.avatar?.url ? question.user.avatar : 'assets/images/avatar.jpg' }}"
+                                    alt="Generic placeholder image">
+                                <div class="media-body">
+                                    <div>
+                                        <div class="d-inline mr-3 font-weight-normal">
+                                            <a routerLink="/articles/{{question.id}}">{{ question.title }}</a>
+                                        </div>
+                                        <div *ngIf="question.tags?.data" class="d-inline-block">
+                                            <span *ngFor="let tag of question.tags.data" class="tag">{{ tag.name }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6 text-sm-left text-right text-color-second">
+                                            <span class="font-weight-normal mr-2 font-second">
+                                                <a class="text-color-second" routerLink="/usrs/{{question.user.id}}">{{ question.user.name }}</a>
+                                            </span>
+                                            <span class="mr-2 number-small">提问于</span>
+                                            <span class="font-second">{{ question.created_at }}</span>
+                                        </div>
+                                        <div class="col-sm-6 text-right">
+                                            <span class="mr-3">
+                                                <i class="fa fa-thumbs-o-up mr-1" aria-hidden="true"></i>
+                                                <i class="text-color-second number-small">{{ question.like_count }}</i>
+                                            </span>
+                                            <span class="mr-3">
+                                                <i class="fa fa-comment-o mr-1" aria-hidden="true"></i>
+                                                <i class="text-color-second number-small">{{ question.replay_count }}</i>
+                                            </span>
+
+                                            <span class="mr-3">
+                                                <i class="fa fa-eye mr-1" aria-hidden="true"></i>
+                                                <i class="text-color-second number-small">{{ question.view_count }}</i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pagination d-flex justify-content-end mt-4">
+                            <p-paginator styleClass="hub-pagination" [alwaysShow]="false" [totalRecords]="resolvedQuestion.meta.pagination.total" [rows]="resolvedQuestion.meta.pagination.per_page"
+                                [first]="(resolvedQuestion.meta.pagination.current_page -1) * resolvedQuestion.meta.pagination.per_page"
+                                (onPageChange)="onPageChange($event, 2)"></p-paginator>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-tabPanel>
+            <p-tabPanel header="零回复">
+                <ng-template pTemplate="content">
+                    <div *ngIf="noReplayQuestion$ | async as noReplayQuestion" class="question-list">
+                        <div *ngFor="let question of noReplayQuestion.data" class="question-item border-bottom py-2 cursor-pointer">
+                            <div class="media">
+                                <img routerLink="/users/{{question.user.id}}" class="mr-3 avatar border border-light " src=" {{ question.user.avatar?.url ? question.user.avatar : 'assets/images/avatar.jpg' }}"
+                                    alt="Generic placeholder image">
+                                <div class="media-body">
+                                    <div>
+                                        <div class="d-inline mr-3 font-weight-normal">
+                                            <a routerLink="/articles/{{question.id}}">{{ question.title }}</a>
+                                        </div>
+                                        <div *ngIf="question.tags?.data" class="d-inline-block">
+                                            <span *ngFor="let tag of question.tags.data" class="tag">{{ tag.name }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6 text-sm-left text-right text-color-second">
+                                            <span class="font-weight-normal mr-2 font-second">
+                                                <a class="text-color-second" routerLink="/usrs/{{question.user.id}}">{{ question.user.name }}</a>
+                                            </span>
+                                            <span class="mr-2 number-small">提问于</span>
+                                            <span class="font-second">{{ question.created_at }}</span>
+                                        </div>
+                                        <div class="col-sm-6 text-right">
+                                            <span class="mr-3">
+                                                <i class="fa fa-thumbs-o-up mr-1" aria-hidden="true"></i>
+                                                <i class="text-color-second number-small">{{ question.like_count }}</i>
+                                            </span>
+                                            <span class="mr-3">
+                                                <i class="fa fa-comment-o mr-1" aria-hidden="true"></i>
+                                                <i class="text-color-second number-small">{{ question.replay_count }}</i>
+                                            </span>
+
+                                            <span class="mr-3">
+                                                <i class="fa fa-eye mr-1" aria-hidden="true"></i>
+                                                <i class="text-color-second number-small">{{ question.view_count }}</i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pagination d-flex justify-content-end mt-4">
+                            <p-paginator styleClass="hub-pagination" [alwaysShow]="false" [totalRecords]="noReplayQuestion.meta.pagination.total" [rows]="noReplayQuestion.meta.pagination.per_page"
+                                [first]="(noReplayQuestion.meta.pagination.current_page -1) * noReplayQuestion.meta.pagination.per_page"
+                                (onPageChange)="onPageChange($event, 3)"></p-paginator>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-tabPanel>
+        </p-tabView>
+    </div>
+
+    <div class="col-md-4">
+
+    </div>
+</div>
