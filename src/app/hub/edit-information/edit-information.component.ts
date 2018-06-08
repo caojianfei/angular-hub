@@ -7,6 +7,7 @@ import { UserService } from '../../apis/user.service';
 import { GrowlMessageService } from '../../growl-message.service';
 import { AuthService } from '../../auth/auth.service';
 import { BASE_URL, ACCEPT } from '../../apis/apis.module';
+import { ErrorFormat } from '../../apis/models/error-format';
 
 @Component({
     selector: 'app-edit-information',
@@ -60,7 +61,7 @@ export class EditInformationComponent implements OnInit {
     createPasswordForm() {
         this.passwordForm = this.fb.group({
             password: ['', Validators.required],
-            passowrd_confirmation: ['', Validators.required]
+            password_confirmation: ['', Validators.required]
         });
     }
 
@@ -74,10 +75,10 @@ export class EditInformationComponent implements OnInit {
         }
         // 修改密码
         if (type === 3) {
-            if (this.password.valid != this.passowrd_confirmation.value) {
-                this.passowrd_confirmation.setErrors({ confirm: true });
-                return;
-            }
+            // if (this.password.value != this.password_confirmation.value) {
+            //     this.password_confirmation.setErrors({ confirm: true });
+            //     return;
+            // }
 
             this.updateUser(this.passwordForm.value);
             return;
@@ -90,8 +91,23 @@ export class EditInformationComponent implements OnInit {
                 this.message.success('信息更新成功');
                 this.authSerivce.updateLoginUser(res);
             },
-            err => {
-                this.message.error(err.message);
+            (err: ErrorFormat) => {
+                if (err.statusCode === 422) {
+                    let errors = err.errors;
+                    if (errors.password) {
+                        this.password.setErrors({
+                            server: errors.password[0]
+                        });
+                    }
+                    if (errors.name) {
+                        this.name.setErrors({
+                            server: errors.name[0]
+                        });
+                    }
+                    this.message.error('数据有误');
+                } else {
+                    this.message.error(err.message);
+                }
             }
         );
     }
@@ -108,8 +124,8 @@ export class EditInformationComponent implements OnInit {
         return this.passwordForm.get('password');
     }
 
-    get passowrd_confirmation() {
-        return this.passwordForm.get('passowrd_confirmation');
+    get password_confirmation() {
+        return this.passwordForm.get('password_confirmation');
     }
 
     beforeUploadAvatar(event) {
@@ -123,7 +139,7 @@ export class EditInformationComponent implements OnInit {
         //console.log("[uploadedAvatar]", event);
         let xhr: XMLHttpRequest = event.xhr;
         //console.log(xhr.response);
-        let response = JSON.parse( xhr.response );
+        let response = JSON.parse(xhr.response);
         if (response.success) {
             this.uploadedAvatarFile = response;
             this.updateUser({

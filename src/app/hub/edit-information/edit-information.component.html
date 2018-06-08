@@ -10,7 +10,8 @@
                             <input type="text" class="form-control" [class.is-invalid]="name.invalid && (name.dirty || name.touched)" id="name" aria-describedby="nameHelp"
                                 formControlName="name">
                             <div class="invalid-feedback">
-                                <span>用户名必填</span>
+                                <span *ngIf="name.errors?.required">用户名必填</span>
+                                <span *ngIf="name.errors?.server">{{name.errors?.server}}</span>
                             </div>
                         </div>
                         <div class="col-sm-4 d-flex align-items-center">
@@ -98,7 +99,8 @@
         <p-tabPanel header="修改头像">
             <ng-template pTemplate="content">
                 <div class="mb-2" style="width: 400px; height: 400px;">
-                    <img class="w-100 rounded" src="{{ uploadedAvatarFile ? uploadedAvatarFile.file_path : (user.avatar.url ? user.avatar?.url : 'assets/images/avatar.jpg') }}" />
+                    <img class="w-100 rounded" src="{{ uploadedAvatarFile ? uploadedAvatarFile.file_path : (user.avatar.url ? user.avatar?.url : 'assets/images/avatar.jpg') }}"
+                    />
                 </div>
                 <p-fileUpload chooseLabel="选择图片" uploadLabel="上传" cancelLabel="取消" name="file" url="{{apiUrl}}/image" (onBeforeSend)="beforeUploadAvatar($event)"
                     (onUpload)="uploadedAvatar($event)" (onError)="uploadAvatarError($event)"></p-fileUpload>
@@ -115,6 +117,7 @@
 
                             <div class="invalid-feedback">
                                 <span *ngIf="password.errors?.required">密码不能为空</span>
+                                <span *ngIf="password.errors?.server">{{ password.errors?.server }}</span>
                             </div>
 
                         </div>
@@ -123,17 +126,17 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="passowrd_confirmation" class="col-sm-2 col-form-label text-sm-right">确认密码</label>
+                        <label for="password_confirmation" class="col-sm-2 col-form-label text-sm-right">确认密码</label>
                         <div class="col-sm-6">
-                            <input type="password" class="form-control" [class.is-invalid]="passowrd_confirmation.invalid && (passowrd_confirmation.dirty || passowrd_confirmation.touched)"
-                                id="passowrd_confirmation" aria-describedby="passowrd_confirmationHelp" formControlName="passowrd_confirmation">
+                            <input type="password" class="form-control" [class.is-invalid]="password_confirmation.invalid && (password_confirmation.dirty || password_confirmation.touched)"
+                                id="password_confirmation" aria-describedby="password_confirmationHelp" formControlName="password_confirmation">
                             <div class="invalid-feedback">
-                                <span *ngIf="passowrd_confirmation.errors?.required">确认密码不能为空</span>
-                                <span *ngIf="passowrd_confirmation.errors?.confirm">两次输入密码不一致</span>
+                                <span *ngIf="password_confirmation.errors?.required">确认密码不能为空</span>
+                                <span *ngIf="password_confirmation.errors?.confirm">两次输入密码不一致</span>
                             </div>
                         </div>
                         <div class="col-sm-4 d-flex align-items-center">
-                            <small id="passowrd_confirmationHelp" class="form-text text-muted ">确认密码请和新密码保持一致</small>
+                            <small id="password_confirmationHelp" class="form-text text-muted ">确认密码请和新密码保持一致</small>
                         </div>
                     </div>
                     <div class="row">
