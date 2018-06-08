@@ -1,79 +1,70 @@
 <div class="row">
-    <div class="col-lg-2 d-none d-lg-block">
-        <aside class="left-nav-tags">
-            推荐标签
-            <hr>
-            <ul class="list-unstyled">
-                <li class="rounded">
-                    <span class="p-2 d-block ">
-                        <a href="#">php</a>
-                    </span>
-                </li>
-                <li class="rounded">
-                    <span class="p-2  d-block">
-                        <a href="#">Linux</a>
-                    </span>
-                </li>
-                <li class="rounded">
-                    <span class="p-2  d-block">
-                        <a href="#">Mysql</a>
-                    </span>
-                </li>
-                <li class="rounded">
-                    <span class="p-2 d-block">
-                        <a href="#">Java</a>
-                    </span>
-                </li>
-                <li class="rounded">
-                    <span class="p-2 d-block">
-                        <a href="#">JavaScript</a>
-                    </span>
-                </li>
-            </ul>
-        </aside>
-    </div>
-    <div class="col-lg-7 col-md-8">
-        <div class="article-list px-4 rounded border border-light">
-            <ul *ngIf="articles$ | async as articles" class="list-group list-group-flush">
 
-                <li *ngFor="let article of articles.data" class="list-group-item px-0">
-                    <div class="media article-item">
-                        <img class="mr-3 avatar rounded" src="assets/images/avatar.jpg" >
-                        <div class="media-body">
-                            <div class="article-header">
-                                <h5 class="mt-0 d-inline">
-                                    <a>{{article.title}}</a>
-                                    <a routerLink="/articles/list/{{article.category.id}}" class="badge badge-secondary badge-info ">{{ article.category.name }}</a>
-                                </h5>
-                                
-                                <div *ngIf="article.tags?.data" class="article-tags d-inline-block">
-                                    <a *ngFor="let tag of article.tags.data" href="#" class="badge badge-primary">{{tag.name}}</a>
-                                </div>
-                            </div>
+    <div class="col-9">
+        <div class="artcle-list container">
 
-                            <div class="d-flex flex-row auth-info">
-                                <div class="p-1">
-                                    <div class="d-flex flex-row ">
-                                        <span class="user-name ml-1">Jeffrey</span>
-                                    </div>
-                                </div>
-                                <div class="p-1">
-                                    <span class="publish-time">5 分钟前</span>
-                                </div>
-                                <div class="p-1">
-                                    <a href="#" class="replay-number">5 回复</a>
-                                </div>
-                            </div>
+            <div class="article-item row py-3 border-bottom">
+                <div class="col-9 overflow-hidden">
+                    <span class="text-nowrap">
+                        <span class="avatar">
+                            <img class="rounded-circle mr-1" src="assets/images/avatar.jpg" />
+                        </span>
+                        <span class="mr-1">
+                            <a href="#" class="badge badge-light text-success px-3 rounded-0">文章</a>
+                        </span>
+                        你好世界哈哈呵呵京津冀你好世界哈哈呵呵京津冀你好世界哈哈呵呵京津冀
+                    </span>
 
-                        </div>
-                    </div>
-                </li>
-                
-                
-            </ul>
+                </div>
+                <div class="col-3 text-right">
+                    <span class="mr-2">
+                        <i class="fa fa-thumbs-o-up mr-1 font-small" aria-hidden="true"></i>
+                        <i class="text-color-second number-small border-right pr-1">100</i>
+                    </span>
+                    <span class="mr-2">
+                        <i class="fa fa-comment-o mr-1 font-small" aria-hidden="true"></i>
+                        <i class="text-color-second number-small border-right pr-1">100</i>
+                    </span>
+
+                    <span class="mr-2">
+                        <i class="fa fa-eye mr-1 font-small" aria-hidden="true"></i>
+                        <i class="text-color-second number-small">100</i>
+                    </span>
+                </div>
+            </div>
+            <div class="article-item row py-3 border-bottom">
+                <div class="col-9 overflow-hidden">
+                    <span class="text-nowrap">
+                        <span class="avatar">
+                            <img class="rounded-circle mr-1" src="assets/images/avatar.jpg" />
+                        </span>
+                        <span class="mr-1">
+                            <a href="#" class="badge badge-light text-success px-3 rounded-0">文章</a>
+                        </span>
+                        你好世界哈哈呵呵京津冀你好世界哈哈呵呵京津冀你好世界哈哈呵呵京津冀
+                    </span>
+
+                </div>
+                <div class="col-3 text-right">
+                    <span class="mr-2">
+                        <i class="fa fa-thumbs-o-up mr-1 font-small" aria-hidden="true"></i>
+                        <i class="text-color-second number-small border-right pr-1">100</i>
+                    </span>
+                    <span class="mr-2">
+                        <i class="fa fa-comment-o mr-1 font-small" aria-hidden="true"></i>
+                        <i class="text-color-second number-small border-right pr-1">100</i>
+                    </span>
+
+                    <span class="mr-2">
+                        <i class="fa fa-eye mr-1 font-small" aria-hidden="true"></i>
+                        <i class="text-color-second number-small">100</i>
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-4 d-none d-md-block">
+
+    <div class="col-3">
         <div class="card">
             热门文章
             <hr>

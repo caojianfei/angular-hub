@@ -25,12 +25,12 @@ export class HubHomeComponent implements OnInit {
 
     ngOnInit() {
         this.getArticles();
-        //console.log(this.authService.isLogin);
-        //console.log(this.authService.authorization);
     }
 
     getArticles() {
-        this.articles$ = this.articlesService.getArticles({recent: '1'}, ['user', 'tags', 'category']);
+        this.articles$ = this.articlesService.getArticles(
+            { recent: '1', hot: '1' },
+            ['user.avatar', 'tags', 'category']);
     }
 
 

@@ -1,44 +1,9 @@
-.left-nav-tags {
-    ul {
-        li:hover {
-            background: bisque;
-            cursor: pointer;
-        }
-    }
+.artcle-list {
+    background: #ffffff;
 }
-
-.article-list {
-    background-color: #ffffff;
-}
-
-$auth-info-height: 25px;
 
 .article-item {
-    .avatar {
-        width: 64px;
-    }
-
-    .article-header {
-        .article-tags {
-            a {
-                margin-left: 2px;
-            }
-        }
-    }
-   
-    .auth-info {
-        .user-name {
-            line-height: $auth-info-height;
-            
-        }
-        .publish-time {
-            font-size: 12px;
-            color: #9E9E9E;
-        }
-
-        .replay-number {
-            color: yellowgreen;
-            line-height: $auth-info-height;
-        }
+    .avatar > img {
+        width: 32px;
     }
 }
