@@ -17,29 +17,36 @@
                                 <div class="col-md-6">
                                     <div class="d-flex justify-content-md-start justify-content-end align-items-center">
                                         <div class="d-inline">
-                                            <img src="assets/images/avatar.jpg" class="rounded-circle avatar">
+                                            <img routerLink="/users/{{article.user_id}}" src=" {{ article.user.avatar ? article.user.avatar.url :  'assets/images/avatar.jpg'}}"
+                                                class="rounded-circle avatar cursor-pointer">
                                         </div>
-                                        <span class="px-2  border-right">{{ article.user.name }}</span>
-                                        <span class="px-2 text-secondary">18小时前</span>
+                                        <span class="px-2  border-right">
+                                            <a class="text-color-second font-second" routerLink="/users/{{article.user_id}}">{{ article.user.name }}</a>
+                                        </span>
+                                        <span class="px-2 text-secondary font-second">{{ article.created_at }}</span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="d-flex justify-content-end">
-                                        <div class="d-inline px-2 border-right">
-                                            <span class="text-info px-1">{{ article.view_count }}</span>
-                                            <span class="text-secondary">阅读</span>
-                                        </div>
-                                        <div class="d-inline px-2 border-right">
-                                            <span class="text-info px-1">{{ article.like_count }}</span>
-                                            <span class="text-secondary">点赞</span>
-                                        </div>
-                                        <div class="d-inline px-2">
-                                            <span class="text-info px-1">{{ article.replay_count }}</span>
-                                            <span class="text-secondary">评论</span>
-                                        </div>
-                                    </div>
+                                <div class="col-sm-6 text-right">
+                                    <span class="mr-3">
+                                        <i class="fa fa-thumbs-o-up mr-1" aria-hidden="true"></i>
+                                        <i class="text-color-second number-small">{{ article.like_count }}</i>
+                                    </span>
+                                    <span class="mr-3">
+                                        <i class="fa fa-comment-o mr-1" aria-hidden="true"></i>
+                                        <i class="text-color-second number-small">{{ article.replay_count }}</i>
+                                    </span>
+
+                                    <span class="mr-3">
+                                        <i class="fa fa-eye mr-1" aria-hidden="true"></i>
+                                        <i class="text-color-second number-small">{{ article.view_count }}</i>
+                                    </span>
                                 </div>
                             </div>
+                        </div>
+                        <div class="pagination d-flex justify-content-end mt-4">
+                            <p-paginator styleClass="hub-pagination" [alwaysShow]="false" [totalRecords]="totalArticles.meta.pagination.total" [rows]="totalArticles.meta.pagination.per_page"
+                                [first]="(totalArticles.meta.pagination.current_page -1) * totalArticles.meta.pagination.per_page"
+                                (onPageChange)="onPageChange($event, 1)"></p-paginator>
                         </div>
                     </div>
                 </ng-template>
@@ -54,38 +61,43 @@
                                     <a routerLink="/articles/{{article.id}}">{{ article.title }}</a>
                                 </h5>
                             </div>
-
                             <div class="article-excerpt text-secondary">
                                 {{ article.excerpt }}
                             </div>
-
                             <div class="article-extra row d-flex align-items-center">
                                 <div class="col-md-6">
                                     <div class="d-flex justify-content-md-start justify-content-end align-items-center">
                                         <div class="d-inline">
-                                            <img src="assets/images/avatar.jpg" class="rounded-circle avatar">
+                                            <img routerLink="/users/{{article.user_id}}" src=" {{ article.user.avatar ? article.user.avatar.url :  'assets/images/avatar.jpg'}}"
+                                                class="rounded-circle avatar cursor-pointer">
                                         </div>
-                                        <span class="px-2  border-right">{{ article.user.name }}</span>
-                                        <span class="px-2 text-secondary">18小时前</span>
+                                        <span class="px-2  border-right">
+                                            <a class="text-color-second font-second" routerLink="/users/{{article.user_id}}">{{ article.user.name }}</a>
+                                        </span>
+                                        <span class="px-2 text-secondary font-second">{{ article.created_at }}</span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="d-flex justify-content-end">
-                                        <div class="d-inline px-2 border-right">
-                                            <span class="text-info px-1">{{ article.view_count }}</span>
-                                            <span class="text-secondary">阅读</span>
-                                        </div>
-                                        <div class="d-inline px-2 border-right">
-                                            <span class="text-info px-1">{{ article.like_count }}</span>
-                                            <span class="text-secondary">点赞</span>
-                                        </div>
-                                        <div class="d-inline px-2">
-                                            <span class="text-info px-1">{{ article.replay_count }}</span>
-                                            <span class="text-secondary">评论</span>
-                                        </div>
-                                    </div>
+                                <div class="col-sm-6 text-right">
+                                    <span class="mr-3">
+                                        <i class="fa fa-thumbs-o-up mr-1" aria-hidden="true"></i>
+                                        <i class="text-color-second number-small">{{ article.like_count }}</i>
+                                    </span>
+                                    <span class="mr-3">
+                                        <i class="fa fa-comment-o mr-1" aria-hidden="true"></i>
+                                        <i class="text-color-second number-small">{{ article.replay_count }}</i>
+                                    </span>
+
+                                    <span class="mr-3">
+                                        <i class="fa fa-eye mr-1" aria-hidden="true"></i>
+                                        <i class="text-color-second number-small">{{ article.view_count }}</i>
+                                    </span>
                                 </div>
                             </div>
+                        </div>
+                        <div class="pagination d-flex justify-content-end mt-4">
+                            <p-paginator styleClass="hub-pagination" [alwaysShow]="false" [totalRecords]="hotArticles.meta.pagination.total" [rows]="hotArticles.meta.pagination.per_page"
+                                [first]="(hotArticles.meta.pagination.current_page -1) * hotArticles.meta.pagination.per_page"
+                                (onPageChange)="onPageChange($event, 2)"></p-paginator>
                         </div>
                     </div>
                 </ng-template>
@@ -99,38 +111,43 @@
                                     <a routerLink="/articles/{{article.id}}">{{ article.title }}</a>
                                 </h5>
                             </div>
-
                             <div class="article-excerpt text-secondary">
                                 {{ article.excerpt }}
                             </div>
-
                             <div class="article-extra row d-flex align-items-center">
                                 <div class="col-md-6">
                                     <div class="d-flex justify-content-md-start justify-content-end align-items-center">
                                         <div class="d-inline">
-                                            <img src="assets/images/avatar.jpg" class="rounded-circle avatar">
+                                            <img routerLink="/users/{{article.user_id}}" src=" {{ article.user.avatar ? article.user.avatar.url :  'assets/images/avatar.jpg'}}"
+                                                class="rounded-circle avatar cursor-pointer">
                                         </div>
-                                        <span class="px-2  border-right">{{ article.user.name }}</span>
-                                        <span class="px-2 text-secondary">18小时前</span>
+                                        <span class="px-2  border-right">
+                                            <a class="text-color-second font-second" routerLink="/users/{{article.user_id}}">{{ article.user.name }}</a>
+                                        </span>
+                                        <span class="px-2 text-secondary font-second">{{ article.created_at }}</span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="d-flex justify-content-end">
-                                        <div class="d-inline px-2 border-right">
-                                            <span class="text-info px-1">{{ article.view_count }}</span>
-                                            <span class="text-secondary">阅读</span>
-                                        </div>
-                                        <div class="d-inline px-2 border-right">
-                                            <span class="text-info px-1">{{ article.like_count }}</span>
-                                            <span class="text-secondary">点赞</span>
-                                        </div>
-                                        <div class="d-inline px-2">
-                                            <span class="text-info px-1">{{ article.replay_count }}</span>
-                                            <span class="text-secondary">评论</span>
-                                        </div>
-                                    </div>
+                                <div class="col-sm-6 text-right">
+                                    <span class="mr-3">
+                                        <i class="fa fa-thumbs-o-up mr-1" aria-hidden="true"></i>
+                                        <i class="text-color-second number-small">{{ article.like_count }}</i>
+                                    </span>
+                                    <span class="mr-3">
+                                        <i class="fa fa-comment-o mr-1" aria-hidden="true"></i>
+                                        <i class="text-color-second number-small">{{ article.replay_count }}</i>
+                                    </span>
+
+                                    <span class="mr-3">
+                                        <i class="fa fa-eye mr-1" aria-hidden="true"></i>
+                                        <i class="text-color-second number-small">{{ article.view_count }}</i>
+                                    </span>
                                 </div>
                             </div>
+                        </div>
+                        <div class="pagination d-flex justify-content-end mt-4">
+                            <p-paginator styleClass="hub-pagination" [alwaysShow]="false" [totalRecords]="recentReplayArticles.meta.pagination.total"
+                                [rows]="recentReplayArticles.meta.pagination.per_page" [first]="(recentReplayArticles.meta.pagination.current_page -1) * recentReplayArticles.meta.pagination.per_page"
+                                (onPageChange)="onPageChange($event, 3)"></p-paginator>
                         </div>
                     </div>
                 </ng-template>

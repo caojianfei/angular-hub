@@ -32,7 +32,7 @@ export class ArticleComponent implements OnInit {
         //console.log(event)
     }
 
-    pageChange(event, type) {
+    onPageChange(event, type) {
         //console.log(event)
         //console.log(type)
         let page = event.page + 1;
