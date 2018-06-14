@@ -26,7 +26,7 @@ export class ShowArticleComponent implements OnInit {
 
     ngOnInit() {
         this.article$ = this.route.paramMap.pipe(
-            switchMap((params: ParamMap) => this.articlesService.getArticle(+params.get('id')))
+            switchMap((params: ParamMap) => this.articlesService.getArticle(+params.get('id'), ['comments.replayComment', 'comments.user.avatar']))
         );
     }
 

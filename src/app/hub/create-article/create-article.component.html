@@ -1,4 +1,4 @@
-<section class="d-flex justify-content-center border">
+<section class="d-flex justify-content-center border background-white p-4">
     <div class="w-75">
         <h2 class="text-center">{{type}}</h2>
         <hr>
@@ -19,7 +19,8 @@
             <p-autoComplete placeholder="标签" [(ngModel)]="selectedTags" [suggestions]="filteredTags" (completeMethod)="filterTags($event)" [multiple]="true"
                 name="tags" field="name" [minLength]="1" (onSelect)="selectedTag($event)" [style]="{'width': '200px'}" styleClass="w-100 mt-4"></p-autoComplete>
             <textarea id="textarea" class="form-control mt-3" rows="16"></textarea>
-            <button type="submit" class="btn btn-info mt-4">发布</button>
+            <button type="submit" (click)="articleStatus = 1" class="btn btn-info mt-4 mr-4">发布</button>
+            <button type="submit" (click)="articleStatus = 0" class="btn btn-info mt-4">保存草稿</button>
         </form>
     </div>
 </section>

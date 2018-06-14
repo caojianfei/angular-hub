@@ -35,6 +35,8 @@ export class CreateArticleComponent implements OnInit {
 
     selectedTags: any[];
 
+    articleStatus: number;
+
     constructor(
         @Inject(BASE_URL) private apiUrl: string,
         private route: ActivatedRoute,
@@ -138,6 +140,8 @@ export class CreateArticleComponent implements OnInit {
 
     submit() {
 
+
+
         if (!this.articleTitle) {
             this.message.warn('标题不能为空');
             return;
@@ -174,7 +178,8 @@ export class CreateArticleComponent implements OnInit {
             category_id: this.categoryId,
             content: articleContent,
             tags: tags,
-            write_type: this.writeTypeCode
+            write_type: this.writeTypeCode,
+            status: this.articleStatus
         }).subscribe(
             res => {
                 this.message.success('新增成功');

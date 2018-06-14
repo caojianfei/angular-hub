@@ -1,8 +1,51 @@
 <section>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="background-white p-5 border" *ngIf="article$ | async as article">
+        
+                <div class="text-center mb-5">
+                    <h1 class="mb-3">{{ article.title }}</h1>
+                    <div class="">
+                        <span class="mr-2">
+                            <i class="fa fa-clock-o mr-1 font-small" aria-hidden="true"></i>
+                            <span class="text-color-second number-small  pr-1">{{article.created_at}}</span>
+                        </span>
+                        <span class="mr-2">
+                            <i class="fa fa-thumbs-o-up mr-1 font-small" aria-hidden="true"></i>
+                            <span class="text-color-second number-small  pr-1">{{article.like_count}}</span>
+                        </span>
+                        <span class="mr-2">
+                            <i class="fa fa-comment-o mr-1 font-small" aria-hidden="true"></i>
+                            <span class="text-color-second number-small pr-1">{{ article.replay_count }}</span>
+                        </span>
 
-    <div *ngIf="article$ | async as article" [appHtml]="article.content"></div>
+                        <span class="mr-2">
+                            <i class="fa fa-eye mr-1 font-small" aria-hidden="true"></i>
+                            <span class="text-color-second number-small">{{ article.view_count }}</span>
+                        </span>
+                    </div>
+                </div>
 
+                <div [appHtml]="article.content"></div>
 
-   
+            </div>
+            <!-- 回复框 -->
+            <div class="write-commnet background-white mt-4 border p-4">
+                <form>
+                    <textarea class="form-control" rows="6"></textarea>
+                    <div class="row">
+                        <div class="offset-md-9  col-md-3 col-lg-2 offset-lg-10">
+                            <button type="button" class="btn btn-danger mt-2 w-100">
+                                <i class="fa fa-paper-plane mr-2" aria-hidden="true"></i>发送</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="col-md-3">
+            <div class="background-white p-5">fsdfsf</div>
+        </div>
+    </div>
 
 </section>
