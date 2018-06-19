@@ -16,6 +16,12 @@ export class ShowArticleComponent implements OnInit {
 
     color: string = 'red';
 
+    displayReplay: boolean = false;
+
+    replayArticle: number;
+
+    replayComment: number;
+
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -26,8 +32,16 @@ export class ShowArticleComponent implements OnInit {
 
     ngOnInit() {
         this.article$ = this.route.paramMap.pipe(
-            switchMap((params: ParamMap) => this.articlesService.getArticle(+params.get('id'), ['comments.replayComment', 'comments.user.avatar']))
+            switchMap((params: ParamMap) => {
+                this.replayArticle = +params.get('id');
+                return this.articlesService.getArticle(this.replayArticle, ['comments.replayComment', 'comments.user.avatar'])
+            }
+            )
         );
+    }
+
+    displayReplayDialog() {
+        this.displayReplay = true;
     }
 
 }

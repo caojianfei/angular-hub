@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+//import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { TabViewModule } from 'primeng/tabview';
 import { PaginatorModule } from 'primeng/paginator';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TooltipModule } from 'primeng/tooltip';
+import { DialogModule } from 'primeng/dialog';
 
 import { HubRoutingModule } from './hub-routing.module';
 import { HubComponent } from './hub.component';
@@ -20,6 +22,7 @@ import { QuestionComponent } from './article-list/question/question.component';
 import { ShareComponent } from './article-list/share/share.component';
 import { PersonalCenterComponent } from './personal-center/personal-center.component';
 import { EditInformationComponent } from './edit-information/edit-information.component';
+import { ReplayArticleComponent } from './replay-article/replay-article.component';
 
 @NgModule({
     imports: [
@@ -30,7 +33,8 @@ import { EditInformationComponent } from './edit-information/edit-information.co
         TabViewModule,
         PaginatorModule,
         FileUploadModule,
-        TooltipModule
+        TooltipModule,
+        DialogModule
     ],
     providers: [
     ],
@@ -45,7 +49,8 @@ import { EditInformationComponent } from './edit-information/edit-information.co
         QuestionComponent,
         ShareComponent,
         PersonalCenterComponent,
-        EditInformationComponent
+        EditInformationComponent,
+        ReplayArticleComponent
     ]
 })
 export class HubModule { }
