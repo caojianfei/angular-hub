@@ -1,5 +1,6 @@
 import { User } from "./user";
 import { Tag } from "./tag";
+import { Comment } from "./comment";
 
 export interface Article {
     id: number;
@@ -8,5 +9,11 @@ export interface Article {
     content: string;
     category_id: number;
     user?: User;
-    tags?: Tag[];
+    tags?: {
+        data: Tag[]
+    };
+    comments?: {
+        data: Comment[]
+    };
+    answer?: Comment;
 }

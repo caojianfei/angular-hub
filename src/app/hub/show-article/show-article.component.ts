@@ -34,14 +34,15 @@ export class ShowArticleComponent implements OnInit {
         this.article$ = this.route.paramMap.pipe(
             switchMap((params: ParamMap) => {
                 this.replayArticle = +params.get('id');
-                return this.articlesService.getArticle(this.replayArticle, ['comments.replayComment', 'comments.user.avatar'])
+                return this.articlesService.getArticle(this.replayArticle, ['comments.replayComment.user', 'comments.user.avatar'])
             }
             )
         );
     }
 
-    displayReplayDialog() {
+    displayReplayDialog(id: number) {
         this.displayReplay = true;
+        this.replayComment = id;
     }
 
 }

@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, Input, OnChanges } from '@angular/core';
 
 import { BASE_URL } from '../../apis/apis.module';
 import { AuthService } from '../../auth/auth.service';
+import { GrowlMessageService } from '../../growl-message.service';
 
 declare let Simditor;
 
@@ -20,7 +21,8 @@ export class ReplayArticleComponent implements OnInit, OnChanges {
 
     constructor(
         @Inject(BASE_URL) private apiUrl: string,
-        private authService: AuthService
+        private authService: AuthService,
+        private message: GrowlMessageService
     ) { }
 
     ngOnInit() {
@@ -28,6 +30,8 @@ export class ReplayArticleComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges() {
+        console.log('replayArticle', this.replayArticle);
+        console.log('replayComment', this.replayComment)
     }
 
     createSimditor() {
@@ -71,6 +75,16 @@ export class ReplayArticleComponent implements OnInit, OnChanges {
                 'alignment'
             ]
         });
+    }
+
+    submit() {
+        let content: string = this.simditor.getValud();
+
+        if (!content) {
+            this.message.warn('回复内容不能为空');
+        }
+
+
     }
 
 

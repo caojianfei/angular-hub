@@ -139,9 +139,7 @@ export class CreateArticleComponent implements OnInit {
     }
 
     submit() {
-
-
-
+        
         if (!this.articleTitle) {
             this.message.warn('标题不能为空');
             return;

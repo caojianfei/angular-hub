@@ -29,16 +29,7 @@ export class TagsService {
     getTags(name: string = null): Observable<TagsCollection> {
         let route: string = '/tags';
         let url = `${this.apiUrl}${route}`;
-        let options: any = {
-            headers: {
-                Accept: this.accept
-            }
-        };
-
-        if (name) {
-            options.params = new HttpParams().set('name', name);
-        }
-        
+                
         return this.http.get<TagsCollection>(url, {
             headers: {
                 Accept: this.accept
