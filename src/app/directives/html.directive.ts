@@ -2,6 +2,10 @@ import { Directive, ElementRef, Input, HostListener, OnInit } from '@angular/cor
 
 declare let Prism;
 
+declare let marked;
+
+declare let editormd;
+
 @Directive({
     selector: '[appHtml]'
 })
@@ -12,13 +16,8 @@ export class HtmlDirective {
     constructor(private el: ElementRef) { }
 
     ngOnInit() {
-
-        console.log(Prism);
-
-        
-
         if (this.content) {
-            this.el.nativeElement.innerHTML = this.content
+            this.el.nativeElement.innerHTML = marked(this.content); 
         }
         
         let html = Prism.highlightAll();

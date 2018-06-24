@@ -3,9 +3,9 @@
 @import "~font-awesome/css/font-awesome.min.css";
 @import "~primeng/resources/themes/omega/theme.css";
 @import "~primeng/resources/primeng.min.css";
-@import "~simditor/styles/simditor.css";
+//@import "~simditor/styles/simditor.css";
 @import "assets/prism/prism.css";
-
+@import "assets/editormd/css/editormd.css";
 
 body {
     background: #f0f2f5;
@@ -44,7 +44,7 @@ body {
 }
 
 .text-color-second {
-    color: #999999;
+    color: #a9a7a7;
 }
 
 a.text-color-second:hover {
@@ -93,3 +93,26 @@ a.text-color-second:hover {
 .overflow-hidden {
     overflow: hidden;
 }
+
+#editormd {
+    .CodeMirror-gutters {
+        display: none!important;
+    }
+    
+    .CodeMirror-sizer {
+        margin-left: 0!important;
+    }
+    
+    .CodeMirror-linenumber {
+        display: none!important;
+    }
+}
+
+
+
+// #articleContent {
+//     img {
+//         width: 100%;
+//     }
+// }
+

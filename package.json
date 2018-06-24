@@ -27,7 +27,6 @@
     "popper.js": "^1.14.3",
     "primeng": "^6.0.0-alpha.2",
     "rxjs": "^6.0.0",
-    "simditor": "^2.3.6",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

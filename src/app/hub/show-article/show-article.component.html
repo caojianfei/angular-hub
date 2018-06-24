@@ -1,8 +1,8 @@
+<div id="test-editormd"></div>
 <section>
     <div class="row">
         <div class="col-md-9" *ngIf="article$ | async as article">
             <div class="background-white p-5 border">
-
                 <div class="text-center mb-5">
                     <h1 class="mb-3">{{ article.title }}</h1>
                     <div class="">
@@ -25,12 +25,33 @@
                         </span>
                     </div>
                 </div>
-
-                <div [appHtml]="article.content"></div>
-
+                <div [appHtml]="article.content" id="articleContent"></div>
+                <div class="article-options mt-4 text-color-second ">
+                    <span class="edit cursor-pointer mr-3">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    </span>
+                    <span class="delete cursor-pointer mr-3">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </span>
+                    <span class="like cursor-pointer">
+                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                    </span>
+                </div>
+                
             </div>
 
-            <!-- 回复列表 -->
+            回复框
+            <div class="mt-2 p-4 background-white border">
+                <textarea class="form-control" rows="4"></textarea>
+                <div class="d-flex justify-content-end mt-2">
+                    <button type="button" class="btn btn-danger">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                        回复
+                    </button>
+                </div>
+            </div>
+
+            回复列表
             <div class="comment-list mt-4 background-white">
 
                 <div class="px-4 py-1 border-bottom">
@@ -52,12 +73,13 @@
                                     <span class="d-block font-small text-color-second ">{{ comment.created_at }}</span>
                                 </div>
 
-                                <div>
-                                    {{ comment.content }}
+                                <div [appHtml]="comment.content">
+
                                 </div>
 
                                 <div *ngIf="comment.replayComment" class="comment-replay p-1 mt-2 border rounded">
-                                    <a href="#">@{{comment.replayComment.user.name}}：</a>{{ comment.replayComment.content }}
+                                    <a href="#">@{{comment.replayComment.user.name}}：</a>
+                                    <div class="d-inline" [appHtml]="comment.replayComment.content "></div>
                                 </div>
                             </div>
                         </div>
@@ -73,6 +95,6 @@
 </section>
 
 
-<p-dialog header="发表回复" [(visible)]="displayReplay">
-    <app-replay-article [replayArticle]="replayArticle" [replayComment]="replayComment"></app-replay-article>
-</p-dialog>
+<!-- <p-dialog header="发表回复" [(visible)]="displayReplay">
+    <app-replay-article [replayArticle]="replayArticle" [replayComment]="replayComment" (createdComment)="createdComment($event)"></app-replay-article>
+</p-dialog> -->

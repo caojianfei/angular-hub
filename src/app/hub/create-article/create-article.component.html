@@ -1,5 +1,5 @@
 <section class="d-flex justify-content-center border background-white p-4">
-    <div class="w-75">
+    <div class="w-100">
         <h2 class="text-center">{{type}}</h2>
         <hr>
         <form class="" (ngSubmit)="submit()">
@@ -16,9 +16,15 @@
             </div>
             <input *ngIf="categoryId == 3" type="text" class="form-control mt-4" placeholder="分享链接" [(ngModel)]="shareLink" name="shareLink">
             <!-- <input type="text" class="form-control" placeholder="输入标题" [(ngModel)]="articleTitle" name="title"> -->
-            <p-autoComplete placeholder="标签" [(ngModel)]="selectedTags" [suggestions]="filteredTags" (completeMethod)="filterTags($event)" [multiple]="true"
-                name="tags" field="name" [minLength]="1" (onSelect)="selectedTag($event)" [style]="{'width': '200px'}" styleClass="w-100 mt-4"></p-autoComplete>
-            <textarea id="textarea" class="form-control mt-3" rows="16"></textarea>
+            <p-autoComplete placeholder="标签" [(ngModel)]="selectedTags" [suggestions]="filteredTags" (completeMethod)="filterTags($event)"
+                [multiple]="true" name="tags" field="name" [minLength]="1" (onSelect)="selectedTag($event)" [style]="{'width': '200px'}"
+                styleClass="w-100 my-4"></p-autoComplete>
+            <!-- <textarea id="textarea" class="form-control mt-3" rows="16"></textarea> -->
+            <!-- <div id="article-editormd" class="rounded">
+            </div> -->
+
+            <app-markdown-editor markdown="# hehe" (contentChang)="getContent($event)"></app-markdown-editor>
+
             <button type="submit" (click)="articleStatus = 1" class="btn btn-info mt-4 mr-4">发布</button>
             <button type="submit" (click)="articleStatus = 0" class="btn btn-info mt-4">保存草稿</button>
         </form>

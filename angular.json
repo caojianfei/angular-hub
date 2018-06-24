@@ -33,11 +33,15 @@
                             "./node_modules/jquery/dist/jquery.min.js",
                             "./node_modules/popper.js/dist/umd/popper.min.js",
                             "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-                            "./node_modules/simple-module/lib/module.js",
-                            "./node_modules/simple-hotkeys/lib/hotkeys.js",
-                            "./node_modules/simple-uploader/lib/uploader.js",
-                            "./node_modules/simditor/lib/simditor.js",
-                            "./src/assets/prism/prism.js"
+                            "./src/assets/prism/prism.js",
+                            "./src/assets/editormd/lib/marked.min.js",
+                            "./src/assets/editormd/lib/prettify.min.js",
+                            "./src/assets/editormd/lib/raphael.min.js",
+                            "./src/assets/editormd/lib/underscore.min.js",
+                            "./src/assets/editormd/lib/sequence-diagram.min.js",
+                            "./src/assets/editormd/lib/flowchart.min.js",
+                            "./src/assets/editormd/lib/jquery.flowchart.min.js",
+                            "./src/assets/editormd/editormd.min.js"
                         ]
                     },
                     "configurations": {

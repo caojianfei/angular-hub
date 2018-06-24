@@ -8,7 +8,7 @@ import { Tag } from '../../apis/models/responses/tag';
 import { GrowlMessageService } from '../../growl-message.service';
 import { ArticlesService } from '../../apis/articles.service';
 
-declare let Simditor;
+declare let editormd;
 
 @Component({
     selector: 'app-create-article',
@@ -60,52 +60,8 @@ export class CreateArticleComponent implements OnInit {
         this.route.params.subscribe(
             res => this.defineType(res.type)
         );
-
-        this.createSimditor();
     }
 
-    createSimditor() {
-
-        let url = this.apiUrl + "/image";
-
-        if (this.authService.isLogin) {
-            url += "?token=" + this.authService.authorization.access_token;
-        }
-
-        this.simditor = new Simditor({
-            textarea: $('#textarea'),
-            placeholder: 'hahaha',
-            defaultImage: "assets/images/avatar.jpg",
-            upload: {
-                url: url,
-                fileKey: 'file',
-                connectionCount: 1,
-                leaveConfirm: 'Uploading is in progress, are you sure to leave this page?'
-            },
-            pasteImage: true,
-            cleanPaste: true,
-            toolbar: [
-                'title',
-                'bold',
-                'italic',
-                'underline',
-                'strikethrough',
-                'fontScale',
-                'color',
-                'ol',
-                'ul',
-                'blockquote',
-                'code',
-                'table',
-                'link',
-                'image',
-                'hr',
-                'indent',
-                'outdent',
-                'alignment'
-            ]
-        });
-    }
 
     defineType(type: string) {
         if (type === "article") {
@@ -138,8 +94,15 @@ export class CreateArticleComponent implements OnInit {
         }
     }
 
+    content: string;
+
+    getContent(event) {
+        //console.log(event);
+        this.content = event;
+    }
+
     submit() {
-        
+
         if (!this.articleTitle) {
             this.message.warn('标题不能为空');
             return;
@@ -155,10 +118,11 @@ export class CreateArticleComponent implements OnInit {
             return;
         }
 
-        let articleContent = this.simditor.getValue();
+        let articleContent = this.content;
+
 
         if (this.categoryId === 3) {
-            articleContent = `<p>分享链接：<a href="${this.shareLink}" target="_blank" class="">${this.shareLink}</a>${articleContent}</p>`;
+            articleContent = `分享链接：[${this.shareLink}](${this.shareLink})${articleContent}`;
         }
 
         if (!articleContent) {

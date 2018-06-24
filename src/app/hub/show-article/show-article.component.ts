@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { Article } from '../../apis/models/responses/article';
 
 
+declare let editormd;
+
 @Component({
     selector: 'app-show-article',
     templateUrl: './show-article.component.html',
@@ -38,11 +40,20 @@ export class ShowArticleComponent implements OnInit {
             }
             )
         );
+
+
     }
 
-    displayReplayDialog(id: number) {
+    displayReplayDialog(id: number = null) {
         this.displayReplay = true;
         this.replayComment = id;
+    }
+
+    createdComment(event) {
+        this.article$ = this.articlesService.getArticle(this.replayArticle, ['comments.replayComment.user', 'comments.user.avatar']);
+        this.displayReplay = false;
+        this.replayArticle = null;
+        console.log('createdComment', event);
     }
 
 }

@@ -8,6 +8,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
 
 import { HubRoutingModule } from './hub-routing.module';
 import { HubComponent } from './hub.component';
@@ -23,6 +24,7 @@ import { ShareComponent } from './article-list/share/share.component';
 import { PersonalCenterComponent } from './personal-center/personal-center.component';
 import { EditInformationComponent } from './edit-information/edit-information.component';
 import { ReplayArticleComponent } from './replay-article/replay-article.component';
+import { MarkdownEditorComponent } from '../components/markdown-editor/markdown-editor.component';
 
 @NgModule({
     imports: [
@@ -34,7 +36,8 @@ import { ReplayArticleComponent } from './replay-article/replay-article.componen
         PaginatorModule,
         FileUploadModule,
         TooltipModule,
-        DialogModule
+        DialogModule,
+        ButtonModule
     ],
     providers: [
     ],
@@ -50,7 +53,8 @@ import { ReplayArticleComponent } from './replay-article/replay-article.componen
         ShareComponent,
         PersonalCenterComponent,
         EditInformationComponent,
-        ReplayArticleComponent
+        ReplayArticleComponent,
+        MarkdownEditorComponent
     ]
 })
 export class HubModule { }
