@@ -51,8 +51,8 @@
                     <div class="p-0 p-lg-2">
                         <div class="btn-group">
                             <button type="button" class="btn btn-light dropdown-toggle p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img class="rounded-circle mr-2" style="width: 36px;" src="assets/images/avatar.jpg" />
-                                <span>Jeffrey</span>
+                                <img class="rounded-circle mr-2" style="width: 36px;" src="{{ authService.loginedUser?.avatar?.url ? authService.loginedUser?.avatar.url : 'assets/images/avatar.jpg'}}" />
+                                <span>{{authService.loginedUser?.name}}</span>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <button class="dropdown-item cursor-pointer" type="button" routerLink="/users/{{ authService.loginedUser?.id }}">
