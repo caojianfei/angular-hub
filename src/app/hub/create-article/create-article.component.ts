@@ -7,6 +7,7 @@ import { TagsService } from '../../apis/tags.service';
 import { Tag } from '../../apis/models/responses/tag';
 import { GrowlMessageService } from '../../growl-message.service';
 import { ArticlesService } from '../../apis/articles.service';
+import { CreateArticle } from '../../apis/models/requests/create-article';
 
 declare let editormd;
 
@@ -118,14 +119,9 @@ export class CreateArticleComponent implements OnInit {
             return;
         }
 
-        let articleContent = this.content;
+        let articleContent = this.content ? this.content : null;
 
-
-        if (this.categoryId === 3) {
-            articleContent = `分享链接：[${this.shareLink}](${this.shareLink})${articleContent}`;
-        }
-
-        if (!articleContent) {
+        if (!articleContent && this.categoryId !== 3) {
             this.message.warn("内容不能为空");
             return;
         }
@@ -135,19 +131,29 @@ export class CreateArticleComponent implements OnInit {
             tags.push(tag.id);
         });
 
-        this.articlesService.createArticle({
+        let data: CreateArticle = {
             title: this.articleTitle,
             category_id: this.categoryId,
             content: articleContent,
             tags: tags,
             write_type: this.writeTypeCode,
-            status: this.articleStatus
-        }).subscribe(
+            status: this.articleStatus,
+        }
+    
+        if (this.categoryId === 3) {
+            data.share_link = this.shareLink;
+        }
+
+        this.articlesService.createArticle(data).subscribe(
             res => {
+                //console.log(res);
                 this.message.success('新增成功');
                 this.router.navigate(['/articles/' + res.id]);
             },
-            err => this.message.error(err.message)
+            err => {
+                console.log(err)
+                //this.message.error(err.message)
+            }
         );
     }
 

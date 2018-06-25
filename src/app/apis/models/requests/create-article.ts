@@ -5,4 +5,5 @@ export interface CreateArticle {
     content: string;
     write_type: number;
     status: number;
+    share_link?: string;
 }

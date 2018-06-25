@@ -15,11 +15,14 @@ export class MarkdownEditorComponent implements OnInit {
 
     @Input() markdown: string;
 
+    @Input() styleClass: string = '';
+
     editor: any;
 
     constructor() { }
 
     ngOnInit() {
+        //console.log(this.styleClass)
         this.createEditor();
     }
 

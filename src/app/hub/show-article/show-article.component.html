@@ -27,7 +27,7 @@
                 </div>
                 <div [appHtml]="article.content" id="articleContent"></div>
                 <div class="article-options mt-4 text-color-second ">
-                    <span class="edit cursor-pointer mr-3">
+                    <span class="edit cursor-pointer mr-3" routerLink="./update">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </span>
                     <span class="delete cursor-pointer mr-3">
@@ -40,7 +40,7 @@
                 
             </div>
 
-            回复框
+            <!-- 回复框 -->
             <div class="mt-2 p-4 background-white border">
                 <textarea class="form-control" rows="4"></textarea>
                 <div class="d-flex justify-content-end mt-2">
@@ -51,7 +51,7 @@
                 </div>
             </div>
 
-            回复列表
+            <!-- 回复列表 -->
             <div class="comment-list mt-4 background-white">
 
                 <div class="px-4 py-1 border-bottom">

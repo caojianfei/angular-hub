@@ -25,6 +25,7 @@ import { PersonalCenterComponent } from './personal-center/personal-center.compo
 import { EditInformationComponent } from './edit-information/edit-information.component';
 import { ReplayArticleComponent } from './replay-article/replay-article.component';
 import { MarkdownEditorComponent } from '../components/markdown-editor/markdown-editor.component';
+import { UpdateArticleComponent } from './update-article/update-article.component';
 
 @NgModule({
     imports: [
@@ -54,7 +55,8 @@ import { MarkdownEditorComponent } from '../components/markdown-editor/markdown-
         PersonalCenterComponent,
         EditInformationComponent,
         ReplayArticleComponent,
-        MarkdownEditorComponent
+        MarkdownEditorComponent,
+        UpdateArticleComponent
     ]
 })
 export class HubModule { }

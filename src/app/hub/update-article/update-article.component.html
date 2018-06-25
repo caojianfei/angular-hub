@@ -1,11 +1,11 @@
 <section class="d-flex justify-content-center border background-white p-4">
-    <div class="w-100">
+    <div *ngIf="article" class="w-100">
         <h2 class="text-center">{{type}}</h2>
         <hr>
         <form class="" (ngSubmit)="submit()">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="输入标题" [(ngModel)]="articleTitle" name="title">
-                <div *ngIf="categoryId == 1" class="input-group-append">
+                <div *ngIf="article.category_id == 1" class="input-group-append">
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ writeType }}</button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item cursor-pointer" (click)="writeType = '原创'">原创</a>
@@ -14,16 +14,13 @@
                     </div>
                 </div>
             </div>
-            <input *ngIf="categoryId == 3" type="text" class="form-control mt-4" placeholder="分享链接" [(ngModel)]="shareLink" name="shareLink">
-            <!-- <input type="text" class="form-control" placeholder="输入标题" [(ngModel)]="articleTitle" name="title"> -->
+            <input *ngIf="article.category_id == 3" type="text" class="form-control mt-4" placeholder="分享链接" [(ngModel)]="shareLink" name="shareLink">
             <p-autoComplete placeholder="标签" [(ngModel)]="selectedTags" [suggestions]="filteredTags" (completeMethod)="filterTags($event)"
                 [multiple]="true" name="tags" field="name" [minLength]="1" (onSelect)="selectedTag($event)" [style]="{'width': '200px'}"
                 styleClass="w-100 my-4"></p-autoComplete>
 
-            <app-markdown-editor (contentChang)="getContent($event)" styleClass="rounded"></app-markdown-editor>
-
-            <button type="submit" (click)="articleStatus = 1" class="btn btn-info mt-4 mr-4">发布</button>
-            <button type="submit" (click)="articleStatus = 0" class="btn btn-info mt-4">保存草稿</button>
+            <app-markdown-editor (contentChang)="getContent($event)" styleClass="rounded" markdown="{{article.content}}"></app-markdown-editor>
+            <button type="submit" (click)="articleStatus = 1" class="btn btn-info mt-4 mr-4">更新</button>
         </form>
     </div>
 </section>

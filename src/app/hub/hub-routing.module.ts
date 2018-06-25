@@ -9,6 +9,7 @@ import { ShowArticleComponent } from './show-article/show-article.component';
 import { ArticleListComponent } from './article-list/article-list.component';
 import { PersonalCenterComponent } from './personal-center/personal-center.component';
 import { EditInformationComponent } from './edit-information/edit-information.component';
+import { UpdateArticleComponent } from './update-article/update-article.component';
 
 const routes: Routes = [
     {
@@ -19,6 +20,7 @@ const routes: Routes = [
             { path: 'login', component: LoginComponent },
             { path: 'register', component: RegisterComponent },
             { path: 'articles/create/:type', component: CreateArticleComponent },
+            { path: 'articles/:id/update', component: UpdateArticleComponent },
             { path: 'articles/:id', component: ShowArticleComponent },
             { path: 'articles/list/:categoryId', component: ArticleListComponent },
             { path: 'users/:id', component: PersonalCenterComponent },

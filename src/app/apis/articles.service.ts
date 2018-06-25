@@ -9,6 +9,7 @@ import { CreateArticle } from './models/requests/create-article';
 import { AuthService } from '../auth/auth.service';
 import { Article } from './models/responses/article';
 import { ArticlePagination } from './models/responses/article-pagination';
+import { UpdateArticle } from './models/requests/update-article';
 
 
 
@@ -31,7 +32,7 @@ export class ArticlesService {
      * @param include 
      * @returns {Observable<ArticlePagination>}
      */
-    public getArticles(params: { [key: string]: string }, include: string[] = null): Observable<ArticlePagination> {
+    getArticles(params: { [key: string]: string }, include: string[] = null): Observable<ArticlePagination> {
 
         let route: string = '/articles';
         let url = `${this.apiUrl}${route}`;
@@ -62,7 +63,7 @@ export class ArticlesService {
      * @returns {Observable<Article>} 
      * @memberof ArticlesService
      */
-    public createArticle(data: CreateArticle): Observable<Article> {
+    createArticle(data: CreateArticle): Observable<Article> {
         let route: string = '/articles';
         let url = `${this.apiUrl}${route}`;
         let options = {
@@ -77,8 +78,8 @@ export class ArticlesService {
         );
     }
 
-    public getArticle(id: number, include: string[] = null): Observable<Article> {
-        let route: string = '/articles/' + id;
+    getArticle(id: number, include: string[] = null): Observable<Article> {
+        let route: string = '/articles/' + id.toString();
         let url = `${this.apiUrl}${route}`;
 
         return this.http.get<Article>(url, {
@@ -89,6 +90,22 @@ export class ArticlesService {
         }).pipe(
             catchError(this.errorHandle.handleError)
         );
+    }
+
+    updateArticle(id: number, data: UpdateArticle): Observable<Article> {
+        let route: string = '/articles/' + id.toString();
+        let url = `${this.apiUrl}${route}`;
+        let options = {
+            headers: {
+                Accept: this.accept,
+                Authorization: "Bearer " + this.authService.authorization.access_token
+            }
+        };
+
+        return this.http.patch<Article>(url, data, options).pipe(
+            catchError(this.errorHandle.handleError)
+        );
+
     }
 
 }
