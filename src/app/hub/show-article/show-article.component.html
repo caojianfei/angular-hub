@@ -1,7 +1,7 @@
 <div id="test-editormd"></div>
 <section>
     <div class="row">
-        <div class="col-md-9" *ngIf="article$ | async as article">
+        <div class="col-md-9" *ngIf="article">
             <div class="background-white p-5 border">
                 <div class="text-center mb-5">
                     <h1 class="mb-3">{{ article.title }}</h1>
@@ -37,18 +37,25 @@
                         <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
                     </span>
                 </div>
-                
+
             </div>
 
             <!-- 回复框 -->
             <div class="mt-2 p-4 background-white border">
-                <textarea class="form-control" rows="4"></textarea>
+
+                <textarea class="form-control" rows="4" [(ngModel)]="comment" appAutoheight></textarea>
+
                 <div class="d-flex justify-content-end mt-2">
-                    <button type="button" class="btn btn-danger">
+                    <button type="button" class="btn btn-danger" (click)="submitCommit()">
                         <i class="fa fa-paper-plane" aria-hidden="true"></i>
                         回复
                     </button>
                 </div>
+
+                <div *ngIf="comment" class="comment-preview rounded p-3 mt-3">
+                    <div [appHtml]="comment"></div>
+                </div>
+
             </div>
 
             <!-- 回复列表 -->
@@ -67,7 +74,7 @@
                             <div class="media-body">
                                 <div class="mb-2">
                                     <span class="">Jeffrey</span>
-                                    <span class="float-right cursor-pointer" (click)="displayReplayDialog(comment.id)">
+                                    <span class="float-right cursor-pointer" data-toggle="modal" data-target="#exampleModalLong" >
                                         <i class="fa fa-reply text-color-second" aria-hidden="true"></i>
                                     </span>
                                     <span class="d-block font-small text-color-second ">{{ comment.created_at }}</span>
@@ -94,7 +101,39 @@
     </div>
 </section>
 
-
-<!-- <p-dialog header="发表回复" [(visible)]="displayReplay">
+<!-- 
+<p-dialog header="发表回复" [(visible)]="displayReplay" minWidth="400">
     <app-replay-article [replayArticle]="replayArticle" [replayComment]="replayComment" (createdComment)="createdComment($event)"></app-replay-article>
 </p-dialog> -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                    <textarea class="form-control" rows="4" [(ngModel)]="comment" appAutoheight></textarea>
+
+                    <div class="d-flex justify-content-end mt-2">
+                        <button type="button" class="btn btn-danger" (click)="submitCommit()">
+                            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                            回复
+                        </button>
+                    </div>
+    
+                    <div *ngIf="comment" class="comment-preview rounded p-3 mt-3">
+                        <div [appHtml]="comment"></div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

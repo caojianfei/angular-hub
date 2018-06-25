@@ -17,7 +17,10 @@ export class MarkdownEditorComponent implements OnInit {
 
     @Input() styleClass: string = '';
 
+
     editor: any;
+
+    editorLoaded: boolean = false;
 
     constructor() { }
 
@@ -37,18 +40,19 @@ export class MarkdownEditorComponent implements OnInit {
         }
 
         config['toolbarIcons'] = options.toolbarIcons ? options.toolbarIcons : [
-            "undo", "redo", "|", 
-                "quote", "hr", "|", 
-                "list-ul", "list-ol", "|",
-                "link", "image", "table",  "|",
-                "watch", "preview", "fullscreen", "|", "clear"
+            "undo", "redo", "|",
+            "quote", "hr", "|",
+            "list-ul", "list-ol", "|",
+            "link", "image", "table", "|",
+            "watch", "preview", "fullscreen", "|", "clear"
         ];
 
         config['placeholder'] = options.placeholder ? options.placeholder : '';
         config['width'] = options.width ? options.width : '100%';
-        config['height'] = options.width ? options.width : '600';
+        config['height'] = options.height ? options.height : '600';
         config['watch'] = options.watch ? options.watch : false;
         config['toolbar'] = typeof options.toolbar === 'boolean' ? options.toolbar : true;
+        //console.log(config)
 
         this.editor = editormd("editormd", {
             toolbarIcons: config['toolbarIcons'],
@@ -61,32 +65,26 @@ export class MarkdownEditorComponent implements OnInit {
             saveHTMLToTextarea: true,    // 保存 HTML 到 Textarea
             watch: config['watch'],                // 关闭实时预览
             htmlDecode: "style,script,iframe|on*",            // 开启 HTML 标签解析，为了安全性，默认不开启    
-            toolbar  : config['toolbar'],             //关闭工具栏
+            toolbar: config['toolbar'],             //关闭工具栏
             imageUpload: true,
             imageFormats: ["jpg", "jpeg", "gif", "png"],
             imageUploadURL: "http://angularhub.test/api/image/editormd",
             crossDomainUpload: true,
-            uploadCallbackURL : "http://localhost:4200/upload_callback",
-            onload: function () {
-                //console.log('onload', this);
-                //this.fullscreen();
-                //this.unwatch();
-                //this.watch().fullscreen();
-
-                //this.setMarkdown("#PHP");
-                //this.width("100%");
-                //this.height(480);
-                //this.resize("100%", 640);
+            uploadCallbackURL: "http://localhost:4200/upload_callback",
+            onload: () => { 
+                this.editorLoaded = true;
+                this.editor.state.preview = true; // 使 onchange 事件在 unwatch 下依旧触发
+             },
+            onchange: () => {
+                this.getMarkdown();   
             }
         });
     }
 
     getMarkdown() {
-        if (this.editor) {
+        if (this.editorLoaded) {
             this.contentChang.emit(this.editor.getMarkdown());
         }
-        //console.log(this.editor.getMarkdown());
-        
     }
 
 }

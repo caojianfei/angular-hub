@@ -5,7 +5,6 @@ import { AuthService } from '../../auth/auth.service';
 import { GrowlMessageService } from '../../growl-message.service';
 import { CommentsService } from '../../apis/comments.service';
 
-declare let Simditor;
 
 @Component({
     selector: 'app-replay-article',
@@ -30,7 +29,7 @@ export class ReplayArticleComponent implements OnInit, OnChanges {
     ) { }
 
     ngOnInit() {
-        this.createSimditor();
+        //this.createSimditor();
     }
 
     ngOnChanges() {
@@ -38,49 +37,7 @@ export class ReplayArticleComponent implements OnInit, OnChanges {
         console.log('replayComment', this.replayComment)
     }
 
-    createSimditor() {
-
-        let url = this.apiUrl + "/image";
-
-        if (this.authService.isLogin) {
-            url += "?token=" + this.authService.authorization.access_token;
-        }
-
-        this.simditor = new Simditor({
-            textarea: $('#textarea'),
-            placeholder: 'hahaha',
-            defaultImage: "assets/images/avatar.jpg",
-            upload: {
-                url: url,
-                fileKey: 'file',
-                connectionCount: 1,
-                leaveConfirm: 'Uploading is in progress, are you sure to leave this page?'
-            },
-            pasteImage: true,
-            cleanPaste: true,
-            toolbar: [
-                'title',
-                'bold',
-                'italic',
-                'underline',
-                'strikethrough',
-                'fontScale',
-                'color',
-                'ol',
-                'ul',
-                'blockquote',
-                'code',
-                'table',
-                'link',
-                'image',
-                'hr',
-                'indent',
-                'outdent',
-                'alignment'
-            ]
-        });
-    }
-
+    
     submit() {
 
         let content: string = this.simditor.getValue();

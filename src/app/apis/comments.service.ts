@@ -6,6 +6,7 @@ import { catchError, retry } from 'rxjs/operators';
 import { BASE_URL, ACCEPT } from './apis.module';
 import { ErrorHandleService } from './error-handle.service';
 import { AuthService } from '../auth/auth.service';
+import { Comment } from './models/responses/comment';
 
 @Injectable({
     providedIn: 'root'
@@ -26,14 +27,16 @@ export class CommentsService {
      * @param articleId 
      * @param body 
      */
-    createComment(articleId: number, body: { content: string, replay_id?: number }): Observable<Comment> {
+    createComment(articleId: number, body: { content: string, replay_id?: number }, include: string[] = []): Observable<Comment> {
         let route: string = `/article/${articleId.toString()}/comments`;
         let url = `${this.apiUrl}${route}`;
+
         return this.http.post<Comment>(url, body, {
             headers: {
                 Accept: this.accept,
                 Authorization: "Bearer " + this.authService.authorization.access_token
-            }
+            },
+            params: (new HttpParams()).set('include', include.join(','))
         }).pipe(
             catchError(this.errorHandle.handleError)
         );
@@ -46,7 +49,7 @@ export class CommentsService {
      * @param commentId 
      * @param content 
      */
-    updateComment(commentId: number, content: string): Observable<Comment> {
+    updateComment(commentId: number, content: string, include: string[] = []): Observable<Comment> {
         let route: string = `/comments/${commentId.toString()}`;
         let url = `${this.apiUrl}${route}`;
 
@@ -54,7 +57,8 @@ export class CommentsService {
             headers: {
                 Accept: this.accept,
                 Authorization: "Bearer " + this.authService.authorization.access_token
-            }
+            },
+            params: (new HttpParams()).set('include', include.join(','))
         }).pipe(
             catchError(this.errorHandle.handleError)
         )
@@ -85,7 +89,7 @@ export class CommentsService {
      * 
      * @param commentId 
      */
-    showComment(commentId: number): Observable<Comment> {
+    showComment(commentId: number, include: string[] = []): Observable<Comment> {
         let route: string = `/comments/${commentId.toString()}`;
         let url = `${this.apiUrl}${route}`;
 
@@ -93,7 +97,8 @@ export class CommentsService {
             headers: {
                 Accept: this.accept,
                 Authorization: "Bearer " + this.authService.authorization.access_token
-            }
+            },
+            params: (new HttpParams()).set('include', include.join(','))
         }).pipe(
             catchError(this.errorHandle.handleError)
         )

@@ -26,6 +26,7 @@ import { EditInformationComponent } from './edit-information/edit-information.co
 import { ReplayArticleComponent } from './replay-article/replay-article.component';
 import { MarkdownEditorComponent } from '../components/markdown-editor/markdown-editor.component';
 import { UpdateArticleComponent } from './update-article/update-article.component';
+import { AutoheightDirective } from '../directives/autoheight.directive';
 
 @NgModule({
     imports: [
@@ -48,6 +49,7 @@ import { UpdateArticleComponent } from './update-article/update-article.componen
         CreateArticleComponent,
         ShowArticleComponent,
         HtmlDirective,
+        AutoheightDirective,
         ArticleListComponent,
         ArticleComponent,
         QuestionComponent,

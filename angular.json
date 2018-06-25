@@ -41,7 +41,8 @@
                             "./src/assets/editormd/lib/sequence-diagram.min.js",
                             "./src/assets/editormd/lib/flowchart.min.js",
                             "./src/assets/editormd/lib/jquery.flowchart.min.js",
-                            "./src/assets/editormd/editormd.min.js"
+                            "./src/assets/editormd/editormd.min.js",
+                            "./src/assets/autoheight_textera.js"
                         ]
                     },
                     "configurations": {
