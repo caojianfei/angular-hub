@@ -27,6 +27,7 @@ import { ReplayArticleComponent } from './replay-article/replay-article.componen
 import { MarkdownEditorComponent } from '../components/markdown-editor/markdown-editor.component';
 import { UpdateArticleComponent } from './update-article/update-article.component';
 import { AutoheightDirective } from '../directives/autoheight.directive';
+import { BootstrapModule } from '../components/bootstrap/bootstrap.module';
 
 @NgModule({
     imports: [
@@ -39,7 +40,8 @@ import { AutoheightDirective } from '../directives/autoheight.directive';
         FileUploadModule,
         TooltipModule,
         DialogModule,
-        ButtonModule
+        ButtonModule,
+        BootstrapModule
     ],
     providers: [
     ],
@@ -48,7 +50,7 @@ import { AutoheightDirective } from '../directives/autoheight.directive';
         HubHomeComponent,
         CreateArticleComponent,
         ShowArticleComponent,
-        HtmlDirective,
+        //HtmlDirective,
         AutoheightDirective,
         ArticleListComponent,
         ArticleComponent,

@@ -15,7 +15,7 @@ import { EditormdCallback } from './editormd-callback.component';
 @NgModule({
     declarations: [
         AppComponent,
-        EditormdCallback
+        EditormdCallback,
     ],
     imports: [
         BrowserModule,

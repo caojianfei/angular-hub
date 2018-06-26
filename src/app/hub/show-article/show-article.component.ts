@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 
 import { ArticlesService } from '../../apis/articles.service';
@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { Article } from '../../apis/models/responses/article';
 import { GrowlMessageService } from '../../growl-message.service';
 import { CommentsService } from '../../apis/comments.service';
+import { ModalComponent } from '../../components/bootstrap/modal/modal.component';
 
 
 declare let editormd;
@@ -18,6 +19,7 @@ declare let editormd;
 })
 export class ShowArticleComponent implements OnInit {
 
+    @ViewChild(ModalComponent) modal: ModalComponent;
     color: string = 'red';
 
     displayReplay: boolean = false;
@@ -72,18 +74,53 @@ export class ShowArticleComponent implements OnInit {
         this.comment = event;
     }
 
-    submitCommit() {
+    submitComment() {
         if (!this.comment) {
             this.message.warn('评论不能为空哦！');
             return false;
         }
 
-        this.commentsService.createComment(this.replayArticle, { content: this.comment }, ['replayComment.user', 'user.avatar'])
+        this.createComment(this.comment)
+    }
+
+    replayCommentContent: string;
+
+    submitReplayComment() {
+
+        if (!this.replayComment) {
+            this.message.warn('出错啦！');
+            return false;
+        }
+
+        if (!this.replayCommentContent) {
+            this.message.warn('评论不能为空哦！');
+            return false;
+        }
+        this.createComment(this.replayCommentContent, this.replayComment);
+    }
+
+
+    createComment(content: string, replayId?: number) {
+        let body: { content: string, replay_id?: number } = {
+            content: content,
+        }
+
+        if (replayId) {
+            body.replay_id = replayId
+        }
+
+        this.commentsService.createComment(this.replayArticle, body, ['replayComment.user', 'user.avatar'])
             .subscribe(
                 res => {
                     if (!this.article.comments) {
                         this.article.comments = { data: [] };
                     }
+
+                    if (replayId) {
+                        ($('#exampleModalLong') as any).modal('hide');
+                    }
+
+                    this.comment = '';
 
                     this.article.comments.data.push(res);
                     this.message.success('评论成功');
@@ -92,8 +129,18 @@ export class ShowArticleComponent implements OnInit {
                     this.message.error(err.message);
                 }
             );
+
     }
 
+
+    test() {
+        this.modal.show();
+    }
+
+    confirmed(event) {
+        console.log('confirmed', event);
+        this.modal.hide();
+    }
 
 
 }

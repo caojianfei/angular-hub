@@ -1,0 +1,18 @@
+<div class="modal" [ngClass]="{'fade': config?.animation}" id="bootstrapModal" tabindex="-1" role="dialog" aria-labelledby="bootstrapModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog {{modalSize}}" [ngClass]="{'modal-dialog-centered': config?.verticallyCentered}" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bootstrapModalTitle">{{title}}</h5>
+                <button *ngIf="config?.closeIcon" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <ng-content class="modal-body"></ng-content>
+            <div class="modal-footer">
+                <button type="button" class="btn {{config?.closeButtonClass}}" data-dismiss="modal">{{config?.closeButtonText}}</button>
+                <button type="button" class="btn {{config?.confirmButtonClass}}" (click)="confirm($event)">{{config?.confirmButtonText}}</button>
+            </div>
+        </div>
+    </div>
+</div>
