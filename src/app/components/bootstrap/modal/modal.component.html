@@ -10,7 +10,7 @@
             </div>
             <ng-content class="modal-body"></ng-content>
             <div class="modal-footer">
-                <button type="button" class="btn {{config?.closeButtonClass}}" data-dismiss="modal">{{config?.closeButtonText}}</button>
+                <button type="button" class="btn {{config?.closeButtonClass}}" (click)="hide()">{{config?.closeButtonText}}</button>
                 <button type="button" class="btn {{config?.confirmButtonClass}}" (click)="confirm($event)">{{config?.confirmButtonText}}</button>
             </div>
         </div>

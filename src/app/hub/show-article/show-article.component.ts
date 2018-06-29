@@ -8,6 +8,9 @@ import { Article } from '../../apis/models/responses/article';
 import { GrowlMessageService } from '../../growl-message.service';
 import { CommentsService } from '../../apis/comments.service';
 import { ModalComponent } from '../../components/bootstrap/modal/modal.component';
+import { Comment } from '../../apis/models/responses/comment';
+import { AuthService } from '../../auth/auth.service';
+import { User } from '../../apis/models/responses/user';
 
 
 declare let editormd;
@@ -28,12 +31,14 @@ export class ShowArticleComponent implements OnInit {
 
     replayComment: number;
 
+
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private articlesService: ArticlesService,
         private message: GrowlMessageService,
-        private commentsService: CommentsService
+        private commentsService: CommentsService,
+        private authService: AuthService
     ) { }
 
     article$: Observable<Article>;
@@ -51,28 +56,17 @@ export class ShowArticleComponent implements OnInit {
             res => this.article = res,
             err => this.message.error(err.message)
         );
-
-
     }
 
-    displayReplayDialog(id: number = null) {
-        this.displayReplay = true;
-        this.replayComment = id;
+    get loginedUser(): User {
+        return this.authService.loginedUser
     }
 
-    createdComment(event) {
-        this.article$ = this.articlesService.getArticle(this.replayArticle, ['comments.replayComment.user', 'comments.user.avatar']);
-        this.displayReplay = false;
-        this.replayArticle = null;
-        console.log('createdComment', event);
+    get isLogin(): boolean {
+        return this.authService.isLogin;
     }
 
     comment: string;
-
-    commentContentChange(event) {
-        console.log(event);
-        this.comment = event;
-    }
 
     submitComment() {
         if (!this.comment) {
@@ -86,7 +80,6 @@ export class ShowArticleComponent implements OnInit {
     replayCommentContent: string;
 
     submitReplayComment() {
-
         if (!this.replayComment) {
             this.message.warn('出错啦！');
             return false;
@@ -117,10 +110,11 @@ export class ShowArticleComponent implements OnInit {
                     }
 
                     if (replayId) {
-                        ($('#exampleModalLong') as any).modal('hide');
+                        this.modalVisibel = false;
+                        this.replayCommentContent = '';
+                    } else {
+                        this.comment = '';
                     }
-
-                    this.comment = '';
 
                     this.article.comments.data.push(res);
                     this.message.success('评论成功');
@@ -132,15 +126,80 @@ export class ShowArticleComponent implements OnInit {
 
     }
 
+    updateComment() {
+        if (!this.updateId) {
+            this.message.warn('出错啦!');
+            return false;
+        }
 
-    test() {
-        this.modal.show();
+        if (!this.updateContent) {
+            this.message.warn("评论不能为空");
+            return false;
+        }
+
+        this.commentsService.updateComment(this.updateId, this.updateContent).subscribe(
+            res => {
+                this.article.comments.data.forEach((comment) => {
+                    if (comment.id === this.updateId) {
+                        comment.content = res.content
+                    }
+                    this.updateContent = '';
+                    this.modalVisibel = false;
+                });
+                this.message.success('评论更新成功');
+            },
+            err => {
+                this.message.error(err.message);
+            }
+        )
+    }
+
+    modalVisibel: boolean = false;
+
+    editType: number = 0;
+
+
+    replay(id: number) {
+        this.editType = 0;
+        this.replayComment = id;
+        this.modalVisibel = true;
     }
 
     confirmed(event) {
-        console.log('confirmed', event);
-        this.modal.hide();
+        if (this.editType === 0) {
+            this.submitReplayComment();
+        } else {
+            this.updateComment();
+        }
+
+    }
+
+    updateContent = '';
+
+    updateId: number;
+
+    update(comment: Comment) {
+        this.editType = 1;
+        this.updateContent = comment.content;
+        this.updateId = comment.id;
+        this.modalVisibel = true;
     }
 
 
+    delete(comment: Comment) {
+        this.commentsService.deleteComment(comment.id).subscribe(
+            res => {
+                this.article.comments.data.forEach((itme, index, comments) => {
+                    if (itme.id === comment.id) {
+                        comments.splice(index, 1);
+                    }
+                })
+                this.message.success("品论删除成功");
+            },
+
+            err => {
+                this.message.error(err.message);
+            }
+        );
+    }
 }

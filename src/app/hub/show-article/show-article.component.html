@@ -46,7 +46,7 @@
                 <textarea class="form-control" rows="4" [(ngModel)]="comment" appAutoheight></textarea>
 
                 <div class="d-flex justify-content-end mt-2">
-                    <button type="button" class="btn btn-danger" (click)="submitCommit()">
+                    <button type="button" class="btn btn-danger" (click)="submitComment()">
                         <i class="fa fa-paper-plane" aria-hidden="true"></i>
                         回复
                     </button>
@@ -74,9 +74,17 @@
                             <div class="media-body">
                                 <div class="mb-2">
                                     <span class="">Jeffrey</span>
-                                    <span class="float-right cursor-pointer" data-toggle="modal" (click)="replayComment = comment.id" data-target="#exampleModalLong">
-                                        <i class="fa fa-reply text-color-second" aria-hidden="true"></i>
-                                    </span>
+                                    <div *ngIf="isLogin" class="font-small">
+                                        <span class="float-right cursor-pointer" style="margin-top: 1px;" (click)="replay(comment.id)">
+                                            <i class="fa fa-reply text-color-second" aria-hidden="true"></i>
+                                        </span>
+                                        <span *ngIf="loginedUser.id === comment.user_id"  style="margin-top: 1px;"  class="float-right cursor-pointer mr-2" (click)="update(comment)">
+                                            <i class="fa fa-pencil-square-o text-color-second" aria-hidden="true"></i>
+                                        </span>
+                                        <span *ngIf="loginedUser.id === comment.user_id"  class="float-right cursor-pointer mr-2" (click)="delete(comment)">
+                                            <i class="fa fa-trash-o text-color-second" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
                                     <span class="d-block font-small text-color-second ">{{ comment.created_at }}</span>
                                 </div>
 
@@ -101,42 +109,19 @@
     </div>
 </section>
 
-<!-- 
-<p-dialog header="发表回复" [(visible)]="displayReplay" minWidth="400">
-    <app-replay-article [replayArticle]="replayArticle" [replayComment]="replayComment" (createdComment)="createdComment($event)"></app-replay-article>
-</p-dialog> -->
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">回复评论</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <textarea class="form-control" rows="4" [(ngModel)]="replayCommentContent" appAutoheight></textarea>
-                <div *ngIf="replayCommentContent" class="comment-preview rounded p-3 mt-3">
-                    <div [appHtml]="replayCommentContent"></div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-danger" (click)="submitReplayComment()">回复</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<bootstrap-modal [options]="{'size': 'large', 'confirmButtonClass': 'btn-danger'}" (confirmed)="confirmed($event)" title="哈哈哈">
-    <div class="modal-body">
+<bootstrap-modal [options]="{'size': 'large', 'confirmButtonClass': 'btn-danger'}" [(visibel)]="modalVisibel" (confirmed)="confirmed($event)"
+    title="{{ editType === 0 ? '回复评论' : '修改评论' }}">
+    <div *ngIf="editType === 0" class="modal-body">
         <textarea class="form-control" rows="4" [(ngModel)]="replayCommentContent" appAutoheight></textarea>
         <div *ngIf="replayCommentContent" class="comment-preview rounded p-3 mt-3">
             <div [appHtml]="replayCommentContent"></div>
         </div>
     </div>
-</bootstrap-modal>
 
-<button (click)="test()">测试modal</button>
+    <div *ngIf="editType === 1" class="modal-body">
+        <textarea class="form-control" rows="4" [(ngModel)]="updateContent" appAutoheight></textarea>
+        <div *ngIf="updateContent" class="comment-preview rounded p-3 mt-3">
+            <div [appHtml]="updateContent"></div>
+        </div>
+    </div>
+</bootstrap-modal>
