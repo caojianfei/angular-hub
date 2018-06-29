@@ -33,8 +33,8 @@
                     <span class="delete cursor-pointer mr-3">
                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                     </span>
-                    <span class="like cursor-pointer">
-                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                    <span class="like cursor-pointer" title="{{ liked ? '已赞' : '点赞' }}" (click)="toogleLike()">
+                        <i class="fa fa-thumbs-o-up" [ngClass]="{'liked': liked}" aria-hidden="true"></i>
                     </span>
                 </div>
 
@@ -78,10 +78,10 @@
                                         <span class="float-right cursor-pointer" style="margin-top: 1px;" (click)="replay(comment.id)">
                                             <i class="fa fa-reply text-color-second" aria-hidden="true"></i>
                                         </span>
-                                        <span *ngIf="loginedUser.id === comment.user_id"  style="margin-top: 1px;"  class="float-right cursor-pointer mr-2" (click)="update(comment)">
+                                        <span *ngIf="loginedUser.id === comment.user_id" style="margin-top: 1px;" class="float-right cursor-pointer mr-2" (click)="update(comment)">
                                             <i class="fa fa-pencil-square-o text-color-second" aria-hidden="true"></i>
                                         </span>
-                                        <span *ngIf="loginedUser.id === comment.user_id"  class="float-right cursor-pointer mr-2" (click)="delete(comment)">
+                                        <span *ngIf="loginedUser.id === comment.user_id" class="float-right cursor-pointer mr-2" (click)="delete(comment)">
                                             <i class="fa fa-trash-o text-color-second" aria-hidden="true"></i>
                                         </span>
                                     </div>

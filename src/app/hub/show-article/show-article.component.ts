@@ -11,6 +11,7 @@ import { ModalComponent } from '../../components/bootstrap/modal/modal.component
 import { Comment } from '../../apis/models/responses/comment';
 import { AuthService } from '../../auth/auth.service';
 import { User } from '../../apis/models/responses/user';
+import { ArticleLikeService } from '../../apis/article-like.service';
 
 
 declare let editormd;
@@ -38,12 +39,15 @@ export class ShowArticleComponent implements OnInit {
         private articlesService: ArticlesService,
         private message: GrowlMessageService,
         private commentsService: CommentsService,
-        private authService: AuthService
+        private authService: AuthService,
+        private likeService: ArticleLikeService
     ) { }
 
     article$: Observable<Article>;
 
     article: Article;
+
+    liked: boolean = false;
 
     ngOnInit() {
         this.route.paramMap.pipe(
@@ -56,6 +60,14 @@ export class ShowArticleComponent implements OnInit {
             res => this.article = res,
             err => this.message.error(err.message)
         );
+
+        if (this.isLogin) {
+            this.likeService.islike(this.replayArticle).subscribe(
+                res => {
+                    this.liked = res.liked
+                }
+            )
+        }
     }
 
     get loginedUser(): User {
@@ -201,5 +213,43 @@ export class ShowArticleComponent implements OnInit {
                 this.message.error(err.message);
             }
         );
+    }
+
+    like() {
+        if (this.liked) {
+            this.message.info("已经点过赞咯！");
+            return;
+        }
+
+        this.likeService.like(this.replayArticle).subscribe(
+            res => {
+                this.liked = true;
+                this.article.like_count += 1;
+            },
+            err => {
+                this.message.error(err.message);
+            }
+        );
+    }
+
+    unlike() {
+        if (!this.like) {
+            this.message.warn('您还没有点赞哦！');
+            return;
+        }
+
+        this.likeService.unlike(this.replayArticle).subscribe(
+            res => {
+                this.liked = false;
+                this.article.like_count -= 1;
+            },
+            err => {
+                this.message.error(err.message);
+            }
+        )
+    }
+
+    toogleLike() {
+        this.liked ? this.unlike() : this.like();
     }
 }
