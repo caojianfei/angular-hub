@@ -42,16 +42,23 @@
 
             <!-- 回复框 -->
             <div class="mt-2 p-4 background-white border">
-
-                <textarea class="form-control" rows="4" [(ngModel)]="comment" appAutoheight></textarea>
-
+                <textarea disabled="{{!isLogin}}" placeholder="{{isLogin ? '来说点啥~！' : '登录之后可以回复' }}" class="form-control" rows="4" [(ngModel)]="comment"
+                    appAutoheight></textarea>
                 <div class="d-flex justify-content-end mt-2">
-                    <button type="button" class="btn btn-danger" (click)="submitCommit()">
-                        <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                        回复
-                    </button>
+                    <ng-container *ngIf="isLogin; else goToLogin">
+                        <button type="button" class="btn btn-danger" (click)="submitComment()">
+                            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                            回复
+                        </button>
+                    </ng-container>
+                    <ng-template #goToLogin>
+                        <button type="button" class="btn btn-danger" (click)="login()">
+                            <i class="fa fa-sign-in" aria-hidden="true"></i>
+                            登录
+                        </button>
+                    </ng-template>
                 </div>
-
+                <!-- 评论预览 -->
                 <div *ngIf="comment" class="comment-preview rounded p-3 mt-3">
                     <div [appHtml]="comment"></div>
                 </div>
@@ -69,24 +76,34 @@
                 <div *ngIf="article.comments.data">
                     <div *ngFor="let comment of article.comments.data" class="comment-item border-bottom p-4">
                         <div class="media">
-                            <img class="mr-3 rounded-circle" style="width: 45px;" src="{{ comment.user.avatar?.url ? comment.user.avatar.url : 'assets/images/avatar.jpg' }}"
-                                alt="Generic placeholder image">
+                            <img class="mr-3 rounded-circle" style="width: 45px;" src="{{ comment.user.avatar?.url ? comment.user.avatar.url : 'assets/images/avatar.jpg' }}">
                             <div class="media-body">
                                 <div class="mb-2">
-                                    <span class="">Jeffrey</span>
-                                    <span class="float-right cursor-pointer" data-toggle="modal" (click)="replayComment = comment.id" data-target="#exampleModalLong">
-                                        <i class="fa fa-reply text-color-second" aria-hidden="true"></i>
-                                    </span>
+                                    <span class="">{{comment.user.name}}</span>
+                                    <!-- 回复操作 -->
+                                    <div class="comment-options float-right">
+                                        <span class=" cursor-pointer" data-toggle="modal" (click)="modal.show();replayComment = comment.id">
+                                            <i class="fa fa-reply text-color-second" aria-hidden="true"></i>
+                                        </span>
+                                        <!-- <span class=" cursor-pointer" data-toggle="modal" (click)="replayComment = comment.id" data-target="#exampleModalLong">
+                                                <i class="fa fa-reply text-color-second" aria-hidden="true"></i>
+                                            </span> -->
+                                        <span *ngIf="isLogin && loginedUser.id === comment.user_id" class="cursor-pointer">
+                                            <i class="fa fa-trash-o text-color-second" aria-hidden="true"></i>
+                                        </span>
+                                        <span *ngIf="isLogin && loginedUser.id === comment.user_id" class="cursor-pointer">
+                                            <i class="fa fa-pencil-square-o text-color-second" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                    
                                     <span class="d-block font-small text-color-second ">{{ comment.created_at }}</span>
                                 </div>
 
-                                <div [appHtml]="comment.content">
-
-                                </div>
+                                <div [appHtml]="comment.content"> </div>
 
                                 <div *ngIf="comment.replayComment" class="comment-replay p-1 mt-2 border rounded">
                                     <a href="#">@{{comment.replayComment.user.name}}：</a>
-                                    <div class="d-inline" [appHtml]="comment.replayComment.content "></div>
+                                    <div class="" [appHtml]="comment.replayComment.content "></div>
                                 </div>
                             </div>
                         </div>
@@ -101,36 +118,8 @@
     </div>
 </section>
 
-<!-- 
-<p-dialog header="发表回复" [(visible)]="displayReplay" minWidth="400">
-    <app-replay-article [replayArticle]="replayArticle" [replayComment]="replayComment" (createdComment)="createdComment($event)"></app-replay-article>
-</p-dialog> -->
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">回复评论</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <textarea class="form-control" rows="4" [(ngModel)]="replayCommentContent" appAutoheight></textarea>
-                <div *ngIf="replayCommentContent" class="comment-preview rounded p-3 mt-3">
-                    <div [appHtml]="replayCommentContent"></div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-danger" (click)="submitReplayComment()">回复</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<bootstrap-modal [options]="{'size': 'large', 'confirmButtonClass': 'btn-danger'}" (confirmed)="confirmed($event)" title="哈哈哈">
+<bootstrap-modal [options]="{'size': 'large', 'confirmButtonClass': 'btn-danger'}" (confirmed)="submitReplayComment($event)" title="回复评论">
     <div class="modal-body">
         <textarea class="form-control" rows="4" [(ngModel)]="replayCommentContent" appAutoheight></textarea>
         <div *ngIf="replayCommentContent" class="comment-preview rounded p-3 mt-3">
@@ -138,5 +127,3 @@
         </div>
     </div>
 </bootstrap-modal>
-
-<button (click)="test()">测试modal</button>

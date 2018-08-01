@@ -16,7 +16,7 @@ export class HtmlDirective implements OnInit, OnChanges {
     constructor(private el: ElementRef) { }
 
     ngOnInit() {
-        console.log('appHtml init');
+        // console.log('appHtml init');
         if (this.content) {
             this.el.nativeElement.innerHTML = marked(this.content); 
         }

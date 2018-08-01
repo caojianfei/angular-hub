@@ -8,6 +8,8 @@ import { Article } from '../../apis/models/responses/article';
 import { GrowlMessageService } from '../../growl-message.service';
 import { CommentsService } from '../../apis/comments.service';
 import { ModalComponent } from '../../components/bootstrap/modal/modal.component';
+import { AuthService } from '../../auth/auth.service';
+import { User } from '../../apis/models/responses/user';
 
 
 declare let editormd;
@@ -20,7 +22,6 @@ declare let editormd;
 export class ShowArticleComponent implements OnInit {
 
     @ViewChild(ModalComponent) modal: ModalComponent;
-    color: string = 'red';
 
     displayReplay: boolean = false;
 
@@ -28,12 +29,17 @@ export class ShowArticleComponent implements OnInit {
 
     replayComment: number;
 
+    isLogin: boolean;
+
+    loginedUser: User;
+
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private articlesService: ArticlesService,
         private message: GrowlMessageService,
-        private commentsService: CommentsService
+        private commentsService: CommentsService,
+        private authService: AuthService
     ) { }
 
     article$: Observable<Article>;
@@ -41,6 +47,10 @@ export class ShowArticleComponent implements OnInit {
     article: Article;
 
     ngOnInit() {
+
+        this.isLogin = this.authService.isLogin;
+        this.loginedUser = this.authService.loginedUser
+
         this.route.paramMap.pipe(
             switchMap((params: ParamMap) => {
                 this.replayArticle = +params.get('id');
@@ -48,43 +58,47 @@ export class ShowArticleComponent implements OnInit {
             }
             )
         ).subscribe(
-            res => this.article = res,
+            res => { 
+                this.article = res;
+                console.log(this.article)
+            },
             err => this.message.error(err.message)
         );
+    }   
 
-
+    /**
+     * 跳转登录界面
+     */
+    login() {
+        this.router.navigate(['/login', { redirect: '/articles/1001' }]);
     }
 
-    displayReplayDialog(id: number = null) {
-        this.displayReplay = true;
-        this.replayComment = id;
-    }
-
-    createdComment(event) {
-        this.article$ = this.articlesService.getArticle(this.replayArticle, ['comments.replayComment.user', 'comments.user.avatar']);
-        this.displayReplay = false;
-        this.replayArticle = null;
-        console.log('createdComment', event);
-    }
-
+    /**
+     * 回复内容
+     */
     comment: string;
 
-    commentContentChange(event) {
-        console.log(event);
-        this.comment = event;
-    }
-
+    /**
+     * 提交文章回复
+     */
     submitComment() {
+
         if (!this.comment) {
             this.message.warn('评论不能为空哦！');
             return false;
         }
 
         this.createComment(this.comment)
-    }
+    }   
 
+    /**
+     * 评论其他回复的内容
+     */
     replayCommentContent: string;
 
+    /**
+     * 提交对评论的回复
+     */
     submitReplayComment() {
 
         if (!this.replayComment) {
@@ -117,10 +131,11 @@ export class ShowArticleComponent implements OnInit {
                     }
 
                     if (replayId) {
-                        ($('#exampleModalLong') as any).modal('hide');
+                        this.modal.hide();
                     }
 
                     this.comment = '';
+                    this.replayCommentContent = '';
 
                     this.article.comments.data.push(res);
                     this.message.success('评论成功');

@@ -34,7 +34,7 @@ export class CommentsService {
         return this.http.post<Comment>(url, body, {
             headers: {
                 Accept: this.accept,
-                Authorization: "Bearer " + this.authService.authorization ? this.authService.authorization.access_token : null
+                Authorization: "Bearer " + (this.authService.authorization ? this.authService.authorization.access_token : null)
             },
             params: (new HttpParams()).set('include', include.join(','))
         }).pipe(

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { CaptchasService } from '../../apis/captchas.service';
 import { ErrorFormat } from '../../apis/models/error-format';
@@ -9,6 +9,7 @@ import { UserService } from '../../apis/user.service';
 import { Authorization } from '../../apis/models/responses/authorization';
 import { GrowlMessageService } from '../../growl-message.service';
 import { AuthService } from '../auth.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-login',
@@ -24,11 +25,18 @@ export class LoginComponent implements OnInit {
         private userService: UserService,
         private message: GrowlMessageService,
         private authService: AuthService,
-        private router: Router
+        private router: Router,
+        private route: ActivatedRoute
     ) { }
 
     ngOnInit() {
         this.createFrom();
+        this.route.params.subscribe(res => {
+            //console.log(res)
+            if (res.redirect) {
+                this.authService.successLoginRedirect = res.redirect
+            }
+        })
     }
 
     createFrom() {
