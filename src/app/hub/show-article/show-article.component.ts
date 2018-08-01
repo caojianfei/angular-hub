@@ -8,8 +8,10 @@ import { Article } from '../../apis/models/responses/article';
 import { GrowlMessageService } from '../../growl-message.service';
 import { CommentsService } from '../../apis/comments.service';
 import { ModalComponent } from '../../components/bootstrap/modal/modal.component';
+import { Comment } from '../../apis/models/responses/comment';
 import { AuthService } from '../../auth/auth.service';
 import { User } from '../../apis/models/responses/user';
+import { ArticleLikeService } from '../../apis/article-like.service';
 
 
 declare let editormd;
@@ -29,9 +31,9 @@ export class ShowArticleComponent implements OnInit {
 
     replayComment: number;
 
-    isLogin: boolean;
+    //isLogin: boolean;
 
-    loginedUser: User;
+    //loginedUser: User;
 
     constructor(
         private route: ActivatedRoute,
@@ -39,17 +41,18 @@ export class ShowArticleComponent implements OnInit {
         private articlesService: ArticlesService,
         private message: GrowlMessageService,
         private commentsService: CommentsService,
-        private authService: AuthService
+        private authService: AuthService,
+        private likeService: ArticleLikeService
     ) { }
 
     article$: Observable<Article>;
 
     article: Article;
 
-    ngOnInit() {
+    liked: boolean = false;
 
-        this.isLogin = this.authService.isLogin;
-        this.loginedUser = this.authService.loginedUser
+    ngOnInit() {
+      
 
         this.route.paramMap.pipe(
             switchMap((params: ParamMap) => {
@@ -60,10 +63,19 @@ export class ShowArticleComponent implements OnInit {
         ).subscribe(
             res => { 
                 this.article = res;
-                console.log(this.article)
+               
+                //console.log(this.article)
             },
             err => this.message.error(err.message)
         );
+
+        if (this.isLogin) {
+            this.likeService.islike(this.replayArticle).subscribe(
+                res => {
+                    this.liked = res.liked
+                }
+            )
+        }
     }   
 
     /**
@@ -71,6 +83,14 @@ export class ShowArticleComponent implements OnInit {
      */
     login() {
         this.router.navigate(['/login', { redirect: '/articles/1001' }]);
+    }
+
+    get loginedUser(): User {
+        return this.authService.loginedUser
+    }
+
+    get isLogin(): boolean {
+        return this.authService.isLogin;
     }
 
     /**
@@ -100,7 +120,6 @@ export class ShowArticleComponent implements OnInit {
      * 提交对评论的回复
      */
     submitReplayComment() {
-
         if (!this.replayComment) {
             this.message.warn('出错啦！');
             return false;
@@ -147,15 +166,118 @@ export class ShowArticleComponent implements OnInit {
 
     }
 
+    updateComment() {
+        if (!this.updateId) {
+            this.message.warn('出错啦!');
+            return false;
+        }
 
-    test() {
-        this.modal.show();
+        if (!this.updateContent) {
+            this.message.warn("评论不能为空");
+            return false;
+        }
+
+        this.commentsService.updateComment(this.updateId, this.updateContent).subscribe(
+            res => {
+                this.article.comments.data.forEach((comment) => {
+                    if (comment.id === this.updateId) {
+                        comment.content = res.content
+                    }
+                    this.updateContent = '';
+                    this.modalVisibel = false;
+                });
+                this.message.success('评论更新成功');
+            },
+            err => {
+                this.message.error(err.message);
+            }
+        )
+    }
+
+    modalVisibel: boolean = false;
+
+    editType: number = 0;
+
+
+    replay(id: number) {
+        this.editType = 0;
+        this.replayComment = id;
+        this.modalVisibel = true;
     }
 
     confirmed(event) {
-        console.log('confirmed', event);
-        this.modal.hide();
+        if (this.editType === 0) {
+            this.submitReplayComment();
+        } else {
+            this.updateComment();
+        }
+
+    }
+
+    updateContent = '';
+
+    updateId: number;
+
+    update(comment: Comment) {
+        this.editType = 1;
+        this.updateContent = comment.content;
+        this.updateId = comment.id;
+        this.modalVisibel = true;
     }
 
 
+    delete(comment: Comment) {
+        this.commentsService.deleteComment(comment.id).subscribe(
+            res => {
+                this.article.comments.data.forEach((itme, index, comments) => {
+                    if (itme.id === comment.id) {
+                        comments.splice(index, 1);
+                    }
+                })
+                this.message.success("删除成功");
+            },
+
+            err => {
+                this.message.error(err.message);
+            }
+        );
+    }
+
+    like() {
+        if (this.liked) {
+            this.message.info("已经点过赞咯！");
+            return;
+        }
+
+        this.likeService.like(this.replayArticle).subscribe(
+            res => {
+                this.liked = true;
+                this.article.like_count += 1;
+            },
+            err => {
+                this.message.error(err.message);
+            }
+        );
+    }
+
+    unlike() {
+        if (!this.like) {
+            this.message.warn('您还没有点赞哦！');
+            return;
+        }
+
+        this.likeService.unlike(this.replayArticle).subscribe(
+            res => {
+                this.liked = false;
+                this.article.like_count -= 1;
+            },
+            err => {
+                this.message.error(err.message);
+            }
+        )
+    }
+
+    toogleLike() {
+        this.liked ? this.unlike() : this.like();
+    }
 }

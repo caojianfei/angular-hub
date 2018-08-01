@@ -6,7 +6,7 @@ export interface Comment {
     user_id: number;
     article_id: number;
     replay_id: number;
-    content: number;
+    content: string;
     created_at: string;
     updated_at: string;
     user?: User;

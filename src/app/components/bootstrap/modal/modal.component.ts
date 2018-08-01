@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnChanges, AfterViewInit } from '@angular/core';
 
 @Component({
     selector: 'bootstrap-modal',
     templateUrl: './modal.component.html',
     styleUrls: ['./modal.component.scss']
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent implements OnInit, AfterViewInit {
 
     constructor() { }
 
@@ -24,6 +24,10 @@ export class ModalComponent implements OnInit {
     @Output() confirmed = new EventEmitter<any>();
 
     instance: any;
+
+    changeVisibel = new EventEmitter<boolean>();
+
+    private _visibel: boolean;
 
     modalSize: string = '';
 
@@ -50,16 +54,36 @@ export class ModalComponent implements OnInit {
     ngOnInit() {
         this.initConfig();
         this.resolveSize();
+    }
+
+    ngAfterViewInit() {
         this.instance = $('#bootstrapModal');
+        this._visibel ? this.show() : this.hide();
         this.registerEvent();
+    }
+
+    @Output()
+    visibelChange = new EventEmitter<boolean>();
+
+    @Input()
+    set visibel(value: boolean) {
+        this._visibel = value;
+        this.visibelChange.emit(value);
+
+        if (this.instance) {
+            this._visibel ? this.show() : this.hide();
+        }
+    }
+
+    get visibel() {
+        return this._visibel;
     }
 
     show() {
         this.instance.modal({
-            keyboard: false,
             backdrop: 'static',
-            show: true
-        });
+            keyboard: false
+        })
     }
 
     hide() {
@@ -123,14 +147,19 @@ export class ModalComponent implements OnInit {
         if (this.options.confirmButtonClass) {
             this.config.confirmButtonClass = this.options.confirmButtonClass;
         }
+        console.log(this.config)
     }
 
     private registerEvent() {
         this.instance.on('show.bs.modal', (e) => {
+
             this.onModalShow.emit(e);
         })
 
         this.instance.on('shown.bs.modal', (e) => {
+            this.visibel = true;
+            //console.log('modal shown');
+            //console.log(this.visibel)
             this.onModalShown.emit(e);
         })
 
@@ -139,6 +168,9 @@ export class ModalComponent implements OnInit {
         })
 
         this.instance.on('hidden.bs.modal', (e) => {
+            this.visibel = false;
+            //console.log('modal hidden')
+            //console.log(this.visibel)
             this.onModalHidden.emit(e);
         })
     }
