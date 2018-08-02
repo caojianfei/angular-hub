@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 
 import { Router } from '@angular/router';
+import { UserService } from '../apis/user.service';
+import { GrowlMessageService } from '../growl-message.service';
 
 @Component({
     selector: 'app-hub',
@@ -12,14 +14,31 @@ export class HubComponent implements OnInit{
 
     isLogin: boolean;
 
-    constructor(private authService: AuthService, private router: Router) { }
+    constructor(
+        private authService: AuthService, 
+        private userService: UserService,
+        private router: Router,
+        private message: GrowlMessageService
+    ) { }
 
     ngOnInit() {
-        //console.log("HubComponent ngOnInit");
     }
 
     nav() {
         this.router.navigate(['articles']);
+    }
+
+    logout() {
+        console.log('logout');
+        this.userService.logout().subscribe(
+            res => {
+                this.authService.logout();
+            },
+            err => {
+                this.message.error(err.message);
+            }
+        )
+
     }
 
 }

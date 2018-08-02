@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Authorization } from '../apis/models/responses/authorization';
 import { User } from '../apis/models/responses/user';
 import { UserService } from '../apis/user.service';
+import { GrowlMessageService } from '../growl-message.service';
 
 
 @Injectable({
@@ -11,10 +12,13 @@ export class AuthService {
 
     constructor() { }
 
+    loginStatusChage: EventEmitter<boolean> = new EventEmitter();
+
     successLoginRedirect: string = '/';
 
     login(authorization: Authorization): boolean {
         sessionStorage.setItem('authorization', JSON.stringify(authorization));
+        this.loginStatusChage.emit(true);
         return true;
     }
 
@@ -55,6 +59,7 @@ export class AuthService {
     logout() {
         sessionStorage.removeItem('authorization');
         sessionStorage.removeItem('loginUser');
+        this.loginStatusChage.emit(false);
     }
 
 }

@@ -49,6 +49,13 @@ export class CreateArticleComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.authService.loginStatusChage.subscribe(res => {
+            if (res === false) {
+                let redirectUrl = this.router.routerState.snapshot.url;
+                this.router.navigate(['login', {redirect: redirectUrl}])
+            }
+        })
+
         this.tagsService.getTags().subscribe(
             res => {
                 this.tags = res.data;

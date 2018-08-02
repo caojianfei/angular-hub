@@ -1,8 +1,8 @@
 <div id="test-editormd"></div>
 <section>
     <div class="row">
-        <div class="col-md-9" *ngIf="article">
-            <div class="background-white p-5 border">
+        <div class="col-md-9" >
+            <div class="background-white p-5 border" *ngIf="article">
                 <div class="text-center mb-5">
                     <h1 class="mb-3">{{ article.title }}</h1>
                     <div class="">
@@ -26,11 +26,11 @@
                     </div>
                 </div>
                 <div [appHtml]="article.content" id="articleContent"></div>
-                <div class="article-options mt-4 text-color-second ">
-                    <span class="edit cursor-pointer mr-3" routerLink="./update">
+                <div *ngIf="isLogin" class="article-options mt-4 text-color-second ">
+                    <span *ngIf="isLogin && loginedUser.id === article.user_id" class="edit cursor-pointer mr-3" routerLink="./update">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </span>
-                    <span class="delete cursor-pointer mr-3">
+                    <span *ngIf="isLogin && loginedUser.id === article.user_id" class="delete cursor-pointer mr-3" (click)="deleteArtice()">
                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                     </span>
                     <span class="like cursor-pointer" title="{{ liked ? '已赞' : '点赞' }}" (click)="toogleLike()">
@@ -69,11 +69,11 @@
             <div class="comment-list mt-4 background-white">
 
                 <div class="px-4 py-1 border-bottom">
-                    <span class="mr-1">{{ article.comments?.data.length ? article.comments?.data.length : '0' }}</span>
+                    <span class="mr-1">{{ article?.comments.data.length ? article.comments?.data.length : '0' }}</span>
                     <span>条回复</span>
                 </div>
 
-                <div *ngIf="article.comments.data">
+                <div *ngIf="article?.comments.data.length; else noComments">
                     <div *ngFor="let comment of article.comments.data" class="comment-item border-bottom p-4">
                         <div class="media">
                             <img class="mr-3 rounded-circle" style="width: 45px;" src="{{ comment.user.avatar?.url ? comment.user.avatar.url : 'assets/images/avatar.jpg' }}">
@@ -106,10 +106,14 @@
                     </div>
                 </div>
 
+                <ng-template #noComments>
+                    <div class="no-comments">暂无评论</div>
+                </ng-template>
+
             </div>
         </div>
         <div class="col-md-3">
-            <div class="background-white p-5">fsdfsf</div>
+            <div class="background-white p-5">{{article?.user.name}}</div>
         </div>
     </div>
 </section>

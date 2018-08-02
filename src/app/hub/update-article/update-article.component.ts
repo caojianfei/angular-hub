@@ -9,6 +9,7 @@ import { Tag } from '../../apis/models/responses/tag';
 import { Article } from '../../apis/models/responses/article';
 import { switchMap } from 'rxjs/operators';
 import { UpdateArticle } from '../../apis/models/requests/update-article';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
     selector: 'app-update-article',
@@ -47,10 +48,19 @@ export class UpdateArticleComponent implements OnInit {
         private message: GrowlMessageService,
         private articlesService: ArticlesService,
         private tagsService: TagsService,
-        private router: Router
+        private router: Router,
+        private authService: AuthService
     ) { }
 
     ngOnInit() {
+        this.authService.loginStatusChage.subscribe(
+            res => {
+                if (res === false) {
+                    let redirectUrl = this.router.routerState.snapshot.url;
+                    this.router.navigate(['login', { redirect: redirectUrl }])
+                }
+            }
+        );
         this.route.paramMap.pipe(
             switchMap((params: ParamMap) => {
                 this.articleId = +params.get('id');
@@ -157,7 +167,7 @@ export class UpdateArticleComponent implements OnInit {
             return;
         }
 
-       
+
 
         let tags: number[] = [];
         this.selectedTags.forEach((tag) => {
@@ -177,7 +187,7 @@ export class UpdateArticleComponent implements OnInit {
         if (this.categoryId === 1) {
             data.write_type = this.writeTypeCode
         }
-    
+
         this.articlesService.updateArticle(this.articleId, data).subscribe(
             res => {
                 this.message.success('更新成功');

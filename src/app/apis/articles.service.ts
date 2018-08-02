@@ -105,7 +105,21 @@ export class ArticlesService {
         return this.http.patch<Article>(url, data, options).pipe(
             catchError(this.errorHandle.handleError)
         );
+    }
 
+    deleteArticle(id: number): Observable<void> {
+        let route: string = '/articles/' + id.toString();
+        let url = `${this.apiUrl}${route}`;
+        let options = {
+            headers: {
+                Accept: this.accept,
+                Authorization: "Bearer " + this.authService.authorization.access_token
+            }
+        };
+
+        return this.http.delete<void>(url, options).pipe(
+            catchError(this.errorHandle.handleError)
+        );
     }
 
 }

@@ -99,9 +99,22 @@ export class UserService {
         }).pipe(
             catchError(this.errorHandle.handleError)
         );
-
-
     }
 
-
+    /**
+     * 退出
+     */
+    logout() {
+        let route = '/authorizations';
+        let url = `${this.apiUrl}${route}`;
+        let options = {
+            headers: {
+                Accept: this.accept,
+                Authorization: "Bearer " + this.authService.authorization.access_token
+            }
+        }
+        return this.http.delete<void>(url, options).pipe(
+            catchError(this.errorHandle.handleError)
+        );
+    }
 }

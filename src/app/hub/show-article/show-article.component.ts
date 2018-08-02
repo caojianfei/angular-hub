@@ -57,14 +57,14 @@ export class ShowArticleComponent implements OnInit {
         this.route.paramMap.pipe(
             switchMap((params: ParamMap) => {
                 this.replayArticle = +params.get('id');
-                return this.articlesService.getArticle(this.replayArticle, ['comments.replayComment.user', 'comments.user.avatar'])
+                return this.articlesService.getArticle(this.replayArticle, ['comments.replayComment.user', 'comments.user.avatar', 'user'])
             }
             )
         ).subscribe(
             res => { 
                 this.article = res;
                
-                //console.log(this.article)
+                console.log(this.article)
             },
             err => this.message.error(err.message)
         );
@@ -218,6 +218,11 @@ export class ShowArticleComponent implements OnInit {
 
     updateId: number;
 
+    /**
+     * 更新评论
+     * 
+     * @param comment
+     */
     update(comment: Comment) {
         this.editType = 1;
         this.updateContent = comment.content;
@@ -225,7 +230,11 @@ export class ShowArticleComponent implements OnInit {
         this.modalVisibel = true;
     }
 
-
+    /**
+     * 删除评论
+     * 
+     * @param comment 
+     */
     delete(comment: Comment) {
         this.commentsService.deleteComment(comment.id).subscribe(
             res => {
@@ -243,6 +252,9 @@ export class ShowArticleComponent implements OnInit {
         );
     }
 
+    /**
+     * 文章点赞
+     */
     like() {
         if (this.liked) {
             this.message.info("已经点过赞咯！");
@@ -260,6 +272,9 @@ export class ShowArticleComponent implements OnInit {
         );
     }
 
+    /**
+     * 文章取消赞
+     */
     unlike() {
         if (!this.like) {
             this.message.warn('您还没有点赞哦！');
@@ -276,8 +291,26 @@ export class ShowArticleComponent implements OnInit {
             }
         )
     }
-
+    
+    /**
+     * toogle 点赞
+     */
     toogleLike() {
         this.liked ? this.unlike() : this.like();
+    }
+
+    /**
+     * 删除文章
+     */
+    deleteArtice() {
+        this.articlesService.deleteArticle(this.article.id).subscribe(
+            res => {
+                this.message.success('文章删除成功');
+                this.router.navigate(['../']);
+            },
+            err => {
+                this.message.error(err.message);
+            }
+        )
     }
 }
