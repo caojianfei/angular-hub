@@ -1,100 +1,146 @@
-<header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" routerLink="/">Angular Hub</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+<section class="">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" routerLink="/">Angular Hub</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" routerLink="">首页
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/articles/list/1">文章</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/articles/list/2">问答</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/articles/list/3">分享</a>
-                    </li>
-                </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="还没实现该功能哦！" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
-                </form>
-                <!-- 登录状态 -->
-                <div *ngIf="authService.isLogin; else elseBlock" class="d-flex flex-row">
-                    <div class="p-0 p-lg-2">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                创建
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" routerLink="/articles/create/article">写文章</a>
-                                <a class="dropdown-item" routerLink="/articles/create/question">提问题</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" routerLink="/articles/create/share">分享</a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" routerLink="">首页
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/articles/list/1">文章</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/articles/list/2">问答</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/articles/list/3">分享</a>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="还没实现该功能哦！" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
+                    </form>
+                    <!-- 登录状态 -->
+                    <div *ngIf="authService.isLogin; else elseBlock" class="d-flex flex-row">
+                        <div class="p-0 p-lg-2">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    创建
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" routerLink="/articles/create/article">写文章</a>
+                                    <a class="dropdown-item" routerLink="/articles/create/question">提问题</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" routerLink="/articles/create/share">分享</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="p-0 p-lg-2">
-                        <button type="button" class="btn btn-light">
-                            <i class="fa fa-bell-o fa-lg" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="p-0 p-lg-2">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-light dropdown-toggle p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img class="rounded-circle mr-2" style="width: 36px;" src="{{ authService.loginedUser?.avatar?.url ? authService.loginedUser?.avatar.url : 'assets/images/avatar.jpg'}}" />
-                                <span>{{authService.loginedUser?.name}}</span>
+                        <div class="p-0 p-lg-2">
+                            <button type="button" class="btn btn-light">
+                                <i class="fa fa-bell-o fa-lg" aria-hidden="true"></i>
                             </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <button class="dropdown-item cursor-pointer" type="button" routerLink="/users/{{ authService.loginedUser?.id }}">
-                                    <i class="fa fa-user mr-3" aria-hidden="true"></i>个人中心</button>
-                                <button class="dropdown-item cursor-pointer" type="button" routerLink="/edit-info">
-                                    <i class="fa fa-cog mr-3" aria-hidden="true"></i>编辑资料</button>
-                                <div class="dropdown-divider"></div>
-                                <button class="dropdown-item cursor-pointer" type="button" (click)="logout()">
-                                    <i class="fa fa-sign-out mr-3" aria-hidden="true"></i>退出</button>
+                        </div>
+                        <div class="p-0 p-lg-2">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-light dropdown-toggle p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img class="rounded-circle mr-2" style="width: 36px;" src="{{ authService.loginedUser?.avatar?.url ? authService.loginedUser?.avatar.url : 'assets/images/avatar.jpg'}}"
+                                    />
+                                    <span>{{authService.loginedUser?.name}}</span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <button class="dropdown-item cursor-pointer" type="button" routerLink="/users/{{ authService.loginedUser?.id }}">
+                                        <i class="fa fa-user mr-3" aria-hidden="true"></i>个人中心</button>
+                                    <button class="dropdown-item cursor-pointer" type="button" routerLink="/edit-info">
+                                        <i class="fa fa-cog mr-3" aria-hidden="true"></i>编辑资料</button>
+                                    <div class="dropdown-divider"></div>
+                                    <button class="dropdown-item cursor-pointer" type="button" (click)="logout()">
+                                        <i class="fa fa-sign-out mr-3" aria-hidden="true"></i>退出</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <ng-template #elseBlock>
+                        <div class="d-flex flex-row">
+                            <div class="p-0 ml-lg-2">
+                                <button routerLink="/register" type="button" class="btn btn-outline-dark">
+                                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                    注册
+                                </button>
+                            </div>
+                            <div class="p-0 ml-lg-2 ml-2">
+                                <button routerLink="/login" type="button" class="btn btn-outline-dark">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                    登录
+                                </button>
                             </div>
                         </div>
+                    </ng-template>
+                </div>
+            </div>
+        </nav>
+    </header>
 
+    <main class="container mt-4">
+        <router-outlet></router-outlet>
+    </main>
+    <div class="push"></div>
+</section>
+<footer class="bg-light p-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 footer-item">
+                <div class="d-flex flex-column align-items-center p-2">
+                    <div class="item-title">友情链接</div>
+                    <div>
+                        <a target="_blank" href="https://caojf.com/">Jeffrey 的博客</a>
                     </div>
                 </div>
-
-                <ng-template #elseBlock>
-                    <div class="d-flex flex-row">
-                        <div class="p-0 ml-lg-2">
-                            <button routerLink="/register" type="button" class="btn btn-outline-dark">
-                                <i class="fa fa-user-plus" aria-hidden="true"></i>
-                                注册
-                            </button>
-                        </div>
-                        <div class="p-0 ml-lg-2 ml-2">
-                            <button routerLink="/login" type="button" class="btn btn-outline-dark">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                                登录
-                            </button>
-                        </div>
+            </div>
+            <div class="col-md-4 footer-item">
+                <div class="d-flex flex-column align-items-center">
+                    <div class="item-title">关于我们</div>
+                    <div>
+                        <a class="text-dark" href="#">示例示例示例</a>
                     </div>
-                </ng-template>
+                    <div>
+                        <a class="text-dark" href="#">示例示例示例</a>
+                    </div>
+                    <div>
+                        <a class="text-dark" href="#">示例示例示例</a>
+                    </div>
+                    <div>
+                        <a class="text-dark" href="#">示例示例示例</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 footer-item">
+                <div class="d-flex flex-column align-items-center">
+                    <div class="item-title">意见反馈</div>
+                    <div>
+                        <a class="text-dark" href="#">示例一</a>
+                    </div>
+                    <div>
+                        <a class="text-dark" href="#">示例二</a>
+                    </div>
+                    <div>
+                        <a class="text-dark" href="#">示例三</a>
+                    </div>
+                    <div>
+                        <a class="text-dark" href="#">示例四</a>
+                    </div>
+                </div>
             </div>
         </div>
-    </nav>
-</header>
-
-<main class="container mt-4">
-    <router-outlet></router-outlet>
-</main>
-
-<footer class="bg-light mt-5">
-    <div class="container">
-        底部内容
     </div>
 </footer>

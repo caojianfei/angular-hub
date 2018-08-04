@@ -17,6 +17,8 @@ export class HubHomeComponent implements OnInit {
 
     articles$: Observable<ArticlePagination>;
 
+    pupularArticles$: Observable<ArticlePagination>;
+
     constructor(
         private message: GrowlMessageService,
         private authService: AuthService,
@@ -24,8 +26,8 @@ export class HubHomeComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-
         this.getArticles();
+        this.getPopularArticles();
     }
 
 
@@ -38,6 +40,10 @@ export class HubHomeComponent implements OnInit {
     onPageChange(event) {
         let page = event.page + 1;
         this.getArticles(page);
+    }
+
+    getPopularArticles() {
+        this.pupularArticles$ = this.articlesService.getArticles({hot: '', per_page: '5'});
     }
 
 
