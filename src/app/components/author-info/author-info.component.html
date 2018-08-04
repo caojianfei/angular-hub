@@ -3,8 +3,10 @@
         <span>作者：</span>
         <span>{{user.name}}</span>
     </div>
-    <div class="author-avatar">
-        <img src="{{user.avatar? user.avatar.url : '/assets/images/avatar.jpg'}}" alt="">
+    <div class="author-avatar cursor-pointer">
+        <a routerLink="/users/{{user.id}}">
+            <img src="{{user.avatar? user.avatar.url : '/assets/images/avatar.jpg'}}" alt="">
+        </a>
     </div>
     <div *ngIf="user.information?.gender" class="author-gender">
         <span [class.male]="user.information.gender === '男'" [class.female]="user.information.gender === '女'">

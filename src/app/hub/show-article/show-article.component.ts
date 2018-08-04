@@ -57,7 +57,7 @@ export class ShowArticleComponent implements OnInit {
         this.route.paramMap.pipe(
             switchMap((params: ParamMap) => {
                 this.replayArticle = +params.get('id');
-                return this.articlesService.getArticle(this.replayArticle, ['comments.replayComment.user', 'comments.user.avatar', 'user'])
+                return this.articlesService.getArticle(this.replayArticle, ['comments.replayComment.user', 'comments.user.avatar', 'user.avatar'])
             }
             )
         ).subscribe(
