@@ -37,6 +37,9 @@ export class EditInformationComponent implements OnInit {
         this.userService.me().subscribe(
             res => {
                 this.user = res;
+                if (!this.user.information) {
+                    this.user.information = {};
+                }
                 this.createInformationForm();
                 this.createPasswordForm();
             },
@@ -56,6 +59,8 @@ export class EditInformationComponent implements OnInit {
                 introduce: this.user.information.introduce || ''
             })
         });
+
+        // console.log(this.informationForm)
     }
 
     createPasswordForm() {
@@ -66,8 +71,6 @@ export class EditInformationComponent implements OnInit {
     }
 
     onSubmit(type) {
-        //console.log(type)
-        //console.log(this.informationForm.value)
         // 修改基本信息
         if (type == 1) {
             this.updateUser(this.informationForm.value);
@@ -75,18 +78,13 @@ export class EditInformationComponent implements OnInit {
         }
         // 修改密码
         if (type === 3) {
-            // if (this.password.value != this.password_confirmation.value) {
-            //     this.password_confirmation.setErrors({ confirm: true });
-            //     return;
-            // }
-
             this.updateUser(this.passwordForm.value);
             return;
         }
     }
 
     updateUser(data) {
-        this.userService.update(data).subscribe(
+        this.userService.update(data, ['avatar']).subscribe(
             res => {
                 this.message.success('信息更新成功');
                 this.authSerivce.updateLoginUser(res);
@@ -136,15 +134,15 @@ export class EditInformationComponent implements OnInit {
     }
 
     uploadedAvatar(event) {
-        //console.log("[uploadedAvatar]", event);
         let xhr: XMLHttpRequest = event.xhr;
-        //console.log(xhr.response);
         let response = JSON.parse(xhr.response);
         if (response.success) {
             this.uploadedAvatarFile = response;
             this.updateUser({
-                avatar_id: this.uploadedAvatarFile.file_id
+                avatar_id: this.uploadedAvatarFile.file_id,
             });
+
+            console.log(this.authSerivce.getLoginUser())
         } else {
             this.uploadedAvatarFile = null;
             this.message.error(response.msg);

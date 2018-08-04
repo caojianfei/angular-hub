@@ -99,13 +99,14 @@
         <p-tabPanel header="修改头像">
             <ng-template pTemplate="content">
                 <div class="mb-2" style="width: 400px; height: 400px;">
-                    <img class="w-100 rounded" src="{{ uploadedAvatarFile ? uploadedAvatarFile.file_path : (user.avatar.url ? user.avatar?.url : 'assets/images/avatar.jpg') }}"
+                    <img class="w-100 rounded" src="{{ authSerivce.loginedUser.avatar?.url ? authSerivce.loginedUser.avatar.url : 'assets/images/avatar.jpg' }}"
                     />
                 </div>
                 <p-fileUpload chooseLabel="选择图片" uploadLabel="上传" cancelLabel="取消" name="file" url="{{apiUrl}}/image" (onBeforeSend)="beforeUploadAvatar($event)"
                     (onUpload)="uploadedAvatar($event)" (onError)="uploadAvatarError($event)"></p-fileUpload>
             </ng-template>
         </p-tabPanel>
+        
         <p-tabPanel header="重置密码">
             <ng-template pTemplate="content">
                 <form [formGroup]="passwordForm" (ngSubmit)="onSubmit(3)">

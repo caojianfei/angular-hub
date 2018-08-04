@@ -1,0 +1,43 @@
+$author-image-size: 60px;
+
+$space-between: 10px;
+
+$male-color: #9fadc7;
+$female-color: #e89090;
+
+.author-container {
+    padding: 20px;
+
+    .male {
+        color: $male-color;
+    }
+
+    .female {
+        color: $female-color;
+    }
+
+    div:not(:first-child) {
+        margin-top: $space-between;
+    }
+    .author-name {
+        width: 100%;
+        color: #888;
+        text-align: center;
+        padding: 10px;
+    }
+    .author-avatar {
+        width: $author-image-size;
+        height: $author-image-size;
+        border-radius: $author-image-size / 2;
+        overflow: hidden;
+    }
+    .author-avatar img {
+        width: 100%;
+    }
+    .author-introduction {
+        padding: 0 20px;
+        text-align: center;
+        color: #525252;
+
+    }
+}

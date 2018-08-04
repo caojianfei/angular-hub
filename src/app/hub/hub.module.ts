@@ -28,6 +28,7 @@ import { MarkdownEditorComponent } from '../components/markdown-editor/markdown-
 import { UpdateArticleComponent } from './update-article/update-article.component';
 import { AutoheightDirective } from '../directives/autoheight.directive';
 import { BootstrapModule } from '../components/bootstrap/bootstrap.module';
+import { AuthorInfoComponent } from '../components/author-info/author-info.component';
 
 @NgModule({
     imports: [
@@ -60,7 +61,8 @@ import { BootstrapModule } from '../components/bootstrap/bootstrap.module';
         EditInformationComponent,
         ReplayArticleComponent,
         MarkdownEditorComponent,
-        UpdateArticleComponent
+        UpdateArticleComponent,
+        AuthorInfoComponent
     ]
 })
 export class HubModule { }

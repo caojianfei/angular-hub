@@ -1,0 +1,30 @@
+<div *ngIf="user" class="author-container d-flex flex-column align-items-center border">
+    <div class="author-name">
+        <span>作者：</span>
+        <span>{{user.name}}</span>
+    </div>
+    <div class="author-avatar">
+        <img src="{{user.avatar? user.avatar.url : '/assets/images/avatar.jpg'}}" alt="">
+    </div>
+    <div *ngIf="user.information?.gender" class="author-gender">
+        <span [class.male]="user.information.gender === '男'" [class.female]="user.information.gender === '女'">
+            <i class="fa fa-mars" [class.fa-mars]="user.information.gender === '男'" [class.fa-venus]="user.information.gender === '女'"
+                aria-hidden="true"></i>
+        </span>
+    </div>
+    <div class="author-introduction">
+        <ng-container *ngIf="user.information?.introduce; else noIntroduce">
+            <span>{{user.information?.introduce}}</span>
+        </ng-container>
+        <ng-template #noIntroduce>
+            <span>
+                <ng-container *ngIf="user.information?.gender; else noGender">
+                    <span>{{user.information.gender === "男" ? '这位少侠没有留下任何痕迹哦！' : '这位女侠没有留下任何痕迹哦！'}}</span>
+                </ng-container>
+                <ng-template #noGender>
+                    <span>这位大侠没有留下任何痕迹哦！</span>
+                </ng-template>
+            </span>
+        </ng-template>
+    </div>
+</div>

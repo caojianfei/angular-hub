@@ -1,7 +1,7 @@
 <div id="test-editormd"></div>
 <section>
     <div class="row">
-        <div class="col-md-9" >
+        <div class="col-md-9">
             <div class="background-white p-5 border" *ngIf="article">
                 <div class="text-center mb-5">
                     <h1 class="mb-3">{{ article.title }}</h1>
@@ -41,7 +41,7 @@
             </div>
 
             <!-- 回复框 -->
-            <div class="mt-2 p-4 background-white border">
+            <div class="mt-2 p-4 background-white border mb-2">
                 <textarea disabled="{{!isLogin}}" placeholder="{{isLogin ? '来说点啥~！' : '登录之后可以回复' }}" class="form-control" rows="4" [(ngModel)]="comment"
                     appAutoheight></textarea>
                 <div class="d-flex justify-content-end mt-2">
@@ -64,8 +64,16 @@
                 </div>
 
             </div>
-
-            <!-- 回复列表 -->
+        </div>
+        <div class="col-md-3 auth-info">
+            <div class="background-white">
+                <app-author-info [user]="article?.user"></app-author-info>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+             <!-- 回复列表 -->
             <div class="comment-list mt-4 background-white">
 
                 <div class="px-4 py-1 border-bottom">
@@ -81,7 +89,7 @@
                                 <div class="mb-2">
                                     <span class="">{{comment.user.name}}</span>
                                     <!-- 回复操作 -->
-                                    <div *ngIf="isLogin"  class="comment-options float-right">
+                                    <div *ngIf="isLogin" class="comment-options float-right">
                                         <span class=" cursor-pointer" data-toggle="modal" (click)="replay(comment.id)">
                                             <i class="fa fa-reply text-color-second" aria-hidden="true"></i>
                                         </span>
@@ -111,9 +119,6 @@
                 </ng-template>
 
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="background-white p-5">{{article?.user.name}}</div>
         </div>
     </div>
 </section>

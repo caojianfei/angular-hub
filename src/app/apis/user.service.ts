@@ -81,22 +81,29 @@ export class UserService {
             headers: {
                 Accept: this.accept,
                 Authorization: "Bearer " + this.authService.authorization.access_token
-            }
+            },
+            params: new HttpParams().set('include', 'avatar')
         }).pipe(
             catchError(this.errorHandle.handleError)
         );
     }
 
-    update(data) {
+    update(data, include: string[] = null) {
         let route = '/user';
         let url = `${this.apiUrl}${route}`;
 
-        return this.http.patch<User>(url, data, {
+        let options: {[key: string]: any} = {
             headers: {
                 Accept: this.accept,
                 Authorization: "Bearer " + this.authService.authorization.access_token
-            }
-        }).pipe(
+            },
+        }
+
+        if (include) {
+            options.params = new HttpParams().set('include', include.join(','))
+        }
+
+        return this.http.patch<User>(url, data, options).pipe(
             catchError(this.errorHandle.handleError)
         );
     }
