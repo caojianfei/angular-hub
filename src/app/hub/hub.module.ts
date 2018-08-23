@@ -9,6 +9,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { HubRoutingModule } from './hub-routing.module';
 import { HubComponent } from './hub.component';
@@ -29,6 +30,7 @@ import { UpdateArticleComponent } from './update-article/update-article.componen
 import { AutoheightDirective } from '../directives/autoheight.directive';
 import { BootstrapModule } from '../components/bootstrap/bootstrap.module';
 import { AuthorInfoComponent } from '../components/author-info/author-info.component';
+import { ConfirmationService } from 'primeng/api';
 
 @NgModule({
     imports: [
@@ -42,9 +44,11 @@ import { AuthorInfoComponent } from '../components/author-info/author-info.compo
         TooltipModule,
         DialogModule,
         ButtonModule,
-        BootstrapModule
+        BootstrapModule,
+        ConfirmDialogModule
     ],
     providers: [
+        ConfirmationService
     ],
     declarations: [
         HubComponent,

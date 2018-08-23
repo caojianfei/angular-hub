@@ -122,4 +122,27 @@ export class ArticlesService {
         );
     }
 
+    /**
+     *选最佳答案
+     *
+     * @param {number} articleId
+     * @param {number} replayId
+     * @returns {Observable<Article>}
+     * @memberof ArticlesService
+     */
+    setQeustionResponse(articleId: number, replayId: number): Observable<Article> {
+        let route: string = `/article/${articleId.toString()}/comment/${replayId.toString()}`;
+        let url = `${this.apiUrl}${route}`;
+        let options = {
+            headers: {
+                Accept: this.accept,
+                Authorization: `Bearer ${this.authService.authorization.access_token}`
+            }
+        }
+
+        return this.http.patch<Article>(url, {}, options).pipe(
+            catchError(this.errorHandle.handleError)
+        )
+    }
+
 }
