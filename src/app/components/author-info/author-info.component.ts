@@ -13,7 +13,7 @@ export class AuthorInfoComponent implements OnInit, OnChanges {
     constructor() { }
 
     ngOnInit() {
-        console.log('user', this.user)
+        // console.log('user', this.user)
     }
 
     ngOnChanges() {

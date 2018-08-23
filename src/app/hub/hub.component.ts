@@ -29,15 +29,16 @@ export class HubComponent implements OnInit{
     }
 
     logout() {
-        console.log('logout');
-        this.userService.logout().subscribe(
-            res => {
-                this.authService.logout();
-            },
-            err => {
-                this.message.error(err.message);
-            }
-        )
+        //console.log('logout');
+        this.authService.logout();
+        // this.userService.logout().subscribe(
+        //     res => {
+        //         this.authService.logout();
+        //     },
+        //     err => {
+        //         this.message.error(err.message);
+        //     }
+        // )
 
     }
 

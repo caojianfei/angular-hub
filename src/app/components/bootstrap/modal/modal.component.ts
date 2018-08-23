@@ -147,7 +147,7 @@ export class ModalComponent implements OnInit, AfterViewInit {
         if (this.options.confirmButtonClass) {
             this.config.confirmButtonClass = this.options.confirmButtonClass;
         }
-        console.log(this.config)
+        //console.log(this.config)
     }
 
     private registerEvent() {

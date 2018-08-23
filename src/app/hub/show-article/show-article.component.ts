@@ -65,7 +65,7 @@ export class ShowArticleComponent implements OnInit {
             res => {
                 this.article = res;
 
-                console.log(this.article)
+                // console.log(this.article)
             },
             err => this.message.error(err.message)
         );
