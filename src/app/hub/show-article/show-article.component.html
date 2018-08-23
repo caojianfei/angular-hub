@@ -25,7 +25,13 @@
                         </span>
                     </div>
                 </div>
+                <div *ngIf="article.category_id === 3" class="share-link mb-2">
+                    <h4>分享链接：</h4>
+                    <a href="article.share_link">{{article.share_link}}</a>
+                </div>
+
                 <div [appHtml]="article.content" id="articleContent"></div>
+
                 <div *ngIf="isLogin" class="article-options mt-4 text-color-second ">
                     <span *ngIf="isLogin && loginedUser.id === article.user_id" class="edit cursor-pointer mr-3" routerLink="./update">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -71,9 +77,42 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row mb-4">
+
         <div class="col-md-9">
-             <!-- 回复列表 -->
+            <div *ngIf="article.answer" class="comment-item border background-white mt-2">
+                <div style="width: 100%;height: 40px; background: #21ba45;line-height: 40px;color: #ffffff;font-size: 16px;padding-left: 10px;">满分回答</div>
+                <div class="media m-4">
+                    <img class="mr-3 rounded-circle" style="width: 45px;" src="{{ article.answer.user.avatar?.url ? article.answer.user.avatar.url : 'assets/images/avatar.jpg' }}">
+                    <div class="media-body">
+                        <div class="mb-2">
+                            <span class="">Jeffrey</span>
+                            <!-- 回复操作 -->
+                            <div *ngIf="isLogin" class="comment-options float-right">
+                                <span class=" cursor-pointer" data-toggle="modal" (click)="replay(article.answer.id)" title="回复">
+                                    <i class="fa fa-reply text-color-second" aria-hidden="true"></i>
+                                </span>
+                                <span *ngIf="isLogin && loginedUser.id === article.answer.user_id" class="cursor-pointer" (click)="delete(article.answer)" title="删除">
+                                    <i class="fa fa-trash-o text-color-second" aria-hidden="true"></i>
+                                </span>
+                                <span *ngIf="isLogin && loginedUser.id === article.answer.user_id" class="cursor-pointer" (click)="update(article.answer)" title="更新">
+                                    <i class="fa fa-pencil-square-o text-color-second" aria-hidden="true"></i>
+                                </span>
+                                <span *ngIf="isLogin && loginedUser.id === article.user_id && article.answer_id === 0" class="cursor-pointer" (click)="chooseAnswer(article.answer)"
+                                    title="选为答案">
+                                    <i class="fa fa-check text-color-second" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <span class="d-block font-small text-color-second ">2018-10-10 10:10:10</span>
+                        </div>
+
+                        <div [appHtml]="article.answer.content"> </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 回复列表 -->
             <div class="comment-list mt-4 background-white">
 
                 <div class="px-4 py-1 border-bottom">
@@ -83,6 +122,8 @@
 
                 <div *ngIf="article?.comments.data.length; else noComments">
                     <div *ngFor="let comment of article.comments.data" class="comment-item border-bottom p-4">
+
+
                         <div class="media">
                             <img class="mr-3 rounded-circle" style="width: 45px;" src="{{ comment.user.avatar?.url ? comment.user.avatar.url : 'assets/images/avatar.jpg' }}">
                             <div class="media-body">
@@ -90,14 +131,18 @@
                                     <span class="">{{comment.user.name}}</span>
                                     <!-- 回复操作 -->
                                     <div *ngIf="isLogin" class="comment-options float-right">
-                                        <span class=" cursor-pointer" data-toggle="modal" (click)="replay(comment.id)">
+                                        <span class=" cursor-pointer" data-toggle="modal" (click)="replay(comment.id)" title="回复">
                                             <i class="fa fa-reply text-color-second" aria-hidden="true"></i>
                                         </span>
-                                        <span *ngIf="isLogin && loginedUser.id === comment.user_id" class="cursor-pointer" (click)="delete(comment)">
+                                        <span *ngIf="isLogin && loginedUser.id === comment.user_id" class="cursor-pointer" (click)="delete(comment)" title="删除">
                                             <i class="fa fa-trash-o text-color-second" aria-hidden="true"></i>
                                         </span>
-                                        <span *ngIf="isLogin && loginedUser.id === comment.user_id" class="cursor-pointer" (click)="update(comment)">
+                                        <span *ngIf="isLogin && loginedUser.id === comment.user_id" class="cursor-pointer" (click)="update(comment)" title="更新">
                                             <i class="fa fa-pencil-square-o text-color-second" aria-hidden="true"></i>
+                                        </span>
+                                        <span *ngIf="isLogin && loginedUser.id === article.user_id && article.answer_id === 0" class="cursor-pointer" (click)="chooseAnswer(comment)"
+                                            title="选为答案">
+                                            <i class="fa fa-check text-color-second" aria-hidden="true"></i>
                                         </span>
                                     </div>
                                     <span class="d-block font-small text-color-second ">{{ comment.created_at }}</span>
@@ -122,6 +167,12 @@
         </div>
     </div>
 </section>
+<p-confirmDialog header="提醒" icon="fa fa-exclamation-triangle" #cd>
+    <!-- <p-footer>
+        <button type="button" pButton icon="fa fa-times" label="取消" (click)="cd.reject()"></button>
+        <button type="button" pButton icon="fa fa-check" label="删除" (click)="cd.accept()"></button>
+    </p-footer> -->
+</p-confirmDialog>
 
 <bootstrap-modal [options]="{'size': 'large', 'confirmButtonClass': 'btn-danger'}" [(visibel)]="modalVisibel" (confirmed)="confirmed($event)"
     title="{{ editType === 0 ? '回复评论' : '修改评论' }}">

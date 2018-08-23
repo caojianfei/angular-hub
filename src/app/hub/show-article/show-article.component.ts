@@ -12,6 +12,7 @@ import { Comment } from '../../apis/models/responses/comment';
 import { AuthService } from '../../auth/auth.service';
 import { User } from '../../apis/models/responses/user';
 import { ArticleLikeService } from '../../apis/article-like.service';
+import { ConfirmationService } from 'primeng/api';
 
 
 declare let editormd;
@@ -42,7 +43,8 @@ export class ShowArticleComponent implements OnInit {
         private message: GrowlMessageService,
         private commentsService: CommentsService,
         private authService: AuthService,
-        private likeService: ArticleLikeService
+        private likeService: ArticleLikeService,
+        private confirmationService: ConfirmationService
     ) { }
 
     article$: Observable<Article>;
@@ -52,18 +54,17 @@ export class ShowArticleComponent implements OnInit {
     liked: boolean = false;
 
     ngOnInit() {
-      
 
         this.route.paramMap.pipe(
             switchMap((params: ParamMap) => {
                 this.replayArticle = +params.get('id');
-                return this.articlesService.getArticle(this.replayArticle, ['comments.replayComment.user', 'comments.user.avatar', 'user.avatar'])
+                return this.articlesService.getArticle(this.replayArticle, ['comments.replayComment.user', 'comments.user.avatar', 'user.avatar', 'answer.user.avatar'])
             }
             )
         ).subscribe(
-            res => { 
+            res => {
                 this.article = res;
-               
+
                 console.log(this.article)
             },
             err => this.message.error(err.message)
@@ -76,7 +77,7 @@ export class ShowArticleComponent implements OnInit {
                 }
             )
         }
-    }   
+    }
 
     /**
      * 跳转登录界面
@@ -109,7 +110,7 @@ export class ShowArticleComponent implements OnInit {
         }
 
         this.createComment(this.comment)
-    }   
+    }
 
     /**
      * 评论其他回复的内容
@@ -236,20 +237,30 @@ export class ShowArticleComponent implements OnInit {
      * @param comment 
      */
     delete(comment: Comment) {
-        this.commentsService.deleteComment(comment.id).subscribe(
-            res => {
-                this.article.comments.data.forEach((itme, index, comments) => {
-                    if (itme.id === comment.id) {
-                        comments.splice(index, 1);
-                    }
-                })
-                this.message.success("删除成功");
-            },
 
-            err => {
-                this.message.error(err.message);
+        this.confirmationService.confirm({
+            message: '确认删除该评论？',
+            acceptLabel: '确定',
+            rejectLabel: '取消',
+            accept: () => {
+                this.commentsService.deleteComment(comment.id).subscribe(
+                    res => {
+                        this.article.comments.data.forEach((itme, index, comments) => {
+                            if (itme.id === comment.id) {
+                                comments.splice(index, 1);
+                            }
+                        })
+                        this.message.success("删除成功");
+                    },
+
+                    err => {
+                        this.message.error(err.message);
+                    }
+                );
             }
-        );
+        });
+
+
     }
 
     /**
@@ -291,7 +302,7 @@ export class ShowArticleComponent implements OnInit {
             }
         )
     }
-    
+
     /**
      * toogle 点赞
      */
@@ -303,14 +314,41 @@ export class ShowArticleComponent implements OnInit {
      * 删除文章
      */
     deleteArtice() {
-        this.articlesService.deleteArticle(this.article.id).subscribe(
-            res => {
-                this.message.success('文章删除成功');
-                this.router.navigate(['../']);
-            },
-            err => {
-                this.message.error(err.message);
+
+        this.confirmationService.confirm({
+            message: '确定删除该文章？',
+            acceptLabel: '确定',
+            rejectLabel: '取消',
+            accept: () => {
+                this.articlesService.deleteArticle(this.article.id).subscribe(
+                    res => {
+                        this.message.success('文章删除成功');
+                        this.router.navigate(['../']);
+                    },
+                    err => {
+                        this.message.error(err.message);
+                    }
+                )
             }
-        )
+        });
+
+    }
+
+    chooseAnswer(comment: Comment) {
+        this.confirmationService.confirm({
+            message: '确定将该回答作为最佳回复？',
+            acceptLabel: '确定',
+            accept: () => {
+                this.articlesService.setQeustionResponse(this.article.id, comment.id).subscribe(
+                    res => {
+                        this.message.success('操作成功');
+                        this.article.answer_id = res.answer_id;
+                    },
+                    err => {
+                        this.message.error(err.message);
+                    }
+                )
+            }
+        });
     }
 }
