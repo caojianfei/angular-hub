@@ -80,7 +80,7 @@
     <div class="row mb-4">
 
         <div class="col-md-9">
-            <div *ngIf="article.answer" class="comment-item border background-white mt-2">
+            <div *ngIf="article?.answer" class="comment-item border background-white mt-2">
                 <div style="width: 100%;height: 40px; background: #21ba45;line-height: 40px;color: #ffffff;font-size: 16px;padding-left: 10px;">满分回答</div>
                 <div class="media m-4">
                     <img class="mr-3 rounded-circle" style="width: 45px;" src="{{ article.answer.user.avatar?.url ? article.answer.user.avatar.url : 'assets/images/avatar.jpg' }}">

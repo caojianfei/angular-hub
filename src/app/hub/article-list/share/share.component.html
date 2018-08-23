@@ -6,8 +6,8 @@
                     <div *ngIf="recentShares$ | async as recentShares" class="share-list">
                         <div *ngFor="let share of recentShares.data" class="share-item border-bottom py-2 cursor-pointer">
                             <div class="media">
-                                <img routerLink="/users/{{share.user.id}}" class="mr-3 avatar border border-light " src=" {{ share.user.avatar?.url ? share.user.avatar : 'assets/images/avatar.jpg' }}"
-                                    alt="Generic placeholder image">
+                                <img routerLink="/users/{{share.user.id}}" class="mr-3 avatar border border-light " src="{{ share.user.avatar?.url ? share.user.avatar.url : 'assets/images/avatar.jpg' }}"
+                                    alt="">
                                 <div class="media-body">
                                     <div>
                                         <div class="d-inline mr-3 font-weight-normal">
@@ -20,7 +20,7 @@
                                     <div class="row">
                                         <div class="col-sm-6 text-sm-left text-right text-color-second">
                                             <span class="font-weight-normal mr-2 font-second">
-                                                <a class="text-color-second" routerLink="/usrs/{{share.user.id}}">{{ share.user.name }}</a>
+                                                <a class="text-color-second" routerLink="/users/{{share.user.id}}">{{ share.user.name }}</a>
                                             </span>
                                             <span class="mr-2 number-small">分享于</span>
                                             <span class="font-second">{{ share.created_at }}</span>
@@ -58,8 +58,8 @@
                     <div *ngIf="hotShares$ | async as hotShares" class="share-list">
                         <div *ngFor="let share of hotShares.data" class="share-item border-bottom py-2 cursor-pointer">
                             <div class="media">
-                                <img routerLink="/users/{{share.user.id}}" class="mr-3 avatar border border-light " src=" {{ share.user.avatar?.url ? share.user.avatar : 'assets/images/avatar.jpg' }}"
-                                    alt="Generic placeholder image">
+                                <img routerLink="/users/{{share.user.id}}" class="mr-3 avatar border border-light " src="{{ share.user.avatar?.url ? share.user.avatar.url : 'assets/images/avatar.jpg' }}"
+                                    alt="">
                                 <div class="media-body">
                                     <div>
                                         <div class="d-inline mr-3 font-weight-normal">
@@ -72,7 +72,7 @@
                                     <div class="row">
                                         <div class="col-sm-6 text-sm-left text-right text-color-second">
                                             <span class="font-weight-normal mr-2 font-second">
-                                                <a class="text-color-second" routerLink="/usrs/{{share.user.id}}">{{ share.user.name }}</a>
+                                                <a class="text-color-second" routerLink="/users/{{share.user.id}}">{{ share.user.name }}</a>
                                             </span>
                                             <span class="mr-2 number-small">分享于</span>
                                             <span class="font-second">{{ share.created_at }}</span>

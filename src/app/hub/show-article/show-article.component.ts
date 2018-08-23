@@ -245,9 +245,12 @@ export class ShowArticleComponent implements OnInit {
             accept: () => {
                 this.commentsService.deleteComment(comment.id).subscribe(
                     res => {
-                        this.article.comments.data.forEach((itme, index, comments) => {
-                            if (itme.id === comment.id) {
+                        this.article.comments.data.forEach((item, index, comments) => {
+                            if (item.id === comment.id) {
                                 comments.splice(index, 1);
+                            }
+                            if (item.id === this.article.answer_id) {
+                                this.article.answer = null;
                             }
                         })
                         this.message.success("删除成功");
@@ -339,10 +342,11 @@ export class ShowArticleComponent implements OnInit {
             message: '确定将该回答作为最佳回复？',
             acceptLabel: '确定',
             accept: () => {
-                this.articlesService.setQeustionResponse(this.article.id, comment.id).subscribe(
+                this.articlesService.setQeustionResponse(this.article.id, comment.id, ['answer.user.avatar']).subscribe(
                     res => {
                         this.message.success('操作成功');
                         this.article.answer_id = res.answer_id;
+                        this.article.answer = res.answer;
                     },
                     err => {
                         this.message.error(err.message);

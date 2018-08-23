@@ -7,8 +7,8 @@
                     <div *ngIf="waittingResolveQuestion$ | async as waittingResolveQuestion" class="question-list">
                         <div *ngFor="let question of waittingResolveQuestion.data" class="question-item border-bottom py-2 cursor-pointer">
                             <div class="media">
-                                <img routerLink="/users/{{question.user.id}}" class="mr-3 avatar border border-light " src=" {{ question.user.avatar?.url ? question.user.avatar : 'assets/images/avatar.jpg' }}"
-                                    alt="Generic placeholder image">
+                                <img routerLink="/users/{{question.user.id}}" class="mr-3 avatar border border-light " src="{{ question.user.avatar?.url ? question.user.avatar.url : 'assets/images/avatar.jpg' }}"
+                                    alt="=">
                                 <div class="media-body">
                                     <div>
                                         <div class="d-inline mr-3 font-weight-normal">
@@ -21,7 +21,7 @@
                                     <div class="row">
                                         <div class="col-sm-6 text-sm-left text-right text-color-second">
                                             <span class="font-weight-normal mr-2 font-second">
-                                                <a class="text-color-second" routerLink="/usrs/{{question.user.id}}">{{ question.user.name }}</a>
+                                                <a class="text-color-second" routerLink="/users/{{question.user.id}}">{{ question.user.name }}</a>
                                             </span>
                                             <span class="mr-2 number-small">提问于</span>
                                             <span class="font-second">{{ question.created_at }}</span>
@@ -60,8 +60,8 @@
                     <div *ngIf="resolvedQuestion$ | async as resolvedQuestion" class="question-list">
                         <div *ngFor="let question of resolvedQuestion.data" class="question-item border-bottom py-2 cursor-pointer">
                             <div class="media">
-                                <img routerLink="/users/{{question.user.id}}" class="mr-3 avatar border border-light " src=" {{ question.user.avatar?.url ? question.user.avatar : 'assets/images/avatar.jpg' }}"
-                                    alt="Generic placeholder image">
+                                <img routerLink="/users/{{question.user.id}}" class="mr-3 avatar border border-light " src="{{ question.user.avatar?.url ? question.user.avatar.url : 'assets/images/avatar.jpg' }}"
+                                    alt="">
                                 <div class="media-body">
                                     <div>
                                         <div class="d-inline mr-3 font-weight-normal">
@@ -74,7 +74,7 @@
                                     <div class="row">
                                         <div class="col-sm-6 text-sm-left text-right text-color-second">
                                             <span class="font-weight-normal mr-2 font-second">
-                                                <a class="text-color-second" routerLink="/usrs/{{question.user.id}}">{{ question.user.name }}</a>
+                                                <a class="text-color-second" routerLink="/users/{{question.user.id}}">{{ question.user.name }}</a>
                                             </span>
                                             <span class="mr-2 number-small">提问于</span>
                                             <span class="font-second">{{ question.created_at }}</span>
@@ -111,7 +111,7 @@
                     <div *ngIf="noReplayQuestion$ | async as noReplayQuestion" class="question-list">
                         <div *ngFor="let question of noReplayQuestion.data" class="question-item border-bottom py-2 cursor-pointer">
                             <div class="media">
-                                <img routerLink="/users/{{question.user.id}}" class="mr-3 avatar border border-light " src=" {{ question.user.avatar?.url ? question.user.avatar : 'assets/images/avatar.jpg' }}"
+                                <img routerLink="/users/{{question.user.id}}" class="mr-3 avatar border border-light " src="{{ question.user.avatar?.url ? question.user.avatar.url : 'assets/images/avatar.jpg' }}"
                                     alt="Generic placeholder image">
                                 <div class="media-body">
                                     <div>
@@ -125,7 +125,7 @@
                                     <div class="row">
                                         <div class="col-sm-6 text-sm-left text-right text-color-second">
                                             <span class="font-weight-normal mr-2 font-second">
-                                                <a class="text-color-second" routerLink="/usrs/{{question.user.id}}">{{ question.user.name }}</a>
+                                                <a class="text-color-second" routerLink="/users/{{question.user.id}}">{{ question.user.name }}</a>
                                             </span>
                                             <span class="mr-2 number-small">提问于</span>
                                             <span class="font-second">{{ question.created_at }}</span>

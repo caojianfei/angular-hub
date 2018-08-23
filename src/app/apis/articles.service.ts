@@ -130,14 +130,22 @@ export class ArticlesService {
      * @returns {Observable<Article>}
      * @memberof ArticlesService
      */
-    setQeustionResponse(articleId: number, replayId: number): Observable<Article> {
+    setQeustionResponse(articleId: number, replayId: number, include: string[] = null): Observable<Article> {
         let route: string = `/article/${articleId.toString()}/comment/${replayId.toString()}`;
         let url = `${this.apiUrl}${route}`;
+
+        let httpParams = new HttpParams();
+
+        if (include) {
+            httpParams = httpParams.set('include', include.join(','));
+        }
+
         let options = {
             headers: {
                 Accept: this.accept,
                 Authorization: `Bearer ${this.authService.authorization.access_token}`
-            }
+            },
+            params: httpParams
         }
 
         return this.http.patch<Article>(url, {}, options).pipe(
