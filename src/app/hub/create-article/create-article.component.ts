@@ -95,7 +95,7 @@ export class CreateArticleComponent implements OnInit {
         });
     }
 
-    selectedTag() {
+    selectedTag(e) {
         if (this.selectedTags.length > 3) {
             alert('请不要选择超过三个标签')
             this.selectedTags.pop();

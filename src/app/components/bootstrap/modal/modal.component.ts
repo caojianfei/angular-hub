@@ -175,7 +175,7 @@ export class ModalComponent implements OnInit, AfterViewInit {
         })
     }
 
-    private confirm(event) {
+    public confirm(event) {
         this.confirmed.emit(event);
     }
 

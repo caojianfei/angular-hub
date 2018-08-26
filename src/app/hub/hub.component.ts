@@ -15,7 +15,7 @@ export class HubComponent implements OnInit{
     isLogin: boolean;
 
     constructor(
-        private authService: AuthService, 
+        public authService: AuthService, 
         private userService: UserService,
         private router: Router,
         private message: GrowlMessageService

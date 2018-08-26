@@ -89,7 +89,13 @@ export class RegisterComponent implements OnInit {
             (res: User) => {
                 this.message.success('注册成功');
                 this.authService.login(res.meta);
-                this.router.navigate([this.authService.successLoginRedirect]);
+                this.userService.me().subscribe(
+                    res => {
+                        this.authService.setLoginUser(res);
+                        this.router.navigate([this.authService.successLoginRedirect]);
+                    }
+                )
+                // this.router.navigate([this.authService.successLoginRedirect]);
             },
             (error: ErrorFormat) => {
                 if (error.statusCode === 422) {

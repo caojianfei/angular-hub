@@ -1,27 +1,29 @@
-# AngularHub
+# 简介
 
-使用`angular`构建一个社区
+个人学习 `angular` 的时候建立的一个项目，参考了几个社区，样式什么的基本用的是 `bootstrap`，没什么美观可言，主要用来学习嘛！为了方便还使用了 [PrimeNG](https://www.primefaces.org/primeng/#/) 的一些组件。项目很早之前就启动了，但是中途由于比较忙放了一段时间。目前仅完成了一部分功能。至于为啥要学 `angular`，一来是个人感觉前后端分离是趋势，二来我当时正在学习 api 开发。
 
-## Development server
+# 功能概览
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+* 导航
+    * 首页
+    * 文章
+    * 问答
+    * 分享
+* 创建
+    * 文章
+    * 提问
+    * 分享
+* 用户
+    * 登录
+    * 注册
+    * 退出
+    * 资料编辑
+    * 个人中心（待完成）
+* 文章详情
+    * 增删改查
+    * 点赞
+    * 回复
+* 全文搜索（待完成）
+* 通知管理（待完成）
+* 管理后台（待完成）
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
